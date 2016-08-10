@@ -1,0 +1,83 @@
+#pragma once
+
+#pragma inline_depth( 255 )
+
+#include <stdlib.h>
+
+
+#include <Lib\Cpp\Common\Debug.h>
+
+
+#define FRM_IObject_IFC public virtual Hcpl::IObject
+#define FRM_Object public virtual Hcpl::Object
+
+namespace Hcpl
+{
+	class ObjectFriend;
+
+	class IObject
+	{
+	private:
+
+		virtual void AddRef(void) = 0;
+		virtual void Release(void) = 0;
+
+
+		friend ObjectFriend;
+	};
+
+	class ObjectFriend
+	{
+	protected:
+		virtual void AddObjectRef(IObject * a_pObj)
+		{
+			if(NULL != a_pObj)
+				a_pObj->AddRef();
+		}
+
+		virtual void ReleaseObject(IObject * a_pObj)
+		{
+			if(NULL != a_pObj)
+				a_pObj->Release();
+		}
+	};
+
+	
+	class Object : FRM_IObject_IFC
+	{
+	public:
+		Object(void)
+		{
+			m_nRefCnt = 0;
+		}
+
+		virtual ~Object(void)
+		{
+		}
+
+
+	private:
+		virtual void AddRef(void)
+		{
+			m_nRefCnt++;
+		}
+
+		virtual void Release(void)
+		{
+			m_nRefCnt--;
+			Hcpl_ASSERT(m_nRefCnt >= 0);
+
+			if(0 == m_nRefCnt)
+			{
+				delete this;
+			}
+		}
+
+
+	private:
+		int m_nRefCnt;
+	};
+	
+
+	
+}

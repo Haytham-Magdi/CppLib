@@ -1,0 +1,141 @@
+#pragma once
+
+#pragma inline_depth( 255 )
+
+#include <stdlib.h>
+
+
+
+#include <Lib\Cpp\Common\Debug.h>
+#include <Lib\Cpp\Common\Object.h>
+
+
+namespace Hcpl
+{
+	class FixedVectorDebug
+	{
+	public:
+
+		static int AllocCnt;
+		static int FixedVectorID;		
+	};
+
+	template<class T>
+	class FixedVector : FRM_Object
+	{
+	public:
+		//virtual T GetAt(int a_index) = 0;
+
+		FixedVector() { Init(); }
+		FixedVector( int a_capacity ) { Init(); SetCapacity( a_capacity ); }
+
+		~FixedVector() 
+		{
+			if( NULL != m_data )
+			{
+				delete [] m_data;
+				FixedVectorDebug::AllocCnt--;
+			}
+
+			int a = FixedVectorDebug::AllocCnt;
+
+		}
+
+		int GetSize() { return m_size; }
+
+		void IncSize( int a_nInc = 1 ) 
+		{ 
+			Hcpl_ASSERT( m_size + a_nInc <= m_capacity );
+
+			SetSize( GetSize() + a_nInc ); 
+		}
+
+
+
+		int GetCapacity( )
+		{
+			return m_capacity;
+		}
+
+
+		void SetCapacity( int a_capacity )
+		{
+			if( NULL != m_data )
+			{
+				delete [] m_data;
+				FixedVectorDebug::AllocCnt--;
+			}
+
+			int a = FixedVectorDebug::AllocCnt;
+
+			m_data = new T[a_capacity];
+			FixedVectorDebug::AllocCnt++;
+
+			a = FixedVectorDebug::AllocCnt;
+
+			m_capacity = a_capacity;
+			m_size = 0;
+		}
+
+		T & operator[](int a_pos)
+		{
+			return m_data[a_pos];
+		}
+
+		T & GetAtBack(int a_nBackIndex)
+		{
+			return m_data[ m_size - 1 - a_nBackIndex ];
+		}
+
+		void ResetSize()
+		{
+			m_size = 0;
+		}
+
+		void SetSize( int a_size )
+		{
+			if( m_capacity < a_size )
+				SetCapacity( a_size );
+
+			m_size = a_size;
+		}
+
+		void PushBack( T a_val )
+		{
+			Hcpl_ASSERT( m_size < m_capacity );
+
+			m_data[ m_size ] = a_val;
+			m_size++;
+		}
+
+		T & GetBack()
+		{
+			return m_data[m_size - 1];
+		}
+
+
+	protected:
+
+		void Init()
+		{
+			m_data = NULL;
+			m_size = 0;
+			m_capacity = 0;
+
+			m_id = FixedVectorDebug::FixedVectorID++;
+		}
+
+	protected:
+
+		T * m_data;
+		int m_size;
+		int m_capacity;
+		int m_id;
+	};
+
+
+	#define FixedVector_REF(T) Hcpl::ObjRef< FixedVector<T> >
+
+
+
+}

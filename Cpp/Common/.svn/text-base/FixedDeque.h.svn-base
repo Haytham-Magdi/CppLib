@@ -1,0 +1,102 @@
+#pragma once
+
+#pragma inline_depth( 255 )
+
+#include <stdlib.h>
+
+
+
+#include <Lib\Cpp\Common\Debug.h>
+#include <Lib\Cpp\Common\Object.h>
+
+
+namespace Hcpl
+{
+	template<class T>
+	class FixedDeque : FRM_Object
+	{
+	public:
+		//virtual T GetAt(int a_index) = 0;
+
+		FixedDeque() { Init(); }
+		FixedDeque( int a_capacity ) { Init(); SetCapacity( a_capacity ); }
+
+		~FixedDeque() 
+		{
+			if( NULL != m_data )
+				delete [] m_data;
+		}
+
+		int GetSize() { return m_size; }
+
+		void SetCapacity( int a_capacity )
+		{
+			if( NULL != m_data )
+				delete [] m_data;
+
+			m_data = new T[a_capacity];
+			m_capacity = a_capacity;
+			m_size = 0;
+		}
+
+		T operator[](int a_pos)
+		{
+			int index = ( m_frontIdx + a_pos ) % m_capacity;
+			return m_data[index];
+		}
+
+		void ResetSize()
+		{
+			m_size = 0;
+			//m_frontIdx = 0;
+		}
+
+		void PushBack( T a_val )
+		{
+			int newIdx = ( m_frontIdx + m_size ) % m_capacity;
+			m_data[ newIdx ] = a_val;
+			m_size++;
+		}
+
+		T GetBack()
+		{
+			int backIdx = ( m_frontIdx + m_size - 1 ) % m_capacity;
+			return m_data[ backIdx ];
+		}
+
+		T GetFront()
+		{
+			return m_data[ m_frontIdx ];
+		}
+
+		void PopFront()
+		{
+			m_frontIdx = ( m_frontIdx + 1 ) % m_capacity;
+			m_size--;
+		}
+
+	protected:
+
+		void Init()
+		{
+			m_data = NULL;
+			m_size = 0;
+			m_capacity = 0;
+
+			m_frontIdx = 0;
+		}
+
+	protected:
+
+		T * m_data;
+		int m_size;
+		int m_frontIdx;
+		int m_capacity;
+	};
+
+
+	#define FixedDeque_REF(T) Hcpl::ObjRef< FixedDeque<T> >
+
+
+
+}

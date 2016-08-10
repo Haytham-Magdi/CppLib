@@ -1,0 +1,52 @@
+#pragma once
+
+#pragma inline_depth( 255 )
+
+#include <stdlib.h>
+
+
+#include <Lib\Cpp\Common\Debug.h>
+
+
+namespace Hcpl
+{
+	class IndexCalc2D : FRM_Object
+	{
+	public :
+
+		IndexCalc2D(int a_nSizX, int a_nSizY) : m_nSizX(a_nSizX), 
+			m_nSizY(a_nSizY), m_nSizTot( a_nSizX * a_nSizY )
+		{
+			//m_nSizX = a_nSizX;
+			//m_nSizY = a_nSizY;
+			//m_nSizTot = m_nSizX * m_nSizY;
+		}
+
+		int Calc(int a_x, int a_y)
+		{
+			return a_x + a_y * m_nSizX;
+		}
+
+		int GetSizeX()
+		{
+			return m_nSizX;
+		}
+
+		int GetSizeY()
+		{
+			return m_nSizY;
+		}
+
+		int GetTotalSize()
+		{
+			return m_nSizTot;
+		}
+
+	protected:
+
+		const int m_nSizX;
+		const int m_nSizY;
+		const int m_nSizTot;
+	};
+
+}

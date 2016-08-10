@@ -1,0 +1,277 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// English (U.S.) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ENU)
+#ifdef _WIN32
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+#pragma code_page(1252)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ARE)\r\n"
+    "LANGUAGE 1, 3\r\n"
+    "#pragma code_page(1256)\r\n"
+    "#include ""res\\MfcCvTut_11Jun07.rc2""  // non-Microsoft Visual C++ edited resources\r\n"
+    "#include ""afxres.rc""     // Standard components\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\MfcCvTut_11Jun07.ico"
+#endif    // English (U.S.) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
+// Arabic (Egypt) resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ARE)
+#ifdef _WIN32
+LANGUAGE LANG_ARABIC, SUBLANG_ARABIC_EGYPT
+#pragma code_page(1256)
+#endif //_WIN32
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 235, 55
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "About MfcCvTut_11Jun07"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,11,17,20,20
+    LTEXT           "MfcCvTut_11Jun07 Version 1.0",IDC_STATIC,40,10,119,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2007",IDC_STATIC,40,25,119,8
+    DEFPUSHBUTTON   "OK",IDOK,178,7,50,16,WS_GROUP
+END
+
+IDD_MFCCVTUT_11JUN07_DIALOG DIALOGEX 0, 0, 581, 420
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "MfcCvTut_11Jun07"
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "OK",IDOK,523,7,50,16
+    PUSHBUTTON      "Cancel",IDCANCEL,523,25,50,16
+    PUSHBUTTON      "Open Image",IDC_OPEN_IMAGE_BTN,7,7,50,14
+    PUSHBUTTON      "Process",IDC_PROCESS_IMAGE_BTN,177,213,106,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Create",IDC_CREATE_BTN,169,244,100,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Sobel",IDC_SOBEL_BTN,167,223,105,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try1",IDC_TRY1_BTN,219,228,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try2",IDC_TRY2_BTN,223,151,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try3",IDC_TRY3_BTN,235,159,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try4",IDC_TRY4_BTN,173,196,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try5",IDC_TRY5_BTN,243,158,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try6",IDC_TRY6_BTN,204,194,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try7",IDC_TRY7_BTN,231,157,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Clusters",IDC_CLUSTERS_BTN,189,207,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try8",IDC_TRY8_BTN,217,203,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try9",IDC_TRY9_BTN,222,168,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try10",IDC_TRY10_BTN,244,180,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Fast Avg",IDC_FAST_AVG_BTN,303,172,57,19
+    PUSHBUTTON      "Max Min Edge",IDC_MAX_MIN_EDGE_BTN,177,188,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try11",IDC_TRY11_BTN,181,158,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try12",IDC_TRY12_BTN,181,151,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try13",IDC_TRY13_BTN,178,161,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try14",IDC_TRY14_BTN,179,160,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Sobel Max",IDC_SOBEL_MAX_BTN,180,152,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Try15",IDC_TRY15_BTN,17,89,50,14
+    PUSHBUTTON      "Edge Dir",IDC_EDGE_DIR_BTN,71,89,50,14
+    PUSHBUTTON      "Try16",IDC_TRY16_BTN,124,89,50,14
+    PUSHBUTTON      "Edge Dir 2",IDC_EDGE_DIR2_BTN,177,89,50,14
+    PUSHBUTTON      "Try17",IDC_TRY17_BTN,231,89,50,14
+    PUSHBUTTON      "Try18",IDC_TRY18_BTN,231,110,50,14
+    PUSHBUTTON      "Try19",IDC_TRY19_BTN,17,111,50,14
+    LISTBOX         IDC_LIST_KEYS,23,166,50,141,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LISTBOX         IDC_LIST2_VALUES,83,166,81,140,LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "TryMouse",IDC_TRY_MOUSE_BTN,228,154,50,14,NOT WS_VISIBLE
+    PUSHBUTTON      "Clear IO",IDC_CLEAR_IO,92,319,70,19
+    PUSHBUTTON      "Draw Line Path",IDC_DRAW_LINE_PATH,193,265,66,21,NOT WS_VISIBLE
+    PUSHBUTTON      "Avg",IDC_AVG_BTN,367,172,70,19
+    GROUPBOX        "Static",IDC_STATIC,289,44,261,295
+    EDITTEXT        IDC_TXT_BX_AVG,441,172,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Reset",IDC_RESET_BTN,367,54,70,19
+    PUSHBUTTON      "Size Up",IDC_SIZE_UP_BTN,367,124,70,19
+    EDITTEXT        IDC_TXT_BX_SIZE_UP,441,124,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Size Down",IDC_SIZE_DOWN_BTN,367,148,70,19
+    EDITTEXT        IDC_TXT_BX_SIZE_DOWN,441,148,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Save To File",IDC_SAVE_TO_FILE_BTN,367,101,70,19
+    EDITTEXT        IDC_TXT_BX_SAVE_TO_FILE,441,101,103,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Clip",IDC_CLIP_BTN,367,196,70,19
+    PUSHBUTTON      "Try20",IDC_TRY20_BTN,72,111,50,14
+    PUSHBUTTON      "Threshold",IDC_THRESHOLD_BTN,369,220,70,19
+    EDITTEXT        IDC_TXT_BX_THRESHOLD,443,221,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Undo",IDC_UNDO_BTN,367,77,70,19
+    PUSHBUTTON      "Redo",IDC_REDO_BTN,441,76,70,19
+    PUSHBUTTON      "Dilate",IDC_DILATE_BTN,369,244,70,19
+    EDITTEXT        IDC_TXT_BX_DILATE,443,244,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Erode",IDC_ERODE_BTN,369,268,70,19
+    EDITTEXT        IDC_TXT_BX_ERODE,443,268,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Median",IDC_MEDIAN_BTN,369,291,70,19
+    EDITTEXT        IDC_TXT_BX_MEDIAN,443,291,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "Equalize Hist X",IDC_EQUALIZE_HIST_BTN,369,350,70,19
+    EDITTEXT        IDC_TXT_BX_APR_SIZE_1D,443,316,76,17,ES_AUTOHSCROLL
+    PUSHBUTTON      "TryRS20",IDC_TRYRS20_BTN,125,111,50,14
+    PUSHBUTTON      "Gray",IDC_GRAY_BTN,445,196,70,19
+    PUSHBUTTON      "Morph Grad",IDC_MGRAD_BTN,448,350,70,19
+    PUSHBUTTON      "Multiply By",IDC_MULT_BY_BTN,291,350,70,19
+    PUSHBUTTON      "Morph G 1-2",IDC_MGRAD_1S2_BTN,447,374,70,19
+    PUSHBUTTON      "Try22",IDC_TRY22_BTN,17,129,50,14
+    PUSHBUTTON      "Try23",IDC_TRY23_BTN,71,130,50,14
+    PUSHBUTTON      "Try24",IDC_TRY24_BTN,125,130,50,14
+    PUSHBUTTON      "Try25",IDC_TRY25_BTN,178,130,50,14
+    PUSHBUTTON      "Try26",IDC_TRY26_BTN,231,130,50,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "040904e4"
+        BEGIN
+            VALUE "CompanyName", "TODO: <Company name>"
+            VALUE "FileDescription", "TODO: <File description>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "MfcCvTut_11Jun07.exe"
+            VALUE "LegalCopyright", "TODO: (c) <Company name>.  All rights reserved."
+            VALUE "OriginalFilename", "MfcCvTut_11Jun07.exe"
+            VALUE "ProductName", "TODO: <Product name>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x409, 1252
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 228
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 48
+    END
+
+    IDD_MFCCVTUT_11JUN07_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 574
+        VERTGUIDE, 573
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 406
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "&About MfcCvTut_11Jun07..."
+END
+
+#endif    // Arabic (Egypt) resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_ARE)
+LANGUAGE 1, 3
+#pragma code_page(1256)
+#include "res\MfcCvTut_11Jun07.rc2"  // non-Microsoft Visual C++ edited resources
+#include "afxres.rc"     // Standard components
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+

@@ -1,0 +1,17 @@
+#pragma once
+
+
+namespace Hcpl
+{
+	namespace Math
+	{
+		using namespace Hcpl;
+
+		template<class T>
+		inline T Sqr(T a_arg)
+		{
+			return a_arg * a_arg;
+		}
+
+	}
+}
