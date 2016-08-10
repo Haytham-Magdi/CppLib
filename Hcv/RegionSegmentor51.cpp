@@ -156,9 +156,9 @@ namespace Hcv
 				
 			IImgDataMgr_2_FactorySetRef imgFactoryMgr = 
 				////new ImgDataMgr_2_FactorySet_CovMat();
-				//new ImgDataMgr_2_FactorySet_LocHist();
+				new ImgDataMgr_2_FactorySet_LocHist();
 				////new ImgDataMgr_2_FactorySet_GridPal();
-				new ImgDataMgr_2_FactorySet_Simple();
+				//new ImgDataMgr_2_FactorySet_Simple();
 			
 
 			//IImgCoreSrcRef ids1 = new ImgDataSrc_LocHist(img1);
