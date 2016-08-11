@@ -1482,6 +1482,35 @@ void CMfcCvTut_11Jun07Dlg::OnBnClickedTry25Btn()
 
 }
 
+void CMfcCvTut_11Jun07Dlg::OnBnClickedTry26Btn_0()
+{
+	// TODO: Add your control notification handler code here
+
+	if (proc != 0)
+	{
+		// process and display
+
+
+		{
+			CString sTmp;
+
+			this->edtAprSize1D.GetWindowTextA(sTmp);
+
+			CString sTmp2 = sTmp.Trim();
+
+			//GlobalStuff::AprSize1D = atoi( sTmp2.GetBuffer() );
+			GlobalStuff::AprSize1D = atof(sTmp2.GetBuffer());
+		}
+
+
+		proc->Try26();
+
+		//proc->display();
+
+	}
+
+}
+
 void CMfcCvTut_11Jun07Dlg::OnBnClickedTry26Btn()
 {
 	// TODO: Add your control notification handler code here
