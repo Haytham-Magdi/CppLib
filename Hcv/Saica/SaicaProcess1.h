@@ -40,9 +40,10 @@ namespace Hcv
 
 			F32ImageRef m_srcImg;
 		};
+	
+		typedef Hcpl::ObjRef< SaicaProcess1 > SaicaProcess1Ref;
 	};
 
 
-	typedef Hcpl::ObjRef< Ns_Saica::SaicaProcess1 > SaicaProcess1Ref;
 
 }

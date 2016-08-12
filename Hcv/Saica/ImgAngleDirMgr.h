@@ -100,9 +100,10 @@ namespace Hcv
 			ImageItrMgrRef m_imageItrMgr;
 
 		};
+
+		typedef Hcpl::ObjRef< ImgAngleDirMgr > ImgAngleDirMgrRef;
 	};
 
 
-	typedef Hcpl::ObjRef< Ns_Saica::ImgAngleDirMgr > ImgAngleDirMgrRef;
 
 }

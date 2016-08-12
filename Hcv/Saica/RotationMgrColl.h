@@ -53,9 +53,8 @@ namespace Hcv
 			int m_nofRots;
 			FixedVector< ImgRotationMgrRef > m_rotMgrArr;
 		};
+
+		typedef Hcpl::ObjRef< RotationMgrColl > RotationMgrCollRef;
 	};
-
-
-	typedef Hcpl::ObjRef< Ns_Saica::RotationMgrColl > RotationMgrCollRef;
 
 }
