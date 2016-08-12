@@ -21,7 +21,7 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
-		ImgAngleDirMgr::ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2)
+		ImgAngleDirMgr::ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2)
 		{
 			Debug::Assert(a_hv == 'H' || a_hv == 'V');
 
@@ -37,9 +37,9 @@ namespace Hcv
 			m_srcImg = m_imgRotMgr->GetSrcImg();
 			m_rotImg = m_imgRotMgr->GetResImg();
 
-			Debug::Assert(m_rotImg->GetSize().width == a_rotSqrImg->GetSize().width
-				&& m_rotImg->GetSize().height == a_rotSqrImg->GetSize().height);
-			m_rotSqrImg = a_rotSqrImg;
+			Debug::Assert(m_rotImg->GetSize().width == a_rotMagSqrImg->GetSize().width
+				&& m_rotImg->GetSize().height == a_rotMagSqrImg->GetSize().height);
+			m_rotMagSqrImg = a_rotMagSqrImg;
 
 
 

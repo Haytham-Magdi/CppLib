@@ -929,6 +929,9 @@ namespace Hcv
 	S16ImageRef GenFastAvgVImg(S16ImageRef a_src, int a_nAprSiz);
 	S16ImageRef GenFastAvgImg(S16ImageRef a_src, int a_nAprSiz);
 
+	F32ImageRef GenMagSqrImg(F32ImageRef a_src);
+	F32ImageRef GenMagImg(F32ImageRef a_src);
+
 	F32ImageRef GenFastAvgHImg(F32ImageRef a_src, int a_nAprSiz);
 	F32ImageRef GenFastAvgVImg(F32ImageRef a_src, int a_nAprSiz);
 	F32ImageRef GenFastAvgImg(F32ImageRef a_src, int a_nAprSizH, int a_nAprSizV = -1);

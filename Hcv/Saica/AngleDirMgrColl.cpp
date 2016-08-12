@@ -40,13 +40,19 @@ namespace Hcv
 
 		void AngleDirMgrColl::Prepare()
 		{
-			for (int i = 0; i < m_rotMgrArr.GetSize(); i++)
+			m_angleDirMgrArr.SetCapacity(m_rotMgrColl->GetNofRots() * 2);
+
+			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
 			{
 				ImgRotationMgrRef rotMgr = m_rotMgrColl->GetRotAt(i);
-
 				F32ImageRef rotImg = rotMgr->GetResImg();
-				//F32ImageRef rotImgSqr = 
-				ImgAngleDirMgrRef angleDirMgr = new ImgAngleDirMgr(rotMgr, NULL, 'H', m_nAprLen_1, m_nAprLen_2);
+				F32ImageRef rotMagSqrImg = GenMagSqrImg(rotImg);
+
+				ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H', m_nAprLen_1, m_nAprLen_2);
+				m_angleDirMgrArr.PushBack(angleDirMgrH);
+
+				ImgAngleDirMgrRef angleDirMgrV = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'V', m_nAprLen_2, m_nAprLen_1);
+				m_angleDirMgrArr.PushBack(angleDirMgrV);
 			}
 
 		}

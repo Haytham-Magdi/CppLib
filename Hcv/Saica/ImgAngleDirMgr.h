@@ -25,7 +25,7 @@ namespace Hcv
 		{
 		public:
 
-			ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
+			ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
 
 			F32ImageRef GetSrcImg()
 			{
@@ -41,7 +41,7 @@ namespace Hcv
 
 			F32ImageRef m_srcImg;
 			F32ImageRef m_rotImg;
-			F32ImageRef m_rotSqrImg;
+			F32ImageRef m_rotMagSqrImg;
 
 			int m_nAprLen_1; 
 			int m_nAprLen_2;

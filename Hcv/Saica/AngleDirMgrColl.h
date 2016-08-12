@@ -29,12 +29,12 @@ namespace Hcv
 
 			//ImgAngleDirMgrRef GetRotAt(int a_nRotIdx)
 			//{
-			//	return m_rotMgrArr[a_nRotIdx];
+			//	return m_angleDirMgrArr[a_nRotIdx];
 			//}
 
 			//int GetNofRots()
 			//{
-			//	return m_rotMgrArr.GetSize();
+			//	return m_angleDirMgrArr.GetSize();
 			//}
 
 			//F32ImageRef GetSrcImg()
@@ -55,7 +55,7 @@ namespace Hcv
 			int m_nAprLen_2;
 
 			//int m_nofRots;
-			FixedVector< ImgAngleDirMgrRef > m_rotMgrArr;
+			FixedVector< ImgAngleDirMgrRef > m_angleDirMgrArr;
 		};
 
 		typedef Hcpl::ObjRef< AngleDirMgrColl > AngleDirMgrCollRef;
