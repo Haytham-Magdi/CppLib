@@ -57,6 +57,7 @@
 //#include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_FactorySet_Simple.cpp>
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_Simple.cpp>
 
+#include <Lib\Hcv\Saica\ImgAngleDirMgr.cpp>
 
 
 

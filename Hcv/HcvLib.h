@@ -200,6 +200,7 @@
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_FactorySet_Simple.h>
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_Simple.h>
 
+#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 
 
 
