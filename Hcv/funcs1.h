@@ -931,7 +931,7 @@ namespace Hcv
 
 	F32ImageRef GenFastAvgHImg(F32ImageRef a_src, int a_nAprSiz);
 	F32ImageRef GenFastAvgVImg(F32ImageRef a_src, int a_nAprSiz);
-	F32ImageRef GenFastAvgImg(F32ImageRef a_src, int a_nAprSiz);
+	F32ImageRef GenFastAvgImg(F32ImageRef a_src, int a_nAprSizH, int a_nAprSizV = -1);
 
 	F32ImageRef Gen4DirEdgeImg(F32ImageRef a_src);
 	F32ImageRef GenMagImgF32(F32ImageRef a_src);

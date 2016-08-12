@@ -21,11 +21,11 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
-		class ImgAngleDirMgr : FRM_Object
+		class SaicaProcess1 : FRM_Object
 		{
 		public:
 
-			ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
+			SaicaProcess1(F32ImageRef a_srcImg);
 
 			F32ImageRef GetSrcImg()
 			{
@@ -34,23 +34,14 @@ namespace Hcv
 
 		protected:
 
-			//void Prepare();
+			void Prepare();
 
 		protected:
 
-
 			F32ImageRef m_srcImg;
-			F32ImageRef m_rotImg;
-			F32ImageRef m_rotSqrImg;
-
-			int m_nAprLen_1; 
-			int m_nAprLen_2;
-
-			ImgRotationMgrRef m_imgRotMgr;
-
 		};
 	
-		typedef Hcpl::ObjRef< ImgAngleDirMgr > ImgAngleDirMgrRef;
+		typedef Hcpl::ObjRef< SaicaProcess1 > SaicaProcess1Ref;
 	};
 
 

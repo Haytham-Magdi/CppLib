@@ -1839,10 +1839,6 @@ namespace Hcv
 		return ret;
 	}
 
-
-
-
-
 	F32ImageRef GenFastAvgVImg(F32ImageRef a_src, int a_nAprSiz)
 	{
 		Hcpl::Debug::Assert( 1 == a_nAprSiz % 2 );
@@ -1931,14 +1927,18 @@ namespace Hcv
 		return ret;
 	}
 
-	F32ImageRef GenFastAvgImg(F32ImageRef a_src, int a_nAprSiz)
+	F32ImageRef GenFastAvgImg(F32ImageRef a_src, int a_nAprSizH, int a_nAprSizV)
 	{
-		Hcpl::Debug::Assert( 1 == a_nAprSiz % 2 );
+		Hcpl::Debug::Assert(1 == a_nAprSizH % 2);
+
+		if (-1 == a_nAprSizV)
+			a_nAprSizV = a_nAprSizH;
+		Hcpl::Debug::Assert(1 == a_nAprSizV % 2);
 
 		F32ImageRef ret = a_src;
 
-		ret = GenFastAvgHImg( ret, a_nAprSiz );
-		ret = GenFastAvgVImg( ret, a_nAprSiz );
+		ret = GenFastAvgHImg( ret, a_nAprSizH );
+		ret = GenFastAvgVImg( ret, a_nAprSizV );
 
 		//FillBorder(ret->GetAt(0), (float)0, a_nAprSiz / 2);
 

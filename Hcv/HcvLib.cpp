@@ -58,6 +58,7 @@
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_Simple.cpp>
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.cpp>
+#include <Lib\Hcv\Saica\AngleDirMgrColl.cpp>
 #include <Lib\Hcv\Saica\RotationMgrColl.cpp>
 #include <Lib\Hcv\Saica\SaicaProcess1.cpp>
 
