@@ -201,6 +201,8 @@
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_Simple.h>
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Saica\RotationMgrColl.h>
+#include <Lib\Hcv\Saica\SaicaProcess1.h>
 
 
 
