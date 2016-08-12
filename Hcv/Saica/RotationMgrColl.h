@@ -25,10 +25,9 @@ namespace Hcv
 		{
 		public:
 
-			RotationMgrColl(F32ImageRef a_srcImg,
-				int a_nofRots);
+			RotationMgrColl(F32ImageRef a_srcImg, int a_nofRots);
 
-			ImgRotationMgrRef GetRotEx_At(int a_nRotIdx)
+			ImgRotationMgrRef GetRotAt(int a_nRotIdx)
 			{
 				return m_rotMgrArr[a_nRotIdx];
 			}
@@ -45,7 +44,7 @@ namespace Hcv
 
 		protected:
 
-			void Prepare();
+			//void Prepare();
 
 		protected:
 

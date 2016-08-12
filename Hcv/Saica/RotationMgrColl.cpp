@@ -21,17 +21,18 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
-		RotationMgrColl::RotationMgrColl(F32ImageRef a_srcImg)
-		{
-			m_srcImg = a_srcImg;
+		//RotationMgrColl::RotationMgrColl(F32ImageRef a_srcImg, int a_nofRots)
+		//{
+		//	m_srcImg = a_srcImg;
+		//	m_nofRots = a_nofRots;
 
-			Prepare();
-		}
+		//	Prepare();
+		//}
 
-		void RotationMgrColl::Prepare()
-		{
-		
-		}
+		//void RotationMgrColl::Prepare()
+		//{
+		//
+		//}
 
 		RotationMgrColl::RotationMgrColl(
 			F32ImageRef a_srcImg, int a_nofRots)
@@ -50,11 +51,11 @@ namespace Hcv
 
 			for (int i = 0; i < a_nofRots; i++)
 			{
-				m_rotExParams->AngDig = i * angStep;
+				float angDig = i * angStep;
 
-				ImgRotationMgrRef rotEx = new ImgRotationMgr(m_rotExParams);
+				ImgRotationMgrRef rot = new ImgRotationMgr(m_srcImg, angDig);
 
-				m_rotMgrArr.PushBack(rotEx);
+				m_rotMgrArr.PushBack(rot);
 			}
 
 		}
