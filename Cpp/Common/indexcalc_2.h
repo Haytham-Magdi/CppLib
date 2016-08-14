@@ -10,58 +10,47 @@
 
 namespace Hcpl
 {
-	class IndexCalc1D : FRM_Object
+	class OffsetCalc_1D : FRM_Object
 	{
 	public:
 
-		IndexCalc1D()
+		OffsetCalc_1D()
 		{
 			//m_bInitDone = false;
 
-			//m_nOffset = -1;
+			//m_nBgnOffset = -1;
 			//m_nStep = -1;
 		}
 
-		IndexCalc1D(int a_nOffset, int a_nStep)
+		OffsetCalc_1D(int a_nBgnOffset, int a_nStep)
 		{
 			//m_bInitDone = false;
 
-			//Init(a_nOffset, a_nStep);
-			//Prepare(a_nOffset, a_nStep);
+			//Init(a_nBgnOffset, a_nStep);
+			//Prepare(a_nBgnOffset, a_nStep);
 
-			SetOffset(a_nOffset);
+			SetBgnOffset(a_nBgnOffset);
 			SetStep(a_nStep);
 		}
 
-		////void Init(int a_nOffset, int a_nStep)
-		//void Prepare(int a_nOffset, int a_nStep)
-		//{
-		//	//Hcpl_ASSERT(!m_bInitDone);
-
-		//	m_nOffset = a_nOffset;
-		//	m_nStep = a_nStep;
-
-		//	//m_bInitDone = true;
-		//}
-
 		int Calc(int a_nSimpleIdx)
 		{
-			return m_nOffset + a_nSimpleIdx * m_nStep;
+			return m_nBgnOffset + a_nSimpleIdx * m_nStep;
 		}
 
-		int ReverseCalc(int a_nRevIdx)
+		int ReverseCalc(int a_nOffset)
 		{
-			return (a_nRevIdx - m_nOffset) / m_nStep;
+			return (a_nOffset - m_nBgnOffset) / m_nStep;
 		}
 
 		int GetOffset()
 		{
-			return m_nOffset;
+			return m_nBgnOffset;
 		}
 
-		void SetOffset(int a_nOffset)
+		void SetBgnOffset(int a_nBgnOffset)
 		{
-			m_nOffset = a_nOffset;
+			m_nBgnOffset = a_nBgnOffset;
 		}
 
 		int GetStep()
@@ -76,171 +65,157 @@ namespace Hcpl
 
 	protected:
 
-		int m_nOffset;
+		int m_nBgnOffset;
 		int m_nStep;
 
 		//bool m_bInitDone;
 	};
 
-	class IndexCalc2D : FRM_Object
+	class OffsetCalc_2D : FRM_Object
 	{
 	public:
 
-		IndexCalc2D()
+		OffsetCalc_2D()
 		{
-			m_bInitDone = false;
-
-			m_nSizX = -1;
-			m_nSizY = -1;
-			m_nSizTot = -1;
 		}
 
-		IndexCalc2D(int a_nSizX, int a_nSizY)
+		OffsetCalc_2D(int a_nBgnOffset, int a_nStep_X, int a_nStep_Y)
 		{
-			m_bInitDone = false;
-
-			Init(a_nSizX, a_nSizY);
+			SetBgnOffset(a_nBgnOffset);
+			
+			SetStep_X(a_nStep_X);
+			SetStep_Y(a_nStep_Y);
 		}
 
-		void Init(int a_nSizX, int a_nSizY)
+		int Calc(int a_nSimpleIdx_X, int a_nSimpleIdx_Y)
 		{
-			Hcpl_ASSERT(!m_bInitDone);
-
-			m_nSizX = a_nSizX;
-			m_nSizY = a_nSizY;
-			m_nSizTot = a_nSizX * a_nSizY;
-
-			m_bInitDone = true;
+			return m_nBgnOffset + CalcOffsetDiff_X(a_nSimpleIdx_X) + CalcOffsetDiff_Y(a_nSimpleIdx_Y);
 		}
 
-		int Calc(int a_x, int a_y)
+		int CalcOffsetDiff_X(int a_nSimpleIdx_X)
 		{
-			return a_x + a_y * m_nSizX;
+			return a_nSimpleIdx_X * m_nStep_X;
 		}
 
-		int Calc_X(int a_nIdx)
+		int CalcOffsetDiff_Y(int a_nSimpleIdx_Y)
 		{
-			return a_nIdx % m_nSizX;
+			return a_nSimpleIdx_Y * m_nStep_Y;
 		}
 
-		int Calc_Y(int a_nIdx)
+		//int ReverseCalc(int a_nOffset)
+		//{
+		//	return (a_nOffset - m_nBgnOffset) / m_nStep;
+		//}
+
+		int GetOffset()
 		{
-			return a_nIdx / m_nSizX;
+			return m_nBgnOffset;
 		}
 
-		int GetSizeX()
+		void SetBgnOffset(int a_nBgnOffset)
 		{
-			return m_nSizX;
+			m_nBgnOffset = a_nBgnOffset;
 		}
 
-		int GetSizeY()
+		int GetStep_X()
 		{
-			return m_nSizY;
+			return m_nStep_X;
 		}
 
-		int GetTotalSize()
+		void SetStep_X(int a_nStep_X)
 		{
-			return m_nSizTot;
+			m_nStep_X = a_nStep_X;
+		}
+
+		int GetStep_Y()
+		{
+			return m_nStep_Y;
+		}
+
+		void SetStep_Y(int a_nStep_Y)
+		{
+			m_nStep_Y = a_nStep_Y;
 		}
 
 	protected:
 
-		int m_nSizX;
-		int m_nSizY;
-		int m_nSizTot;
+		int m_nBgnOffset;
 
-		bool m_bInitDone;
+		int m_nStep_X;
+		int m_nStep_Y;
+
+		//bool m_bInitDone;
 	};
 
-	class IndexCalc3D : FRM_Object
-	{
-	public:
 
-		IndexCalc3D()
-		{
-			m_bInitDone = false;
+	//class IndexCalc2D : FRM_Object
+	//{
+	//public:
 
-			m_nSizX = -1;
-			m_nSizY = -1;
-			m_nSizZ = -1;
-			m_nSizXY = -1;
-			m_nSizTot = -1;
-		}
+	//	IndexCalc2D()
+	//	{
+	//		m_bInitDone = false;
 
-		IndexCalc3D(int a_nSizX, int a_nSizY, int a_nSizZ)
-		{
-			m_bInitDone = false;
+	//		m_nSizX = -1;
+	//		m_nSizY = -1;
+	//		m_nSizTot = -1;
+	//	}
 
-			Init(a_nSizX, a_nSizY, a_nSizZ);
-		}
+	//	IndexCalc2D(int a_nSizX, int a_nSizY)
+	//	{
+	//		m_bInitDone = false;
 
-		void Init(int a_nSizX, int a_nSizY, int a_nSizZ)
-		{
-			Hcpl_ASSERT(!m_bInitDone);
+	//		Init(a_nSizX, a_nSizY);
+	//	}
 
-			m_nSizX = a_nSizX;
-			m_nSizY = a_nSizY;
-			m_nSizZ = a_nSizZ;
-			m_nSizXY = a_nSizX * a_nSizY;
-			m_nSizTot = a_nSizX * a_nSizY * a_nSizZ;
+	//	void Init(int a_nSizX, int a_nSizY)
+	//	{
+	//		Hcpl_ASSERT(!m_bInitDone);
 
-			m_bInitDone = true;
-		}
+	//		m_nSizX = a_nSizX;
+	//		m_nSizY = a_nSizY;
+	//		m_nSizTot = a_nSizX * a_nSizY;
 
-		int Calc(int a_x, int a_y, int a_z)
-		{
-			return a_x + a_y * m_nSizX +
-				a_z * m_nSizXY;
-		}
+	//		m_bInitDone = true;
+	//	}
 
-		int Calc_X(int a_nIdx)
-		{
-			int nIdxXY = a_nIdx % m_nSizXY;
+	//	int Calc(int a_x, int a_y)
+	//	{
+	//		return a_x + a_y * m_nSizX;
+	//	}
 
-			return nIdxXY % m_nSizX;
-		}
+	//	int Calc_X(int a_nIdx)
+	//	{
+	//		return a_nIdx % m_nSizX;
+	//	}
 
-		int Calc_Y(int a_nIdx)
-		{
-			int nIdxXY = a_nIdx % m_nSizXY;
+	//	int Calc_Y(int a_nIdx)
+	//	{
+	//		return a_nIdx / m_nSizX;
+	//	}
 
-			return nIdxXY / m_nSizX;
-		}
+	//	int GetSizeX()
+	//	{
+	//		return m_nSizX;
+	//	}
 
-		int Calc_Z(int a_nIdx)
-		{
-			return a_nIdx / m_nSizXY;
-		}
+	//	int GetSizeY()
+	//	{
+	//		return m_nSizY;
+	//	}
 
-		int GetSizeX()
-		{
-			return m_nSizX;
-		}
+	//	int GetTotalSize()
+	//	{
+	//		return m_nSizTot;
+	//	}
 
-		int GetSizeY()
-		{
-			return m_nSizY;
-		}
+	//protected:
 
-		int GetSizeZ()
-		{
-			return m_nSizZ;
-		}
+	//	int m_nSizX;
+	//	int m_nSizY;
+	//	int m_nSizTot;
 
-		int GetTotalSize()
-		{
-			return m_nSizTot;
-		}
-
-	protected:
-
-		int m_nSizX;
-		int m_nSizY;
-		int m_nSizXY;
-		int m_nSizZ;
-		int m_nSizTot;
-
-		bool m_bInitDone;
-	};
+	//	bool m_bInitDone;
+	//};
 
 }
