@@ -18,49 +18,27 @@ namespace Hcpl
 		{
 		}
 
-
-		OffsetCalc_1D(int a_nOuterLimStep, int a_nStepLen)
+		OffsetCalc_1D(int a_nLimStep, int a_nStepLen)
 		{
-			Init(a_nOuterLimStep, a_nStepLen);
+			Init(a_nLimStep, a_nStepLen);
 		}
 
-		void Init(int a_nOuterLimStep, int a_nStepLen)
+		void Init(int a_nLimStep, int a_nStepLen)
 		{
 			m_nStepLen = a_nStepLen;
-			m_nOuterLimStep = a_nOuterLimStep;
-			m_nOuterLimOffsetDiff = m_nOuterLimStep * m_nStepLen;
-
-			SetBgnOffset(0);
-			SetInnerLimStep(a_nOuterLimStep);
+			m_nLimStep = a_nLimStep;
+			m_nLimOffset = m_nLimStep * m_nStepLen;
 		}
 
 		int Calc(int a_nStep)
-		{
-			return m_nBgnOffset + CalcOffsetDiff(a_nStep);
-		}
-
-		int CalcInnerOffsetDiff(int a_nStep)
 		{
 			return a_nStep * m_nStepLen;
 		}
 
 		int ReverseCalc(int a_nOffset)
 		{
-			Assert 123
-			return ((a_nOffset - m_nBgnOffset) % m_nOuterLimOffsetDiff) / m_nStepLen;
-		}
-
-		//void SetBgnStep(int a_nBgnStep)
-
-		int GetBgnOffset()
-		{
-			return m_nBgnOffset;
-		}
-
-		void SetBgnOffset(int a_nBgnOffset)
-		{
-			Assert 123
-				m_nBgnOffset = a_nBgnOffset;
+			Hcpl_ASSERT(0 == a_nOffset % m_nStepLen);
+			return (a_nOffset % m_nLimOffset) / m_nStepLen;
 		}
 
 		int GetStepLen()
@@ -68,36 +46,21 @@ namespace Hcpl
 			return m_nStepLen;
 		}
 
-		int GetOuterLimOffsetDiff()
+		int GetLimOffset()
 		{
-			return m_nOuterLimOffsetDiff;
+			return m_nLimOffset;
 		}
 
-		int GetInnerLimStep()
+		int GetLimStep()
 		{
-			return m_nInnerLimStep;
-		}
-
-		void SetInnerLimStep(int a_nInnerLimStep)
-		{
-			Assert 123
-
-			m_nInnerLimStep = a_nInnerLimStep;
-		}
-
-		int GetOuterLimStep()
-		{
-			return m_nOuterLimStep;
+			return m_nLimStep;
 		}
 
 	protected:
 
-		int m_nOuterBgnOffset;
-		int m_nInnerBgnOffset;
 		int m_nStepLen;
-		int m_nInnerLimStep;
-		int m_nOuterLimStep;
-		int m_nOuterLimOffsetDiff;
+		int m_nLimStep;
+		int m_nLimOffset;
 	};
 
 	//class OffsetCalc_2D : FRM_Object
@@ -118,15 +81,15 @@ namespace Hcpl
 
 	//	int Calc(int a_nStep_X, int a_nStep_Y)
 	//	{
-	//		return m_nBgnOffset + CalcOffsetDiff_X(a_nStep_X) + CalcOffsetDiff_Y(a_nStep_Y);
+	//		return m_nBgnOffset + CalcOffset_X(a_nStep_X) + CalcOffset_Y(a_nStep_Y);
 	//	}
 
-	//	int CalcOffsetDiff_X(int a_nStep_X)
+	//	int CalcOffset_X(int a_nStep_X)
 	//	{
 	//		return a_nStep_X * m_nStepLen_X;
 	//	}
 
-	//	int CalcOffsetDiff_Y(int a_nStep_Y)
+	//	int CalcOffset_Y(int a_nStep_Y)
 	//	{
 	//		return a_nStep_Y * m_nStepLen_Y;
 	//	}
