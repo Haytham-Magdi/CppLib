@@ -39,7 +39,7 @@ namespace Hcpl
 			return m_nBgnOffset + CalcOffsetDiff(a_nStep);
 		}
 
-		int CalcOffsetDiff(int a_nStep)
+		int CalcInnerOffsetDiff(int a_nStep)
 		{
 			return a_nStep * m_nStepLen;
 		}
@@ -92,7 +92,8 @@ namespace Hcpl
 
 	protected:
 
-		int m_nBgnOffset;
+		int m_nOuterBgnOffset;
+		int m_nInnerBgnOffset;
 		int m_nStepLen;
 		int m_nInnerLimStep;
 		int m_nOuterLimStep;
