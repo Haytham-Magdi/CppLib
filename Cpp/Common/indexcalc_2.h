@@ -18,49 +18,68 @@ namespace Hcpl
 		{
 		}
 
-		OffsetCalc_1D(int a_nLimStep, int a_nStepLen)
+		OffsetCalc_1D(int a_nOuterLimStep, int a_nAbsAbsoluteStepSize)
 		{
-			Init(a_nLimStep, a_nStepLen);
+			Init(a_nOuterLimStep, a_nAbsAbsoluteStepSize);
 		}
 
-		void Init(int a_nLimStep, int a_nStepLen)
+		void Init(int a_nOuterLimStep, int a_nAbsAbsoluteStepSize, int a_nInnerBgnStep, int a_nInnerEndStep)
 		{
-			m_nStepLen = a_nStepLen;
-			m_nLimStep = a_nLimStep;
-			m_nLimOffset = m_nLimStep * m_nStepLen;
+			m_nAbsoluteStepSize = a_nAbsAbsoluteStepSize;
+			m_nOuterLimStep = a_nOuterLimStep;
+			m_nOuterLimOffset = m_nOuterLimStep * m_nAbsoluteStepSize;
 		}
 
-		int Calc(int a_nStep)
+		int GetOffsetPart1()
 		{
-			return a_nStep * m_nStepLen;
+			return m_nOffsetPart1;
+		}
+
+		void SetOffsetPart1(int a_nOffsetPart1)
+		{
+			m_nOffsetPart1 = a_nOffsetPart1;
+		}
+
+		int CalcPart2(int a_nStep)
+		{
+			return a_nStep * m_nAbsoluteStepSize;
 		}
 
 		int ReverseCalc(int a_nOffset)
 		{
-			Hcpl_ASSERT(0 == a_nOffset % m_nStepLen);
-			return (a_nOffset % m_nLimOffset) / m_nStepLen;
+			Hcpl_ASSERT(0 == a_nOffset % m_nAbsoluteStepSize);
+			return ((a_nOffset - m_nOffsetPart1) % m_nOuterLimOffset) / m_nAbsoluteStepSize;
 		}
 
-		int GetStepLen()
+		int GetAbsoluteStepSize()
 		{
-			return m_nStepLen;
+			return m_nAbsoluteStepSize;
 		}
 
-		int GetLimOffset()
+		int GetActualStepSize()
 		{
-			return m_nLimOffset;
+			return m_nActualStepSize;
 		}
 
-		int GetLimStep()
+		int GetOuterLimOffset()
 		{
-			return m_nLimStep;
+			return m_nOuterLimOffset;
+		}
+
+		int GetOuterLimStep()
+		{
+			return m_nOuterLimStep;
 		}
 
 	protected:
 
-		int m_nStepLen;
-		int m_nLimStep;
-		int m_nLimOffset;
+		int m_nOffsetPart1;
+
+		int m_nAbsoluteStepSize;
+		int m_nActualStepSize;
+
+		int m_nOuterLimStep;
+		int m_nOuterLimOffset;
 	};
 
 	//class OffsetCalc_2D : FRM_Object
@@ -71,12 +90,12 @@ namespace Hcpl
 	//	{
 	//	}
 
-	//	OffsetCalc_2D(int a_nBgnOffset, int a_nStepLen_X, int a_nStepLen_Y)
+	//	OffsetCalc_2D(int a_nBgnOffset, int a_nAbsAbsoluteStepSize_X, int a_nAbsAbsoluteStepSize_Y)
 	//	{
 	//		SetBgnOffset(a_nBgnOffset);
 	//		
-	//		SetStepLen_X(a_nStepLen_X);
-	//		SetStepLen_Y(a_nStepLen_Y);
+	//		SetAbsoluteStepSize_X(a_nAbsAbsoluteStepSize_X);
+	//		SetAbsoluteStepSize_Y(a_nAbsAbsoluteStepSize_Y);
 	//	}
 
 	//	int Calc(int a_nStep_X, int a_nStep_Y)
@@ -86,17 +105,17 @@ namespace Hcpl
 
 	//	int CalcOffset_X(int a_nStep_X)
 	//	{
-	//		return a_nStep_X * m_nStepLen_X;
+	//		return a_nStep_X * m_nAbsoluteStepSize_X;
 	//	}
 
 	//	int CalcOffset_Y(int a_nStep_Y)
 	//	{
-	//		return a_nStep_Y * m_nStepLen_Y;
+	//		return a_nStep_Y * m_nAbsoluteStepSize_Y;
 	//	}
 
 	//	//int ReverseCalc(int a_nOffset)
 	//	//{
-	//	//	return (a_nOffset - m_nBgnOffset) / m_nStepLen;
+	//	//	return (a_nOffset - m_nBgnOffset) / m_nAbsoluteStepSize;
 	//	//}
 
 	//	int GetOffset()
@@ -109,32 +128,32 @@ namespace Hcpl
 	//		m_nBgnOffset = a_nBgnOffset;
 	//	}
 
-	//	int GetStepLen_X()
+	//	int GetAbsoluteStepSize_X()
 	//	{
-	//		return m_nStepLen_X;
+	//		return m_nAbsoluteStepSize_X;
 	//	}
 
-	//	void SetStepLen_X(int a_nStepLen_X)
+	//	void SetAbsoluteStepSize_X(int a_nAbsAbsoluteStepSize_X)
 	//	{
-	//		m_nStepLen_X = a_nStepLen_X;
+	//		m_nAbsoluteStepSize_X = a_nAbsAbsoluteStepSize_X;
 	//	}
 
-	//	int GetStepLen_Y()
+	//	int GetAbsoluteStepSize_Y()
 	//	{
-	//		return m_nStepLen_Y;
+	//		return m_nAbsoluteStepSize_Y;
 	//	}
 
-	//	void SetStepLen_Y(int a_nStepLen_Y)
+	//	void SetAbsoluteStepSize_Y(int a_nAbsAbsoluteStepSize_Y)
 	//	{
-	//		m_nStepLen_Y = a_nStepLen_Y;
+	//		m_nAbsoluteStepSize_Y = a_nAbsAbsoluteStepSize_Y;
 	//	}
 
 	//protected:
 
 	//	int m_nBgnOffset;
 
-	//	int m_nStepLen_X;
-	//	int m_nStepLen_Y;
+	//	int m_nAbsoluteStepSize_X;
+	//	int m_nAbsoluteStepSize_Y;
 
 	//	//bool m_bInitDone;
 	//};
