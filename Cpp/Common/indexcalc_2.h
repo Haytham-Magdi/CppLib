@@ -50,7 +50,7 @@ namespace Hcpl
 			return ((a_nOffset - m_nBgnOffset) % m_nOuterLimOffsetDiff) / m_nStepLen;
 		}
 
-		SetBgnStep ?
+		//void SetBgnStep(int a_nBgnStep)
 
 		int GetBgnOffset()
 		{
@@ -99,81 +99,81 @@ namespace Hcpl
 		int m_nOuterLimOffsetDiff;
 	};
 
-	class OffsetCalc_2D : FRM_Object
-	{
-	public:
+	//class OffsetCalc_2D : FRM_Object
+	//{
+	//public:
 
-		OffsetCalc_2D()
-		{
-		}
+	//	OffsetCalc_2D()
+	//	{
+	//	}
 
-		OffsetCalc_2D(int a_nBgnOffset, int a_nStepLen_X, int a_nStepLen_Y)
-		{
-			SetBgnOffset(a_nBgnOffset);
-			
-			SetStepLen_X(a_nStepLen_X);
-			SetStepLen_Y(a_nStepLen_Y);
-		}
+	//	OffsetCalc_2D(int a_nBgnOffset, int a_nStepLen_X, int a_nStepLen_Y)
+	//	{
+	//		SetBgnOffset(a_nBgnOffset);
+	//		
+	//		SetStepLen_X(a_nStepLen_X);
+	//		SetStepLen_Y(a_nStepLen_Y);
+	//	}
 
-		int Calc(int a_nStep_X, int a_nStep_Y)
-		{
-			return m_nBgnOffset + CalcOffsetDiff_X(a_nStep_X) + CalcOffsetDiff_Y(a_nStep_Y);
-		}
+	//	int Calc(int a_nStep_X, int a_nStep_Y)
+	//	{
+	//		return m_nBgnOffset + CalcOffsetDiff_X(a_nStep_X) + CalcOffsetDiff_Y(a_nStep_Y);
+	//	}
 
-		int CalcOffsetDiff_X(int a_nStep_X)
-		{
-			return a_nStep_X * m_nStepLen_X;
-		}
+	//	int CalcOffsetDiff_X(int a_nStep_X)
+	//	{
+	//		return a_nStep_X * m_nStepLen_X;
+	//	}
 
-		int CalcOffsetDiff_Y(int a_nStep_Y)
-		{
-			return a_nStep_Y * m_nStepLen_Y;
-		}
+	//	int CalcOffsetDiff_Y(int a_nStep_Y)
+	//	{
+	//		return a_nStep_Y * m_nStepLen_Y;
+	//	}
 
-		//int ReverseCalc(int a_nOffset)
-		//{
-		//	return (a_nOffset - m_nBgnOffset) / m_nStepLen;
-		//}
+	//	//int ReverseCalc(int a_nOffset)
+	//	//{
+	//	//	return (a_nOffset - m_nBgnOffset) / m_nStepLen;
+	//	//}
 
-		int GetOffset()
-		{
-			return m_nBgnOffset;
-		}
+	//	int GetOffset()
+	//	{
+	//		return m_nBgnOffset;
+	//	}
 
-		void SetBgnOffset(int a_nBgnOffset)
-		{
-			m_nBgnOffset = a_nBgnOffset;
-		}
+	//	void SetBgnOffset(int a_nBgnOffset)
+	//	{
+	//		m_nBgnOffset = a_nBgnOffset;
+	//	}
 
-		int GetStepLen_X()
-		{
-			return m_nStepLen_X;
-		}
+	//	int GetStepLen_X()
+	//	{
+	//		return m_nStepLen_X;
+	//	}
 
-		void SetStepLen_X(int a_nStepLen_X)
-		{
-			m_nStepLen_X = a_nStepLen_X;
-		}
+	//	void SetStepLen_X(int a_nStepLen_X)
+	//	{
+	//		m_nStepLen_X = a_nStepLen_X;
+	//	}
 
-		int GetStepLen_Y()
-		{
-			return m_nStepLen_Y;
-		}
+	//	int GetStepLen_Y()
+	//	{
+	//		return m_nStepLen_Y;
+	//	}
 
-		void SetStepLen_Y(int a_nStepLen_Y)
-		{
-			m_nStepLen_Y = a_nStepLen_Y;
-		}
+	//	void SetStepLen_Y(int a_nStepLen_Y)
+	//	{
+	//		m_nStepLen_Y = a_nStepLen_Y;
+	//	}
 
-	protected:
+	//protected:
 
-		int m_nBgnOffset;
+	//	int m_nBgnOffset;
 
-		int m_nStepLen_X;
-		int m_nStepLen_Y;
+	//	int m_nStepLen_X;
+	//	int m_nStepLen_Y;
 
-		//bool m_bInitDone;
-	};
+	//	//bool m_bInitDone;
+	//};
 
 
 	//class IndexCalc2D : FRM_Object
