@@ -22,6 +22,8 @@ namespace Hcpl
 
 		OffsetCalc_2D(int a_nBgnOffset, int a_nAbsoluteStepSize_X, int a_nAbsoluteStepSize_Y)
 		{
+			throw "Not Implemented!";
+
 			SetBgnOffset(a_nBgnOffset);
 			
 			SetAbsoluteStepSize_X(a_nAbsoluteStepSize_X);
@@ -30,51 +32,61 @@ namespace Hcpl
 
 		int Calc(int a_nStep_X, int a_nStep_Y)
 		{
+			throw "Not Implemented!";
 			return m_nBgnOffset + CalcOffset_X(a_nStep_X) + CalcOffset_Y(a_nStep_Y);
 		}
 
 		int CalcOffset_X(int a_nStep_X)
 		{
+			throw "Not Implemented!";
 			return a_nStep_X * m_nAbsoluteStepSize_X;
 		}
 
 		int CalcOffset_Y(int a_nStep_Y)
 		{
+			throw "Not Implemented!";
 			return a_nStep_Y * m_nAbsoluteStepSize_Y;
 		}
 
 		//int ReverseCalc(int a_nOffset)
 		//{
+		//throw "Not Implemented!";
 		//	return (a_nOffset - m_nBgnOffset) / m_nAbsoluteStepSize;
 		//}
 
 		int GetOffset()
 		{
+			throw "Not Implemented!";
 			return m_nBgnOffset;
 		}
 
 		void SetBgnOffset(int a_nBgnOffset)
 		{
+			throw "Not Implemented!";
 			m_nBgnOffset = a_nBgnOffset;
 		}
 
 		int GetAbsoluteStepSize_X()
 		{
+			throw "Not Implemented!";
 			return m_nAbsoluteStepSize_X;
 		}
 
 		void SetAbsoluteStepSize_X(int a_nAbsoluteStepSize_X)
 		{
+			throw "Not Implemented!";
 			m_nAbsoluteStepSize_X = a_nAbsoluteStepSize_X;
 		}
 
 		int GetAbsoluteStepSize_Y()
 		{
+			throw "Not Implemented!";
 			return m_nAbsoluteStepSize_Y;
 		}
 
 		void SetAbsoluteStepSize_Y(int a_nAbsoluteStepSize_Y)
 		{
+			throw "Not Implemented!";
 			m_nAbsoluteStepSize_Y = a_nAbsoluteStepSize_Y;
 		}
 
@@ -135,15 +147,25 @@ namespace Hcpl
 			return a_nIdx / m_nSizX;
 		}
 
-		int GetSizeX()
+		OffsetCalc_1D & GetOffsetCalc_X()
 		{
-			return m_nSizX;
+			return m_offsetCalc_X;
 		}
 
-		int GetSizeY()
+		OffsetCalc_1D & GetOffsetCalc_Y()
 		{
-			return m_nSizY;
+			return m_offsetCalc_Y;
 		}
+
+		//int GetSizeX()
+		//{
+		//	return m_offsetCalc_X.GetMaxNofSteps();
+		//}
+
+		//int GetSizeY()
+		//{
+		//	return m_nSizY;
+		//}
 
 		int GetTotalSize()
 		{
@@ -152,11 +174,14 @@ namespace Hcpl
 
 	protected:
 
-		int m_nSizX;
-		int m_nSizY;
-		int m_nSizTot;
+		OffsetCalc_1D m_offsetCalc_X;
+		OffsetCalc_1D m_offsetCalc_Y;
 
-		bool m_bInitDone;
+		//int m_nSizX;
+		//int m_nSizY;
+		//int m_nSizTot;
+
+		//bool m_bInitDone;
 	};
 
 }
