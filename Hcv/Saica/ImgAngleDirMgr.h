@@ -43,6 +43,9 @@ namespace Hcv
 			F32ImageRef m_rotImg;
 			F32ImageRef m_rotMagSqrImg;
 
+			//const char m_hv;
+			char m_hv;
+
 			int m_nAprLen_1; 
 			int m_nAprLen_2;
 

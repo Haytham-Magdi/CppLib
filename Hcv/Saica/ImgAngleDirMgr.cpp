@@ -25,6 +25,9 @@ namespace Hcv
 		{
 			Debug::Assert(a_hv == 'H' || a_hv == 'V');
 
+			m_hv = a_hv;
+
+
 				//if (a_hv != 'H' && a_hv != 'V')
 			//	throw "Invalid a_hv";
 
@@ -50,7 +53,6 @@ namespace Hcv
 		//{
 		//
 		//}
-
 
 
 	}

@@ -17,6 +17,11 @@ namespace Hcpl
 	{
 	public:
 
+		void CopyTo(MemAccessor_2D<T> a_pDest)
+		{
+			*pDest = *this;
+		}
+
 		void Init(T * a_data, int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
 		{
 			m_data = a_data;
