@@ -46,7 +46,8 @@ namespace Hcv
 		static void PrepareAccessorFromImage( Hcv::Image< T_ImgElm > * a_srcImg,
 			MemAccessor_2D<T_AccElm> * a_pAccessor)
 		{
-			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
+			//Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
+			Hcpl_ASSERT(a_srcImg->GetNofChannels() == 13);
 
 			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0),
 				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
