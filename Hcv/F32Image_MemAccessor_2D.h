@@ -17,20 +17,24 @@ namespace Hcv
 	using namespace Hcpl;
 	//using namespace std;
 
+	template<class T_ImgElm, class T_AccElm>
+	static void PrepareAccessorFromImage(
+		Hcpl::ObjRef< Hcv::Image< T_ImgElm >> a_srcImg, 
+		int a_supposedNofChannels, MemAccessor_2D<T_AccElm> * a_pAccessor)
+	{
+		Hcpl_ASSERT(a_srcImg->GetNofChannels() == a_supposedNofChannels);
+
+		a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0),
+			1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
+	}
+
+
+
 	class F32Image_MemAccessor_2D : FRM_Object
 	{
 	public:
 
 		 
-		template<class T_ImgElm, class T_AccElm>
-		static void PrepareAccessorFromImage(Hcpl::ObjRef< Hcv::Image< T_ImgElm > a_srcImg, MemAccessor_2D<T_AccElm> * a_pAccessor)
-		{
-			Hcpl_ASSERT(3 == a_srcImg->GetNofChannels());
-
-			a_pAccessor->Init((F32ColorVal *)a_srcImg->GetPixAt(0, 0),
-				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
-		}
-
 		static void PrepareF32ColorValAccessor(F32ImageRef a_srcImg, MemAccessor_2D<F32ColorVal> * a_pAccessor)
 		{
 			Hcpl_ASSERT(3 == a_srcImg->GetNofChannels());
