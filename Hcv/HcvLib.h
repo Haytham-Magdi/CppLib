@@ -185,6 +185,8 @@
 #include <Lib\Hcv\ImgBiMixGrad.h>
 #include <Lib\Hcv\ImgScanMgr.h>
 #include <Lib\Hcv\ImgClusteringTry.h>
+#include <Lib\Hcv\F32Image_MemAccessor_2D.h>
+
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.h>
 #include <Lib\Hcv\LocHist\ImgDataMgr_2_FactorySet_LocHist.h>
