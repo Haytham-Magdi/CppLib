@@ -22,7 +22,8 @@ namespace Hcv
 
 	//template<class T_ImgElm, class T_AccElm>
 
-	template<class T_ImgElm, class T_AccElm, int V_SupposedNofChannels>
+	//template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
+	template<class T_ImgElm, class T_AccElm>
 	class Image_MemAccessor_2D : FRM_Object
 	{
 	public:
@@ -30,7 +31,9 @@ namespace Hcv
 		Image_MemAccessor_2D(Hcpl::ObjRef< Hcv::Image< T_ImgElm >> a_srcImg)
 		{
 			m_srcImg = a_srcImg;
-			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, V_SupposedNofChannels, &m_memAccessor);
+			//Image_MemAccessor_2D::PrepareAccessorFromImage//<T_ImgElm, T_AccElm, V_SupposedNofChannels>(
+			Image_MemAccessor_2D::PrepareAccessorFromImage(
+				m_srcImg, &m_memAccessor);
 		}
 
 		MemAccessor_2D<T_AccElm> &  GetMemAccessor()
@@ -38,8 +41,9 @@ namespace Hcv
 			return m_memAccessor;
 		}
 
-		static void PrepareAccessorFromImage(
-			Hcv::Image< T_ImgElm > * a_srcImg,
+		//template<>
+		//template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
+		static void PrepareAccessorFromImage( Hcv::Image< T_ImgElm > * a_srcImg,
 			MemAccessor_2D<T_AccElm> * a_pAccessor)
 		{
 			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
@@ -72,10 +76,14 @@ namespace Hcv
 
 	};
 
-	typedef Hcv::MemAccessor_2D< Hcpl::Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
-	typedef Hcv::MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
+	typedef Hcv::MemAccessor_2D< float, float > F32Image3C_F32ColorVal_MemAccessor_2D;
+	//typedef Hcv::MemAccessor_2D< float, float, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
 
-	typedef Hcv::MemAccessor_2D< Hcpl::Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
 
-	
+	//typedef Hcv::MemAccessor_2D< Hcpl::Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
+	//typedef Hcv::MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
+
+	//typedef Hcv::MemAccessor_2D< Hcpl::Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
+
+
 }
