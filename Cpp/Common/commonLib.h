@@ -15,6 +15,8 @@
 #include <Lib\Cpp\Common\TypeIDGen.h>
 //#include <Lib\Cpp\Common\MultiQue.h>
 #include <Lib\Cpp\Common\IndexCalc.h>
+#include <Lib\Cpp\Common\OffsetCalc_1D.h>
+#include <Lib\Cpp\Common\OffsetCalc_2D.h>
 #include <Lib\Cpp\Common\MultiListQue.h>
 #include <Lib\Cpp\Common\ListQue.h>
 #include <Lib\Cpp\Common\APtrList.h>
