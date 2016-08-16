@@ -28,36 +28,37 @@ namespace Hcv
 	{
 	public:
 
-		Image_MemAccessor_2D(Hcpl::ObjRef< Hcv::Image< T_ImgElm >> a_srcImg)
-		{
-			m_srcImg = a_srcImg;
-			//Image_MemAccessor_2D::PrepareAccessorFromImage//<T_ImgElm, T_AccElm, V_SupposedNofChannels>(
-			Image_MemAccessor_2D::PrepareAccessorFromImage(
-				m_srcImg, &m_memAccessor);
-		}
+		//Image_MemAccessor_2D(Hcpl::ObjRef< Hcv::Image< T_ImgElm >> a_srcImg)
+		//{
+		//	m_srcImg = a_srcImg;
+		//	//Image_MemAccessor_2D::PrepareAccessorFromImage//<T_ImgElm, T_AccElm, V_SupposedNofChannels>(
+		//	Image_MemAccessor_2D::PrepareAccessorFromImage(
+		//		m_srcImg, &m_memAccessor);
+		//}
 
-		MemAccessor_2D<T_AccElm> &  GetMemAccessor()
-		{
-			return m_memAccessor;
-		}
+		//MemAccessor_2D<T_AccElm> &  GetMemAccessor()
+		//{
+		//	return m_memAccessor;
+		//}
 
-		//template<>
-		//template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
-		static void PrepareAccessorFromImage( Hcv::Image< T_ImgElm > * a_srcImg,
-			MemAccessor_2D<T_AccElm> * a_pAccessor)
-		{
-			//Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
-			Hcpl_ASSERT(a_srcImg->GetNofChannels() == 13);
+		////template<>
+		////template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
+		//static void PrepareAccessorFromImage( 
+		//	Hcv::Image< T_ImgElm > * a_srcImg,
+		//	MemAccessor_2D<T_AccElm> * a_pAccessor)
+		//{
+		//	//Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
+		//	Hcpl_ASSERT(a_srcImg->GetNofChannels() == 13);
 
-			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0),
-				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
-		}
+		//	a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0),
+		//		1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
+		//}
 
 
 	protected:
 
-		MemAccessor_2D<T_AccElm> m_memAccessor;
-		Hcpl::ObjRef< Hcv::Image< T_ImgElm >> m_srcImg;
+		//MemAccessor_2D<T_AccElm> m_memAccessor;
+		//Hcpl::ObjRef< Hcv::Image< T_ImgElm >> m_srcImg;
 
 		//static void PrepareF32ColorValAccessor(F32ImageRef a_srcImg, MemAccessor_2D<F32ColorVal> * a_pAccessor)
 		//{
@@ -77,7 +78,7 @@ namespace Hcv
 
 	};
 
-	typedef Hcv::MemAccessor_2D< float, float > F32Image3C_F32ColorVal_MemAccessor_2D;
+	typedef Hcv::MemAccessor_2D<float,float> F32Image3C_F32ColorVal_MemAccessor_2D;
 	//typedef Hcv::MemAccessor_2D< float, float, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
 
 
