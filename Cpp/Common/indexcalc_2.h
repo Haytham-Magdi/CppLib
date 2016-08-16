@@ -39,8 +39,6 @@ namespace Hcpl
 
 		void CopyRelativeRangeTo(OffsetCalc_1D * a_pDest, int a_nRelativeBgnStep, int a_nRelativeEndStep)
 		{
-			//int , int a_nRelativeEndStep
-
 			Hcpl_ASSERT(a_nRelativeBgnStep >= 0);
 			Hcpl_ASSERT(a_nRelativeBgnStep < m_nRelativeLimStep);
 
@@ -48,32 +46,15 @@ namespace Hcpl
 			Hcpl_ASSERT(a_nRelativeEndStep < m_nRelativeLimStep);
 
 
-
-
-
 			int nRelativeRangeDiff = a_nRelativeEndStep - a_nRelativeBgnStep;
 			Hcpl_ASSERT(0 != nRelativeRangeDiff);
 
-			m_nRelativeLimStep = abs(nInnerRangeDiff);
-
-			m_nInnerBgnStep = a_nInnerBgnStep;
-			m_nInnerEndStep = a_nInnerEndStep;
-
-			m_nOffsetPart1 = m_nInnerBgnStep * m_nAbsoluteStepSize;
-
-
-
-
-
 			int nDir = m_nActualStepSize / m_nAbsoluteStepSize;
 
+			int nNewInnerBgnStep = m_nInnerBgnStep + nDir * a_nRelativeBgnStep;
+			int nNewInnerEndStep = m_nInnerBgnStep + nDir * a_nRelativeEndStep;
 
-
-
-
-			int nNewInnerBgnStep = ;
-
-			//*a_pDest = *this;
+			SetInnerRange(nNewInnerBgnStep, nNewInnerEndStep);
 		}
 
 		void Init(int a_nOuterLimStep, int a_nAbsoluteStepSize)
