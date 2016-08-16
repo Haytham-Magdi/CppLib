@@ -71,4 +71,11 @@ namespace Hcv
 		//}
 
 	};
+
+	typedef Hcv::MemAccessor_2D< Hcpl::Float, F32ColorVal > F32Image_F32ColorVal_MemAccessor_2D;
+	typedef Hcv::MemAccessor_2D< Hcpl::Float, float > F32Image_Float_MemAccessor_2D;
+
+	typedef Hcv::MemAccessor_2D< Hcpl::Int32, int > S32Image_Int_MemAccessor_2D;
+
+	
 }
