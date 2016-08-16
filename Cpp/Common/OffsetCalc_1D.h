@@ -129,10 +129,10 @@ namespace Hcpl
 		//	return m_nActualStepSize;
 		//}
 
-		//int GetOuterLimOffset()
-		//{
-		//	return m_nOuterLimOffset;
-		//}
+		int GetOuterLimOffset()
+		{
+			return m_nOuterLimOffset;
+		}
 
 		//int GetOuterMaxNofSteps()
 		//{
