@@ -100,6 +100,9 @@ namespace Hcpl
 			{
 				m_nActualStepSize = -m_nAbsoluteStepSize;
 			}
+
+			//m_nEndOffsetPart2 = GetOffsetPart1() + CalcPart2(m_nInnerEndStep);
+			m_nEndOffsetPart2 = CalcPart2(m_nInnerEndStep);
 		}
 
 		int GetOffsetPart1()
@@ -124,10 +127,15 @@ namespace Hcpl
 		//	return m_nAbsoluteStepSize;
 		//}
 
-		//int GetActualStepSize()
-		//{
-		//	return m_nActualStepSize;
-		//}
+		int GetActualStepSize()
+		{
+			return m_nActualStepSize;
+		}
+
+		int GetEndOffsetPart2()
+		{
+			return m_nEndOffsetPart2;
+		}
 
 		int GetOuterLimOffset()
 		{
@@ -144,10 +152,10 @@ namespace Hcpl
 			return m_nMaxNofSteps;
 		}
 
-
 	protected:
 
 		int m_nOffsetPart1;
+		int m_nEndOffsetPart2;
 
 		int m_nAbsoluteStepSize;
 		int m_nActualStepSize;
