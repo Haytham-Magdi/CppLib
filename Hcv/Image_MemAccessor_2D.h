@@ -73,10 +73,9 @@ namespace Hcv
 				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
 		}
 
-	//protected:
-
 	protected:
 
+		//MemAccessor_2D_Ref
 		MemAccessor_2D<T_AccElm> m_memAccessor;
 		IMAGE_REF(T_ImgElm) m_srcImg;
 	};

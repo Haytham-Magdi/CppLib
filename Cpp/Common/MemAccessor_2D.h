@@ -30,7 +30,7 @@ namespace Hcpl
 			m_offsetCalc.Init(a_nAbsoluteStepSize_X, a_nOuterMaxNofSteps_X, a_nOuterMaxNofSteps_Y);
 		}
 
-		OffsetCalc_2D & GetOffsetCalc()
+		OffsetCalc_2D_Ref GetOffsetCalc()
 		{
 			return m_offsetCalc;
 		}
@@ -43,7 +43,7 @@ namespace Hcpl
 	protected:
 
 		T * m_data;
-		OffsetCalc_2D m_offsetCalc;
+		OffsetCalc_2D_Ref m_offsetCalc;
 	};
 	
 #define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >

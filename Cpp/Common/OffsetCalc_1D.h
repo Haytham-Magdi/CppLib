@@ -28,15 +28,6 @@ namespace Hcpl
 			*a_pDest = *this;
 		}
 
-		void SwapWith(OffsetCalc_1D & a_rOffCalc)
-		{
-			OffsetCalc_1D temp;
-
-			temp = *this;
-			*this = a_rOffCalc;
-			a_rOffCalc = temp;
-		}
-
 		void CopyRelativeRangeTo(OffsetCalc_1D * a_pDest, int a_nRelativeBgnStep, int a_nRelativeEndStep)
 		{
 			Hcpl_ASSERT(a_nRelativeBgnStep >= 0);
