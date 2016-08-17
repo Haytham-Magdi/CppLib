@@ -31,7 +31,7 @@ namespace Hcpl
 
 		OffsetCalc_2D & GetOffsetCalc()
 		{
-			return m_offsetCalc_Y;
+			return m_offsetCalc;
 		}
 
 		T * GetData()

@@ -14,6 +14,8 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
+	#define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) Hcpl::ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
+
 	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
 	class Image_MemAccessor_2D : FRM_Object
 	{
@@ -23,6 +25,35 @@ namespace Hcv
 		{
 			m_srcImg = a_srcImg;
 			Image_MemAccessor_2D::PrepareAccessorFromImage( m_srcImg, &m_memAccessor);
+		}
+
+		void Init(IMAGE_REF(T_ImgElm) a_srcImg)
+		{
+			m_srcImg = a_srcImg;
+			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, &m_memAccessor);
+		}
+
+		//void CopyTo(Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels> * pDest)
+		//{
+		//	*pDest = *this;
+		//}
+
+		Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneNew()
+		{
+			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
+				new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
+
+			ret->m_srcImg = Image::Create(this->m_srcImg->GetSize(), this->m_srcImg->GetNofChannels());
+			ret->m_memAccessor->Init(ret->m_srcImg);
+			m_memAccessor->GetOffsetCalc().(&ret->m_memAccessor->GetOffsetCalc());
+
+
+			
+			
+			m_memAccessor.CopyTo(&ret->m_memAccessor);
+
+			return ret;
+			//throw "Not Implemented";
 		}
 
 		MemAccessor_2D<T_AccElm> &  GetMemAccessor()
@@ -45,6 +76,8 @@ namespace Hcv
 				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
 		}
 
+	//protected:
+
 	protected:
 
 		MemAccessor_2D<T_AccElm> m_memAccessor;
@@ -62,4 +95,5 @@ namespace Hcv
 	
 	typedef Image_MemAccessor_2D< Hcpl::Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
 	typedef Hcpl::ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2DRef;
+
 }
