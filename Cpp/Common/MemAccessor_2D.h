@@ -11,6 +11,7 @@
 
 namespace Hcpl
 {
+	//MemAccessor_1D
 
 	template<class T>
 	class MemAccessor_2D : FRM_Object
@@ -44,5 +45,8 @@ namespace Hcpl
 		T * m_data;
 		OffsetCalc_2D m_offsetCalc;
 	};
+	
+#define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >
 
+	//typedef Hcpl::ObjRef< OffsetCalc_2D > OffsetCalc_2D_Ref;
 }

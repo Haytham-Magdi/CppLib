@@ -167,4 +167,6 @@ namespace Hcpl
 		int m_nInnerBgnStep;
 		int m_nInnerEndStep;
 	};
+
+	typedef Hcpl::ObjRef< OffsetCalc_1D > OffsetCalc_1D_Ref;
 }

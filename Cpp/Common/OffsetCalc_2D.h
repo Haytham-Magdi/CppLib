@@ -62,4 +62,5 @@ namespace Hcpl
 		int m_nOuterLimOffset;
 	};
 
+	typedef Hcpl::ObjRef< OffsetCalc_2D > OffsetCalc_2D_Ref;
 }
