@@ -24,6 +24,11 @@ namespace Hcpl
 			m_nOuterLimOffset = m_offsetCalc_Y.GetOuterLimOffset();
 		}
 
+		void CopyTo(OffsetCalc_2D * a_pDest)
+		{
+			*a_pDest = *this;
+		}
+
 		int GetOffsetPart1()
 		{
 			return m_offsetCalc_X.GetOffsetPart1() + m_offsetCalc_Y.GetOffsetPart1();

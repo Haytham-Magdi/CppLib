@@ -3934,8 +3934,10 @@ namespace Hcv
 		return ret;
 	}
 
-
-
+	bool AreEqualCvSizes(CvSize & rSize1, CvSize & rSize2)
+	{
+		return (rSize1.width == rSize2.width) && (rSize1.height == rSize2.height);
+	}
 
 	F32ImageRef GenAvgColorsImg(F32ImageRef a_src, F32Point & a_p1, F32Point & a_p2)
 	{

@@ -43,14 +43,11 @@ namespace Hcv
 			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
 				new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
 
-			ret->m_srcImg = Image::Create(this->m_srcImg->GetSize(), this->m_srcImg->GetNofChannels());
+			ret->m_srcImg = m_srcImg->CloneNew();
 			ret->m_memAccessor->Init(ret->m_srcImg);
-			m_memAccessor->GetOffsetCalc().(&ret->m_memAccessor->GetOffsetCalc());
-
-
+			m_memAccessor->GetOffsetCalc().CopyTo(&ret->m_memAccessor->GetOffsetCalc());
 			
-			
-			m_memAccessor.CopyTo(&ret->m_memAccessor);
+			//m_memAccessor.CopyTo(&ret->m_memAccessor);
 
 			return ret;
 			//throw "Not Implemented";

@@ -17,7 +17,6 @@ namespace Hcv
 	using namespace Hcpl;
 	using namespace Hcpl::Math;
 
-	//F32ColorVal;
 
 	typedef struct _U8ColorVal
 	{
@@ -1000,6 +999,7 @@ namespace Hcv
 
 	F32ImageRef GenAvgColorsImg( F32ImageRef a_src, F32Point & a_p1, F32Point & a_p2 );
 	
+	bool AreEqualCvSizes(CvSize & rSize1, CvSize & rSize2);
 
 	void ThrowHcvException();
 	void Try17May10( F32ImageRef a_img  );

@@ -64,6 +64,11 @@ namespace Hcv
 			return siz.width * siz.height;
 		}
 
+		int GetSize1D_InBytes()
+		{
+			return GetSize1D() * sizeof(T);
+		}
+
 		CvMat* GetMatPtr()
 		{
 			return cvGetMat(this->GetIplImagePtr(), &m_mat);
@@ -81,37 +86,57 @@ namespace Hcv
 				m_channels[i]->SetAll(a_val);
 		}
 
-
 		T * GetPixAt(int a_nX, int a_nY)
 		{
 			return &m_pixs[a_nX * m_nofChannels + a_nY * m_nofLineUnits];
+		}
+
+		T * GetDataPtr()
+		{
+			return GetPixAt(0, 0);
+		}
+
+		Image< T > * CloneNew()
+		{
+			Image<T> * pRet = Image<T>::Create(this->GetSize(), this->GetNofChannels());
+
+			return pRet;
 		}
 
 		Image< T > * Clone()
 		{
 			CvSize siz = this->GetSize();
 
-			Image< T > * pRet = Image< T >::Create(
-				siz, this->GetNofChannels());
+			Image<T> * pRet = this->CloneNew();
+			this->CopyTo(pRet);
 
-			for(int y=0; y < siz.height; y++)
-			{
-				for(int x=0; x < siz.width; x++)
-				{
-					T * srcPix = this->GetPixAt(x, y);
-					T * dstPix = pRet->GetPixAt(x, y);
+			//for(int y=0; y < siz.height; y++)
+			//{
+			//	for(int x=0; x < siz.width; x++)
+			//	{
+			//		T * srcPix = this->GetPixAt(x, y);
+			//		T * dstPix = pRet->GetPixAt(x, y);
 
-					for(int i=0; i < m_nofChannels; i++)
-					{
-						dstPix[i] = srcPix[i];
-					}
-				}
-			}
-
+			//		for(int i=0; i < m_nofChannels; i++)
+			//		{
+			//			dstPix[i] = srcPix[i];
+			//		}
+			//	}
+			//}
 
 			return pRet;
 		}
 
+		void CopyTo(Image<T> * destImg)
+		{
+			Hcpl_ASSERT(AreEqualCvSizes( GetSize(), destImg->GetSize()));
+			Hcpl_ASSERT(GetNofChannels() == destImg->GetNofChannels());
+			Hcpl_ASSERT(GetSize1D_InBytes() == destImg->GetSize1D_InBytes());
+
+			memcpy(destImg->GetDataPtr(), this->GetDataPtr(), this->GetSize1D_InBytes());
+
+			throw "Not Implemented.";
+		}
 
 	protected:
 		void Init(IplImage * a_src)
