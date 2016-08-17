@@ -47,13 +47,13 @@ namespace Hcv
 			ret->m_memAccessor->Init(ret->m_srcImg);
 			m_memAccessor->GetOffsetCalc().CopyTo(&ret->m_memAccessor->GetOffsetCalc());
 			
-			//m_memAccessor.CopyTo(&ret->m_memAccessor);
+			//m_memAccessor->CopyTo(&ret->m_memAccessor);
 
 			return ret;
 			//throw "Not Implemented";
 		}
 
-		MemAccessor_2D<T_AccElm> &  GetMemAccessor()
+		MemAccessor_2D_REF(T_AccElm) GetMemAccessor()
 		{
 			return m_memAccessor;
 		}
@@ -75,8 +75,8 @@ namespace Hcv
 
 	protected:
 
-		//MemAccessor_2D_Ref
-		MemAccessor_2D<T_AccElm> m_memAccessor;
+		MemAccessor_2D_REF(T_AccElm) m_memAccessor;
+		//MemAccessor_2D<T_AccElm> m_memAccessor;
 		IMAGE_REF(T_ImgElm) m_srcImg;
 	};
 
