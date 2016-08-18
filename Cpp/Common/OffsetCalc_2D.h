@@ -40,8 +40,24 @@ namespace Hcpl
 			m_isLocked = true;
 		}
 
+		OffsetCalc_2D * CloneUnlocked()
+		{
+			OffsetCalc_2D * pRet = new OffsetCalc_2D();
+
+			pRet->m_offsetCalc_X = m_offsetCalc_X;
+			pRet->m_offsetCalc_Y = m_offsetCalc_Y;
+
+			pRet->m_nOuterLimOffset = m_nOuterLimOffset;
+
+			pRet->m_isLocked = false;
+			return pRet;
+		}
+
 		void Init(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			m_offsetCalc_X->Init(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
 			m_offsetCalc_Y->Init(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
 
@@ -60,6 +76,9 @@ namespace Hcpl
 
 		void SwapXY()
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			OffsetCalc_1D_Ref temp;
 
 			temp = m_offsetCalc_X;

@@ -23,14 +23,29 @@ namespace Hcv
 
 		Image_MemAccessor_2D(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
+			m_isLocked = false;
+
 			m_srcImg = a_srcImg;
-			Image_MemAccessor_2D::PrepareAccessorFromImage( m_srcImg, &m_memAccessor);
+			Image_MemAccessor_2D::PrepareAccessorFromImage( m_srcImg, m_memAccessor);
 		}
 
 		void Init(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
 			m_srcImg = a_srcImg;
-			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, &m_memAccessor);
+			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
+		}
+
+		bool IsLocked()
+		{
+			return m_isLocked;
+		}
+
+		void LockForever()
+		{
+			if (m_isLocked)
+				return;
+
+			m_isLocked = true;
 		}
 
 		Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneNew()
@@ -38,14 +53,10 @@ namespace Hcv
 			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
 				new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
 
-			ret->m_srcImg = m_srcImg->CloneNew();
-			ret->m_memAccessor->Init(ret->m_srcImg);
-			m_memAccessor->GetOffsetCalc().CopyTo(&ret->m_memAccessor->GetOffsetCalc());
-			
-			//m_memAccessor->CopyTo(&ret->m_memAccessor);
+			ret->m_srcImg = m_srcImg;
+			ret->m_memAccessor = this->m_memAccessor;
 
 			return ret;
-			//throw "Not Implemented";
 		}
 
 		MemAccessor_2D_REF(T_AccElm) GetMemAccessor()
@@ -59,32 +70,33 @@ namespace Hcv
 		}
 
 		static void PrepareAccessorFromImage( 
-			Image<T_ImgElm> * a_srcImg,
-			MemAccessor_2D<T_AccElm> * a_pAccessor)
+			IMAGE_REF(T_ImgElm) a_srcImg,
+			MemAccessor_2D_REF(T_AccElm) a_pAccessor)
 		{
 			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
 
-			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0),
-				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
+			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0), new OffsetCalc_2D(
+				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height));
 		}
 
 	protected:
 
 		MemAccessor_2D_REF(T_AccElm) m_memAccessor;
-		//MemAccessor_2D<T_AccElm> m_memAccessor;
 		IMAGE_REF(T_ImgElm) m_srcImg;
+
+		bool m_isLocked;
 	};
 
 	typedef Image_MemAccessor_2D< float, float, 3 > F32Image3C_Float_MemAccessor_2D;
-	typedef Hcpl::ObjRef< F32Image3C_Float_MemAccessor_2D > F32Image3C_Float_MemAccessor_2DRef;
+	typedef Hcpl::ObjRef< F32Image3C_Float_MemAccessor_2D > F32Image3C_Float_MemAccessor_2D_Ref;
 
 	typedef Image_MemAccessor_2D< Hcpl::Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
-	typedef Hcpl::ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2DRef;
+	typedef Hcpl::ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2D_Ref;
 
 	typedef Image_MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
-	typedef Hcpl::ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2DRef;
+	typedef Hcpl::ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2D_Ref;
 	
 	typedef Image_MemAccessor_2D< Hcpl::Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
-	typedef Hcpl::ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2DRef;
+	typedef Hcpl::ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2D_Ref;
 
 }

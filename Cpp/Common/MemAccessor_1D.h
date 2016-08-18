@@ -6,42 +6,30 @@
 
 
 #include <Lib\Cpp\Common\Debug.h>
-#include <Lib\Cpp\Common\OffsetCalc_2D.h>
+#include <Lib\Cpp\Common\OffsetCalc_1D.h>
 
 
 namespace Hcpl
 {
 	template<class T>
-	class MemAccessor_2D : FRM_Object
+	class MemAccessor_1D : FRM_Object
 	{
 	public:
 
-		MemAccessor_2D()
+		MemAccessor_1D()
 		{
 			m_isLocked = false;
 		}
 
-		MemAccessor_2D(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
+		MemAccessor_1D(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
 		{
 			m_isLocked = false;
 			Init(a_data, a_offsetCalc);
 		}
 
-		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
+		MemAccessor_1D<T> * CloneUnlocked()
 		{
-			if (m_isLocked)
-				throw "m_isLocked";
-
-			m_data = a_data;
-			
-			//	Input should never be mutted.
-			m_offsetCalc = a_offsetCalc->IsLocked() ? a_offsetCalc : a_offsetCalc->CloneUnlocked();
-			m_offsetCalc->LockForever();
-		}
-
-		MemAccessor_2D<T> * CloneUnlocked()
-		{
-			MemAccessor_2D<T> * pRet = new MemAccessor_2D<T>();
+			MemAccessor_1D<T> * pRet = new MemAccessor_1D<T>();
 
 			pRet->m_data = m_data;
 			pRet->m_offsetCalc = m_offsetCalc;
@@ -63,7 +51,19 @@ namespace Hcpl
 			m_isLocked = true;
 		}
 
-		OffsetCalc_2D_Ref GetOffsetCalc()
+		void Init(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_data = a_data;
+
+			//	Input should never be mutted.
+			m_offsetCalc = a_offsetCalc->IsLocked() ? a_offsetCalc : a_offsetCalc->CloneUnlocked();
+			m_offsetCalc->LockForever();
+		}
+
+		OffsetCalc_1D_Ref GetOffsetCalc()
 		{
 			return m_offsetCalc;
 		}
@@ -84,9 +84,9 @@ namespace Hcpl
 	protected:
 
 		T * m_data;
-		OffsetCalc_2D_Ref m_offsetCalc;
+		OffsetCalc_1D_Ref m_offsetCalc;
 		bool m_isLocked;
 	};
 	
-#define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >
+#define MemAccessor_1D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_1D< T > >
 }

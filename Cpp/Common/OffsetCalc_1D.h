@@ -25,6 +25,17 @@ namespace Hcpl
 			Init(a_nOuterMaxNofSteps, a_nAbsoluteStepSize);
 		}
 
+		OffsetCalc_1D * CloneUnlocked()
+		{
+			OffsetCalc_1D * pRet = new OffsetCalc_1D();
+
+			//	This could be dangerous in case that any ref member exists!
+			*pRet = *this;
+
+			pRet->m_isLocked = false;
+			return pRet;
+		}
+
 		bool IsLocked()
 		{
 			return m_isLocked;
@@ -40,6 +51,9 @@ namespace Hcpl
 
 		void SetRelativeRangeTo(int a_nRelativeBgnStep, int a_nRelativeEndStep)
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			Hcpl_ASSERT(a_nRelativeBgnStep >= 0);
 			Hcpl_ASSERT(a_nRelativeBgnStep < m_nMaxNofSteps);
 
@@ -59,11 +73,17 @@ namespace Hcpl
 
 		void Init(int a_nOuterMaxNofSteps, int a_nAbsoluteStepSize)
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			Init(a_nOuterMaxNofSteps, a_nAbsoluteStepSize, 0, a_nOuterMaxNofSteps - 1);
 		}
 
 		void Init(int a_nOuterMaxNofSteps, int a_nAbsoluteStepSize, int a_nInnerBgnStep, int a_nInnerEndStep)
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			Hcpl_ASSERT(a_nOuterMaxNofSteps > 0);
 			Hcpl_ASSERT(a_nAbsoluteStepSize > 0);
 
@@ -121,11 +141,13 @@ namespace Hcpl
 			return m_nMaxNofSteps;
 		}
 
-
 	protected:
 
 		void SetAbsoluteInnerRange(int a_nInnerBgnStep, int a_nInnerEndStep)
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			Hcpl_ASSERT(a_nInnerBgnStep >= 0);
 			Hcpl_ASSERT(a_nInnerBgnStep < m_nOuterMaxNofSteps);
 
