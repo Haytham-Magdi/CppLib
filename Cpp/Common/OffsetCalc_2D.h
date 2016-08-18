@@ -34,6 +34,9 @@ namespace Hcpl
 
 		void LockForever()
 		{
+			if (m_isLocked)
+				return;
+
 			m_isLocked = true;
 		}
 
@@ -44,11 +47,6 @@ namespace Hcpl
 
 			m_nOuterLimOffset = m_offsetCalc_Y->GetOuterLimOffset();
 		}
-
-		//void CopyTo(OffsetCalc_2D * a_pDest)
-		//{
-		//	*a_pDest = *this;
-		//}
 
 		int GetOffsetPart1()
 		{

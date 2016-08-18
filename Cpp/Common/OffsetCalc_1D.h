@@ -32,15 +32,13 @@ namespace Hcpl
 
 		void LockForever()
 		{
+			if (m_isLocked)
+				return;
+
 			m_isLocked = true;
 		}
 
-		//void CopyTo(OffsetCalc_1D * a_pDest)
-		//{
-		//	*a_pDest = *this;
-		//}
-
-		void CopyRelativeRangeTo(OffsetCalc_1D * a_pDest, int a_nRelativeBgnStep, int a_nRelativeEndStep)
+		void SetRelativeRangeTo(int a_nRelativeBgnStep, int a_nRelativeEndStep)
 		{
 			Hcpl_ASSERT(a_nRelativeBgnStep >= 0);
 			Hcpl_ASSERT(a_nRelativeBgnStep < m_nMaxNofSteps);
@@ -56,8 +54,7 @@ namespace Hcpl
 			int nNewInnerBgnStep = m_nInnerBgnStep + nDir * a_nRelativeBgnStep;
 			int nNewInnerEndStep = m_nInnerBgnStep + nDir * a_nRelativeEndStep;
 
-			this->CopyTo(a_pDest);
-			a_pDest->SetInnerRange(nNewInnerBgnStep, nNewInnerEndStep);
+			SetAbsoluteInnerRange(nNewInnerBgnStep, nNewInnerEndStep);
 		}
 
 		void Init(int a_nOuterMaxNofSteps, int a_nAbsoluteStepSize)
@@ -74,38 +71,7 @@ namespace Hcpl
 			m_nAbsoluteStepSize = a_nAbsoluteStepSize;
 			m_nOuterLimOffset = m_nOuterMaxNofSteps * m_nAbsoluteStepSize;
 
-			SetInnerRange(a_nInnerBgnStep, a_nInnerEndStep);
-		}
-
-		void SetInnerRange(int a_nInnerBgnStep, int a_nInnerEndStep)
-		{
-			Hcpl_ASSERT(a_nInnerBgnStep >= 0);
-			Hcpl_ASSERT(a_nInnerBgnStep < m_nOuterMaxNofSteps);
-
-			Hcpl_ASSERT(a_nInnerEndStep >= 0);
-			Hcpl_ASSERT(a_nInnerEndStep < m_nOuterMaxNofSteps);
-
-			int nInnerRangeDiff = a_nInnerEndStep - a_nInnerBgnStep;
-			Hcpl_ASSERT(0 != nInnerRangeDiff);
-
-			m_nMaxNofSteps = abs(nInnerRangeDiff);
-
-			m_nInnerBgnStep = a_nInnerBgnStep;
-			m_nInnerEndStep = a_nInnerEndStep;
-
-			m_nOffsetPart1 = m_nInnerBgnStep * m_nAbsoluteStepSize;
-
-			if (nInnerRangeDiff > 0)
-			{
-				m_nActualStepSize = m_nAbsoluteStepSize;
-			}
-			else
-			{
-				m_nActualStepSize = -m_nAbsoluteStepSize;
-			}
-
-			//m_nEndOffsetPart2 = GetOffsetPart1() + CalcPart2(m_nInnerEndStep);
-			m_nEndOffsetPart2 = CalcPart2(m_nInnerEndStep);
+			SetAbsoluteInnerRange(a_nInnerBgnStep, a_nInnerEndStep);
 		}
 
 		int GetOffsetPart1()
@@ -153,6 +119,40 @@ namespace Hcpl
 		int GetMaxNofSteps()
 		{
 			return m_nMaxNofSteps;
+		}
+
+
+	protected:
+
+		void SetAbsoluteInnerRange(int a_nInnerBgnStep, int a_nInnerEndStep)
+		{
+			Hcpl_ASSERT(a_nInnerBgnStep >= 0);
+			Hcpl_ASSERT(a_nInnerBgnStep < m_nOuterMaxNofSteps);
+
+			Hcpl_ASSERT(a_nInnerEndStep >= 0);
+			Hcpl_ASSERT(a_nInnerEndStep < m_nOuterMaxNofSteps);
+
+			int nInnerRangeDiff = a_nInnerEndStep - a_nInnerBgnStep;
+			Hcpl_ASSERT(0 != nInnerRangeDiff);
+
+			m_nMaxNofSteps = abs(nInnerRangeDiff);
+
+			m_nInnerBgnStep = a_nInnerBgnStep;
+			m_nInnerEndStep = a_nInnerEndStep;
+
+			m_nOffsetPart1 = m_nInnerBgnStep * m_nAbsoluteStepSize;
+
+			if (nInnerRangeDiff > 0)
+			{
+				m_nActualStepSize = m_nAbsoluteStepSize;
+			}
+			else
+			{
+				m_nActualStepSize = -m_nAbsoluteStepSize;
+			}
+
+			//m_nEndOffsetPart2 = GetOffsetPart1() + CalcPart2(m_nInnerEndStep);
+			m_nEndOffsetPart2 = CalcPart2(m_nInnerEndStep);
 		}
 
 	protected:

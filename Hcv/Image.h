@@ -14,6 +14,8 @@
 
 namespace Hcv
 {
+	#define IMAGE_REF(T) Hcpl::ObjRef< Hcv::Image< T > >
+
 	template<class T>
 	class Image : FRM_Object
 	{
@@ -127,16 +129,16 @@ namespace Hcv
 			return pRet;
 		}
 
-		//void CopyTo(Image<T> * destImg)
-		//{
-		//	Hcpl_ASSERT(AreEqualCvSizes( GetSize(), destImg->GetSize()));
-		//	Hcpl_ASSERT(GetNofChannels() == destImg->GetNofChannels());
-		//	Hcpl_ASSERT(GetSize1D_InBytes() == destImg->GetSize1D_InBytes());
+		void CopyTo(IMAGE_REF(T) destImg)
+		{
+			Hcpl_ASSERT(AreEqualCvSizes( GetSize(), destImg->GetSize()));
+			Hcpl_ASSERT(GetNofChannels() == destImg->GetNofChannels());
+			Hcpl_ASSERT(GetSize1D_InBytes() == destImg->GetSize1D_InBytes());
 
-		//	memcpy(destImg->GetDataPtr(), this->GetDataPtr(), this->GetSize1D_InBytes());
+			memcpy(destImg->GetDataPtr(), this->GetDataPtr(), this->GetSize1D_InBytes());
 
-		//	throw "Not Implemented.";
-		//}
+			throw "Not Implemented.";
+		}
 
 	protected:
 		void Init(IplImage * a_src)
@@ -182,7 +184,6 @@ namespace Hcv
 		T * m_pixs;
 	};
 
-#define IMAGE_REF(T) Hcpl::ObjRef< Hcv::Image< T > >
 
 	typedef Hcv::Image< Hcpl::Uint8 > U8Image;
 	typedef Hcpl::ObjRef< U8Image > U8ImageRef;

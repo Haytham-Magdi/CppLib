@@ -36,13 +36,11 @@ namespace Hcpl
 
 		void LockForever()
 		{
+			if (m_isLocked)
+				return;
+
 			m_isLocked = true;
 		}
-
-		//void CopyTo(MemAccessor_2D<T> a_pDest)
-		//{
-		//	*pDest = *this;
-		//}
 
 		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
 		{

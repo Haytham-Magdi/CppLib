@@ -33,11 +33,6 @@ namespace Hcv
 			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, &m_memAccessor);
 		}
 
-		//void CopyTo(Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels> * pDest)
-		//{
-		//	*pDest = *this;
-		//}
-
 		Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneNew()
 		{
 			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
