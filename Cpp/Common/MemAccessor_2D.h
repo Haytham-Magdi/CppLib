@@ -18,16 +18,36 @@ namespace Hcpl
 	{
 	public:
 
-		void CopyTo(MemAccessor_2D<T> a_pDest)
+		MemAccessor_2D()
 		{
-			*pDest = *this;
+			m_isLocked = false;
 		}
 
-		void Init(T * a_data, int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
+		MemAccessor_2D(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
+		{
+			m_isLocked = false;
+			Init(a_data, a_offsetCalc);
+		}
+
+		bool IsLocked()
+		{
+			return m_isLocked;
+		}
+
+		void LockForever()
+		{
+			m_isLocked = true;
+		}
+
+		//void CopyTo(MemAccessor_2D<T> a_pDest)
+		//{
+		//	*pDest = *this;
+		//}
+
+		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
 		{
 			m_data = a_data;
-
-			m_offsetCalc.Init(a_nAbsoluteStepSize_X, a_nOuterMaxNofSteps_X, a_nOuterMaxNofSteps_Y);
+			m_offsetCalc = a_offsetCalc;
 		}
 
 		OffsetCalc_2D_Ref GetOffsetCalc()
@@ -44,6 +64,7 @@ namespace Hcpl
 
 		T * m_data;
 		OffsetCalc_2D_Ref m_offsetCalc;
+		bool m_isLocked;
 	};
 	
 #define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >

@@ -35,10 +35,10 @@ namespace Hcpl
 			m_isLocked = true;
 		}
 
-		void CopyTo(OffsetCalc_1D * a_pDest)
-		{
-			*a_pDest = *this;
-		}
+		//void CopyTo(OffsetCalc_1D * a_pDest)
+		//{
+		//	*a_pDest = *this;
+		//}
 
 		void CopyRelativeRangeTo(OffsetCalc_1D * a_pDest, int a_nRelativeBgnStep, int a_nRelativeEndStep)
 		{
