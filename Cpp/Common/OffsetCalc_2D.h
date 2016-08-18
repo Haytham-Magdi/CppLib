@@ -16,6 +16,27 @@ namespace Hcpl
 	{
 	public:
 
+		OffsetCalc_2D()
+		{
+			m_isLocked = false;
+		}
+
+		OffsetCalc_2D(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
+		{
+			m_isLocked = false;
+			Init(a_nAbsoluteStepSize_X, a_nOuterMaxNofSteps_X, a_nOuterMaxNofSteps_Y);
+		}
+
+		bool IsLocked()
+		{
+			return m_isLocked;
+		}
+
+		void LockForever()
+		{
+			m_isLocked = true;
+		}
+
 		void Init(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
 		{
 			m_offsetCalc_X->Init(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
@@ -64,6 +85,8 @@ namespace Hcpl
 		OffsetCalc_1D_Ref m_offsetCalc_Y;
 
 		int m_nOuterLimOffset;
+
+		bool m_isLocked;
 	};
 
 	typedef Hcpl::ObjRef< OffsetCalc_2D > OffsetCalc_2D_Ref;

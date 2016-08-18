@@ -16,11 +16,23 @@ namespace Hcpl
 
 		OffsetCalc_1D()
 		{
+			m_isLocked = false;
 		}
 
 		OffsetCalc_1D(int a_nOuterMaxNofSteps, int a_nAbsoluteStepSize)
 		{
+			m_isLocked = false;
 			Init(a_nOuterMaxNofSteps, a_nAbsoluteStepSize);
+		}
+
+		bool IsLocked()
+		{
+			return m_isLocked;
+		}
+
+		void LockForever()
+		{
+			m_isLocked = true;
 		}
 
 		void CopyTo(OffsetCalc_1D * a_pDest)
@@ -157,6 +169,8 @@ namespace Hcpl
 		int m_nMaxNofSteps;
 		int m_nInnerBgnStep;
 		int m_nInnerEndStep;
+
+		bool m_isLocked;
 	};
 
 	typedef Hcpl::ObjRef< OffsetCalc_1D > OffsetCalc_1D_Ref;
