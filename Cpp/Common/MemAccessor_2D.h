@@ -6,6 +6,8 @@
 
 
 #include <Lib\Cpp\Common\Debug.h>
+#include <Lib\Cpp\Common\Object.h>
+#include <Lib\Cpp\Common\ObjRef.h>
 #include <Lib\Cpp\Common\OffsetCalc_2D.h>
 
 
@@ -57,10 +59,11 @@ namespace Hcpl
 		}
 
 		////static MemAccessor_2D_REF(T) SelfOrClone_Unlocked(MemAccessor_2D_REF(T) a_arg)
-		//static Hcpl::ObjRef< Hcv::MemAccessor_2D<T> > SelfOrClone_Unlocked(Hcpl::ObjRef< Hcv::MemAccessor_2D<T> > a_arg)
+		//static Hcpl::ObjRef<Hcv::MemAccessor_2D<T>> SelfOrClone_Unlocked(
+		//	Hcpl::ObjRef<Hcv::MemAccessor_2D<T>> a_arg)
 		//{
 		//	throw "Not working!";
-		//	//return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		//	return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
 		//}
 
 		//static MemAccessor_2D_REF(T) SelfOrClone_Locked(MemAccessor_2D_REF(T) a_arg)

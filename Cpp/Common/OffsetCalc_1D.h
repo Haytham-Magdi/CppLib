@@ -70,7 +70,7 @@ namespace Hcpl
 			m_isLocked = true;
 		}
 
-		void SetRelativeRangeTo(int a_nRelativeBgnStep, int a_nRelativeEndStep)
+		void SetRange_Relative(int a_nRelativeBgnStep, int a_nRelativeEndStep)
 		{
 			if (m_isLocked)
 				throw "m_isLocked";
@@ -89,7 +89,7 @@ namespace Hcpl
 			int nNewInnerBgnStep = m_nInnerBgnStep + nDir * a_nRelativeBgnStep;
 			int nNewInnerEndStep = m_nInnerBgnStep + nDir * a_nRelativeEndStep;
 
-			SetAbsoluteInnerRange(nNewInnerBgnStep, nNewInnerEndStep);
+			SetRange_Absolute(nNewInnerBgnStep, nNewInnerEndStep);
 		}
 
 		void Init(int a_nOuterMaxNofSteps, int a_nAbsoluteStepSize)
@@ -112,7 +112,7 @@ namespace Hcpl
 			m_nAbsoluteStepSize = a_nAbsoluteStepSize;
 			m_nOuterLimOffset = m_nOuterMaxNofSteps * m_nAbsoluteStepSize;
 
-			SetAbsoluteInnerRange(a_nInnerBgnStep, a_nInnerEndStep);
+			SetRange_Absolute(a_nInnerBgnStep, a_nInnerEndStep);
 		}
 
 		int GetOffsetPart1()
@@ -174,7 +174,7 @@ namespace Hcpl
 
 	protected:
 
-		void SetAbsoluteInnerRange(int a_nInnerBgnStep, int a_nInnerEndStep)
+		void SetRange_Absolute(int a_nInnerBgnStep, int a_nInnerEndStep)
 		{
 			if (m_isLocked)
 				throw "m_isLocked";
