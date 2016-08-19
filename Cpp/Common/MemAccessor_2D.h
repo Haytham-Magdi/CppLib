@@ -11,9 +11,9 @@
 
 namespace Hcpl
 {
-	template<class T>
-	class MemAccessor_2D;
-	#define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >
+	//template<class T>
+	//class MemAccessor_2D;
+#define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >
 
 	template<class T>
 	class MemAccessor_2D : FRM_Object
@@ -40,7 +40,7 @@ namespace Hcpl
 				throw "!a_offsetCalc_Locked->IsLocked()";
 
 			m_data = a_data;
-			
+
 			m_offsetCalc = a_offsetCalc_Locked;
 			m_offsetCalc->LockForever();
 		}
@@ -56,9 +56,11 @@ namespace Hcpl
 			return pRet;
 		}
 
-		//static MemAccessor_2D_REF(T) SelfOrClone_Unlocked(MemAccessor_2D_REF(T) a_arg)
+		////static MemAccessor_2D_REF(T) SelfOrClone_Unlocked(MemAccessor_2D_REF(T) a_arg)
+		//static Hcpl::ObjRef< Hcv::MemAccessor_2D<T> > SelfOrClone_Unlocked(Hcpl::ObjRef< Hcv::MemAccessor_2D<T> > a_arg)
 		//{
-		//	return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		//	throw "Not working!";
+		//	//return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
 		//}
 
 		//static MemAccessor_2D_REF(T) SelfOrClone_Locked(MemAccessor_2D_REF(T) a_arg)
@@ -111,5 +113,5 @@ namespace Hcpl
 		OffsetCalc_2D_Ref m_offsetCalc;
 		bool m_isLocked;
 	};
-	
+
 }
