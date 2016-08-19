@@ -11,6 +11,8 @@
 
 namespace Hcpl
 {
+	class OffsetCalc_2D;
+	typedef Hcpl::ObjRef< OffsetCalc_2D > OffsetCalc_2D_Ref;
 
 	class OffsetCalc_2D : FRM_Object
 	{
@@ -51,6 +53,24 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
+		}
+
+		static OffsetCalc_2D_Ref SelfOrClone_Unlocked(OffsetCalc_2D_Ref a_arg)
+		{
+			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		}
+
+		static OffsetCalc_2D_Ref SelfOrClone_Locked(OffsetCalc_2D_Ref a_arg)
+		{
+			OffsetCalc_2D_Ref ret = a_arg;
+
+			if (!ret->IsLocked())
+			{
+				ret = ret->CloneUnlocked();
+				ret->LockForever();
+			}
+
+			return ret;
 		}
 
 		void Init(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
@@ -106,5 +126,4 @@ namespace Hcpl
 		bool m_isLocked;
 	};
 
-	typedef Hcpl::ObjRef< OffsetCalc_2D > OffsetCalc_2D_Ref;
 }

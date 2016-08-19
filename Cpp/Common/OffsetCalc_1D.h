@@ -10,6 +10,9 @@
 
 namespace Hcpl
 {
+	class OffsetCalc_1D;
+	typedef Hcpl::ObjRef< OffsetCalc_1D > OffsetCalc_1D_Ref;
+
 	class OffsetCalc_1D : FRM_Object
 	{
 	public:
@@ -34,6 +37,24 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
+		}
+
+		static OffsetCalc_1D_Ref SelfOrClone_Unlocked(OffsetCalc_1D_Ref a_arg)
+		{
+			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		}
+
+		static OffsetCalc_1D_Ref SelfOrClone_Locked(OffsetCalc_1D_Ref a_arg)
+		{
+			OffsetCalc_1D_Ref ret = a_arg;
+				
+			if (!ret->IsLocked())
+			{
+				ret = ret->CloneUnlocked();
+				ret->LockForever();
+			}
+
+			return ret;
 		}
 
 		bool IsLocked()
@@ -205,5 +226,4 @@ namespace Hcpl
 		bool m_isLocked;
 	};
 
-	typedef Hcpl::ObjRef< OffsetCalc_1D > OffsetCalc_1D_Ref;
 }
