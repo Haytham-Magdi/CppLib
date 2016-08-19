@@ -186,6 +186,7 @@
 #include <Lib\Hcv\ImgScanMgr.h>
 #include <Lib\Hcv\ImgClusteringTry.h>
 #include <Lib\Hcv\Image_MemAccessor_2D.h>
+#include <Lib\Hcv\ImageUtil.h>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.h>
