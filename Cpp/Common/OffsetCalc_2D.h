@@ -94,7 +94,7 @@ namespace Hcpl
 			return m_offsetCalc_X->CalcPart2(a_nStep_X) + m_offsetCalc_Y->CalcPart2(a_nStep_Y);
 		}
 
-		void SwapXY()
+		void SwitchXY()
 		{
 			if (m_isLocked)
 				throw "m_isLocked";

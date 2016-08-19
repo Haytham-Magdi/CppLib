@@ -96,6 +96,27 @@ namespace Hcpl
 			return m_offsetCalc;
 		}
 
+		MemAccessor_1D_REF(T) GenAccessor_1D_Unlocked_X()
+		{
+			return new MemAccessor_1D<T>(
+				m_data, m_offsetCalc->GetOffsetCalc_X());
+		}
+
+		MemAccessor_1D_REF(T) GenAccessor_1D_Unlocked_Y()
+		{
+			return new MemAccessor_1D<T>(
+				m_data, m_offsetCalc->GetOffsetCalc_Y());
+		}
+
+		void SwitchXY()
+		{
+			OffsetCalc_2D_Ref offsetCalc = m_offsetCalc->CloneUnlocked();
+			offsetCalc->SwitchXY();
+			offsetCalc->LockForever();
+
+			m_offsetCalc = offsetCalc;
+		}
+
 		T * GetDataPtr()
 		{
 			return m_data;

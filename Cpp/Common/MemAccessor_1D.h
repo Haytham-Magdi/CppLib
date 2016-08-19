@@ -11,6 +11,8 @@
 
 namespace Hcpl
 {
+#define MemAccessor_1D_REF(T) Hcpl::ObjRef< MemAccessor_1D< T > >
+
 	template<class T>
 	class MemAccessor_1D : FRM_Object
 	{
@@ -36,6 +38,25 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
+		}
+
+		static MemAccessor_1D_REF(T) SelfOrClone_Unlocked(MemAccessor_1D_REF(T) a_arg)
+		{
+			throw "Not working!";
+			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		}
+
+		static MemAccessor_1D_REF(T) SelfOrClone_Locked(MemAccessor_1D_REF(T) a_arg)
+		{
+			MemAccessor_1D_REF(T) ret = a_arg;
+
+			if (!ret->IsLocked())
+			{
+				ret = ret->CloneUnlocked();
+				ret->LockForever();
+			}
+
+			return ret;
 		}
 
 		bool IsLocked()
@@ -90,5 +111,4 @@ namespace Hcpl
 		bool m_isLocked;
 	};
 	
-#define MemAccessor_1D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_1D< T > >
 }
