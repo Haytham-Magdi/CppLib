@@ -107,7 +107,17 @@ namespace Hcpl
 		int ReverseCalc(int a_nOffset)
 		{
 			Hcpl_ASSERT(0 == a_nOffset % m_nAbsoluteStepSize);
-			int nStep = ((a_nOffset - m_nOffsetPart1) % m_nOuterLimOffset) / m_nAbsoluteStepSize;
+			//int nStep = ((a_nOffset - m_nOffsetPart1) % m_nOuterLimOffset) / m_nAbsoluteStepSize;
+
+			int nStep = ReverseCalcPart2(a_nOffset - m_nOffsetPart1);
+			return nStep;
+		}
+
+		int ReverseCalcPart2(int a_nOffsetPart2)
+		{
+			Hcpl_ASSERT(0 == a_nOffsetPart2 % m_nAbsoluteStepSize);
+			
+			int nStep = (a_nOffsetPart2 % m_nOuterLimOffset) / m_nAbsoluteStepSize;
 			return nStep;
 		}
 

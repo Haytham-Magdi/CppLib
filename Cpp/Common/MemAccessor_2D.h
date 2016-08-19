@@ -21,21 +21,23 @@ namespace Hcpl
 			m_isLocked = false;
 		}
 
-		MemAccessor_2D(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
+		MemAccessor_2D(T * a_data, OffsetCalc_2D_Ref a_offsetCalc_Locked)
 		{
 			m_isLocked = false;
 			Init(a_data, a_offsetCalc);
 		}
 
-		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
+		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc_Locked)
 		{
 			if (m_isLocked)
 				throw "m_isLocked";
 
+			if (!a_offsetCalc_Locked->IsLocked())
+				throw "!a_offsetCalc_Locked->IsLocked()";
+
 			m_data = a_data;
 			
-			//	Input should never be mutted.
-			m_offsetCalc = a_offsetCalc->IsLocked() ? a_offsetCalc : a_offsetCalc->CloneUnlocked();
+			m_offsetCalc = a_offsetCalc_Locked;
 			m_offsetCalc->LockForever();
 		}
 
