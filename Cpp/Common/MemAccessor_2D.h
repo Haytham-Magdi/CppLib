@@ -15,7 +15,8 @@ namespace Hcpl
 {
 	//template<class T>
 	//class MemAccessor_2D;
-#define MemAccessor_2D_REF(T) Hcpl::ObjRef< Hcv::MemAccessor_2D< T > >
+//#define MemAccessor_2D_REF(T) Hcpl::ObjRef<Hcv::MemAccessor_2D<T>>
+#define MemAccessor_2D_REF(T) ObjRef<MemAccessor_2D<T>>
 
 	template<class T>
 	class MemAccessor_2D : FRM_Object
@@ -58,26 +59,24 @@ namespace Hcpl
 			return pRet;
 		}
 
-		////static MemAccessor_2D_REF(T) SelfOrClone_Unlocked(MemAccessor_2D_REF(T) a_arg)
-		//static Hcpl::ObjRef<Hcv::MemAccessor_2D<T>> SelfOrClone_Unlocked(
-		//	Hcpl::ObjRef<Hcv::MemAccessor_2D<T>> a_arg)
-		//{
-		//	throw "Not working!";
-		//	return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
-		//}
+		static MemAccessor_2D_REF(T) SelfOrClone_Unlocked(MemAccessor_2D_REF(T) a_arg)
+		{
+			throw "Not working!";
+			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		}
 
-		//static MemAccessor_2D_REF(T) SelfOrClone_Locked(MemAccessor_2D_REF(T) a_arg)
-		//{
-		//	MemAccessor_2D_REF(T) ret = a_arg;
+		static MemAccessor_2D_REF(T) SelfOrClone_Locked(MemAccessor_2D_REF(T) a_arg)
+		{
+			MemAccessor_2D_REF(T) ret = a_arg;
 
-		//	if (!ret->IsLocked())
-		//	{
-		//		ret = ret->CloneUnlocked();
-		//		ret->LockForever();
-		//	}
+			if (!ret->IsLocked())
+			{
+				ret = ret->CloneUnlocked();
+				ret->LockForever();
+			}
 
-		//	return ret;
-		//}
+			return ret;
+		}
 
 		bool IsLocked()
 		{

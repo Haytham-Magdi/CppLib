@@ -14,7 +14,7 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	#define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) Hcpl::ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
+	#define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
 
 	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
 	class Image_MemAccessor_2D : FRM_Object
@@ -33,6 +33,27 @@ namespace Hcv
 		{
 			m_srcImg = a_srcImg;
 			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
+		}
+
+		static Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) SelfOrClone_Unlocked(
+			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) a_arg)
+		{
+			throw "Not working!";
+			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
+		}
+
+		static Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) SelfOrClone_Locked(
+			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) a_arg)
+		{
+			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret = a_arg;
+
+			if (!ret->IsLocked())
+			{
+				ret = ret->CloneUnlocked();
+				ret->LockForever();
+			}
+
+			return ret;
 		}
 
 		bool IsLocked()

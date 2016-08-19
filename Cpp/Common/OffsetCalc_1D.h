@@ -172,6 +172,11 @@ namespace Hcpl
 			return m_nMaxNofSteps;
 		}
 
+		void ResetRange()
+		{
+			SetRange_Absolute(0, m_nOuterMaxNofSteps - 1);
+		}
+
 	protected:
 
 		void SetRange_Absolute(int a_nInnerBgnStep, int a_nInnerEndStep)
