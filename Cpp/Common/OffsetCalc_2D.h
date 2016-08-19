@@ -78,8 +78,11 @@ namespace Hcpl
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			m_offsetCalc_X->Init(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
-			m_offsetCalc_Y->Init(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
+			m_offsetCalc_X = new OffsetCalc_1D(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
+			m_offsetCalc_Y = new OffsetCalc_1D(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
+
+			//m_offsetCalc_X->Init(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
+			//m_offsetCalc_Y->Init(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
 
 			m_nOuterLimOffset = m_offsetCalc_Y->GetOuterLimOffset();
 		}

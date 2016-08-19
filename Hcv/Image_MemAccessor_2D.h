@@ -14,7 +14,7 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	#define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
+#define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
 
 	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
 	class Image_MemAccessor_2D : FRM_Object
@@ -26,7 +26,7 @@ namespace Hcv
 			m_isLocked = false;
 
 			m_srcImg = a_srcImg;
-			Image_MemAccessor_2D::PrepareAccessorFromImage( m_srcImg, m_memAccessor);
+			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
 		}
 
 		void Init(IMAGE_REF(T_ImgElm) a_srcImg)
@@ -90,13 +90,13 @@ namespace Hcv
 			return m_srcImg;
 		}
 
-		static void PrepareAccessorFromImage( 
+		static void PrepareAccessorFromImage(
 			IMAGE_REF(T_ImgElm) a_srcImg,
 			MemAccessor_2D_REF(T_AccElm) a_pAccessor)
 		{
 			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
 
-			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0), new OffsetCalc_2D(
+			a_pAccessor = new MemAccessor_2D<T_AccElm>((T_AccElm *)a_srcImg->GetPixAt(0, 0), new OffsetCalc_2D(
 				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height));
 		}
 
@@ -116,7 +116,7 @@ namespace Hcv
 
 	typedef Image_MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
 	typedef Hcpl::ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2D_Ref;
-	
+
 	typedef Image_MemAccessor_2D< Hcpl::Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
 	typedef Hcpl::ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2D_Ref;
 

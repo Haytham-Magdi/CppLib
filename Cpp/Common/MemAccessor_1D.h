@@ -26,7 +26,7 @@ namespace Hcpl
 		MemAccessor_1D(T * a_data, OffsetCalc_1D_Ref a_offsetCalc_Locked)
 		{
 			m_isLocked = false;
-			Init(a_data, a_offsetCalc);
+			Init(a_data, a_offsetCalc_Locked);
 		}
 
 		MemAccessor_1D<T> * CloneUnlocked()

@@ -31,7 +31,7 @@ namespace Hcpl
 		MemAccessor_2D(T * a_data, OffsetCalc_2D_Ref a_offsetCalc_Locked)
 		{
 			m_isLocked = false;
-			Init(a_data, a_offsetCalc);
+			Init(a_data, a_offsetCalc_Locked);
 		}
 
 		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc_Locked)
