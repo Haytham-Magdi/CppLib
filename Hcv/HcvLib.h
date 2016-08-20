@@ -186,7 +186,7 @@
 #include <Lib\Hcv\ImgScanMgr.h>
 #include <Lib\Hcv\ImgClusteringTry.h>
 #include <Lib\Hcv\Image_MemAccessor_2D.h>
-#include <Lib\Hcv\ImageUtil.h>
+#include <Lib\Hcv\MemAccOperations.h>
 #include <Lib\Hcv\F32ColorVal_Basic.h>
 #include <Lib\Hcv\Type_Basic.h>
 

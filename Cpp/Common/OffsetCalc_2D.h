@@ -63,10 +63,10 @@ namespace Hcpl
 				throw "m_isLocked";
 
 			m_offsetCalc_X = new OffsetCalc_1D(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
-			m_offsetCalc_X->LockForever();
+			m_offsetCalc_X->Lock();
 
 			m_offsetCalc_Y = new OffsetCalc_1D(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
-			m_offsetCalc_Y->LockForever();
+			m_offsetCalc_Y->Lock();
 
 			//m_offsetCalc_X->Init(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
 			//m_offsetCalc_Y->Init(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
@@ -101,9 +101,9 @@ namespace Hcpl
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			m_offsetCalc_X = m_offsetCalc_X->CloneUnlocked();
+			m_offsetCalc_X->Unlock();
 			m_offsetCalc_X->SetRange_Relative(a_nBgn_X, a_nEnd_X);
-			m_offsetCalc_X->LockForever();
+			m_offsetCalc_X->Lock();
 		}
 
 		void SetRange_Relative_Y(int a_nBgn_Y, int a_nEnd_Y)
@@ -111,9 +111,9 @@ namespace Hcpl
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			m_offsetCalc_Y = m_offsetCalc_Y->CloneUnlocked();
+			m_offsetCalc_Y->Unlock();
 			m_offsetCalc_Y->SetRange_Relative(a_nBgn_Y, a_nEnd_Y);
-			m_offsetCalc_Y->LockForever();
+			m_offsetCalc_Y->Lock();
 		}
 
 		void SetRange_Relative(int a_nBgn_X, int a_nEnd_X, int a_nBgn_Y, int a_nEnd_Y)

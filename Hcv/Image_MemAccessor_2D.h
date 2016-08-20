@@ -88,7 +88,7 @@ namespace Hcv
 			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
 
 			OffsetCalc_2D_Ref calc = new OffsetCalc_2D(1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
-			calc->LockForever();
+			calc->Lock();
 
 			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0), calc);
 		}

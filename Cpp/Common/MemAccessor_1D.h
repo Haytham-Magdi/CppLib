@@ -77,7 +77,7 @@ namespace Hcpl
 			m_data = a_data;
 
 			m_offsetCalc = a_offsetCalc->CloneUnlocked();
-			m_offsetCalc->LockForever();
+			m_offsetCalc->Lock();
 		}
 
 		OffsetCalc_1D_Ref GetOffsetCalc()

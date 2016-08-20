@@ -15,7 +15,7 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	namespace ImageUtil
+	namespace MemAccOperations
 	{
 		template<class T>
 		void FillImage_Stripes(MemAccessor_2D_REF(T) a_memAcc, T & a_val1, T & a_val2, int a_stripWidth)
@@ -26,8 +26,8 @@ namespace Hcv
 
 			int valIdx = 1;
 
-			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0, 0);
 
@@ -49,8 +49,8 @@ namespace Hcv
 		template<class T>
 		void FillImage(MemAccessor_2D_REF(T) a_memAcc, T & a_val)
 		{
-			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0, 0);
 
@@ -78,11 +78,11 @@ namespace Hcv
 		template<class T>
 		void CopyImage(MemAccessor_2D_REF(T) a_destAcc, MemAccessor_2D_REF(T) a_srcAcc)
 		{
-			MemAccessor_1D_REF(T) acc_Src_Y = a_srcAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(T) acc_Src_X = a_srcAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(T) acc_Src_Y = a_srcAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Src_X = a_srcAcc->GenAccessor_1D_X();
 
-			MemAccessor_1D_REF(T) acc_Dest_Y = a_destAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(T) acc_Dest_X = a_destAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(T) acc_Dest_Y = a_destAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Dest_X = a_destAcc->GenAccessor_1D_X();
 
 			Hcpl_ASSERT(acc_Src_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Dest_Y->GetOffsetCalc()->GetMaxNofSteps());
@@ -135,7 +135,7 @@ namespace Hcv
 
 			//F32Image3C_F32ColorVal_MemAccessor_2D_Ref ret = a_imgAcc->CloneNew();
 			//ret->SetSrcImg(a_imgAcc->GetSrcImg()->CloneNew());
-			//ret->LockForever();
+			//ret->Lock();
 
 			//FillImage_Stripes(a_imgAcc, a_val1, a_val2, a_stripWidth);
 
@@ -152,11 +152,11 @@ namespace Hcv
 		template<class T>
 		void CalcMagImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
 		{
-			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
 
-			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
 			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());

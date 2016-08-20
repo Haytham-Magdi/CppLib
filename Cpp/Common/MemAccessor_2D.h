@@ -42,7 +42,7 @@ namespace Hcpl
 			m_data = a_data;
 
 			m_offsetCalc = a_offsetCalc->CloneUnlocked();
-			m_offsetCalc->LockForever();
+			m_offsetCalc->Lock();
 		}
 
 		MemAccessor_2D<T> * CloneUnlocked()
@@ -76,13 +76,13 @@ namespace Hcpl
 			return m_offsetCalc;
 		}
 
-		MemAccessor_1D_REF(T) GenAccessor_1D_Unlocked_X()
+		MemAccessor_1D_REF(T) GenAccessor_1D_X()
 		{
 			return new MemAccessor_1D<T>(
 				m_data, m_offsetCalc->GetOffsetCalc_X());
 		}
 
-		MemAccessor_1D_REF(T) GenAccessor_1D_Unlocked_Y()
+		MemAccessor_1D_REF(T) GenAccessor_1D_Y()
 		{
 			return new MemAccessor_1D<T>(
 				m_data, m_offsetCalc->GetOffsetCalc_Y());
@@ -93,9 +93,9 @@ namespace Hcpl
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			m_offsetCalc->Unlock();
 			m_offsetCalc->SetRange_Relative(a_nBgn_X, a_nEnd_X, a_nBgn_Y, a_nEnd_Y);
-			m_offsetCalc->LockForever();
+			m_offsetCalc->Lock();
 		}
 
 		void SetRange_Relative_X(int a_nBgn_X, int a_nEnd_X)
@@ -103,9 +103,9 @@ namespace Hcpl
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			m_offsetCalc->Unlock();
 			m_offsetCalc->SetRange_Relative_X(a_nBgn_X, a_nEnd_X);
-			m_offsetCalc->LockForever();
+			m_offsetCalc->Lock();
 		}
 
 		void SetRange_Relative_Y(int a_nBgn_Y, int a_nEnd_Y)
@@ -113,18 +113,16 @@ namespace Hcpl
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			m_offsetCalc->Unlock();
 			m_offsetCalc->SetRange_Relative_Y(a_nBgn_Y, a_nEnd_Y);
-			m_offsetCalc->LockForever();
+			m_offsetCalc->Lock();
 		}
 
 		void SwitchXY()
 		{
-			OffsetCalc_2D_Ref offsetCalc = m_offsetCalc->CloneUnlocked();
-			offsetCalc->SwitchXY();
-			offsetCalc->LockForever();
-
-			m_offsetCalc = offsetCalc;
+			m_offsetCalc->Unlock();
+			m_offsetCalc->SwitchXY();
+			m_offsetCalc->Lock();
 		}
 
 		T * GetDataPtr()
