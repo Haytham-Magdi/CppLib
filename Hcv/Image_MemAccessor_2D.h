@@ -14,7 +14,29 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
+	//template<class T>
+	//class MemAccessor_2D;
+
+	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
+	class Image_MemAccessor_2D;
+
+
 #define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
+
+	//typedef Image_MemAccessor_2D< float, float, 3 > F32Image3C_FloatAcc;
+	//typedef ObjRef< F32Image3C_FloatAcc > F32Image3C_FloatAcc_Ref;
+
+	typedef Image_MemAccessor_2D< Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
+	typedef ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2D_Ref;
+
+	//typedef Image_MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
+	typedef Image_MemAccessor_2D< Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
+	typedef ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2D_Ref;
+
+	typedef Image_MemAccessor_2D< Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
+	typedef ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2D_Ref;
+
+
 
 	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
 	class Image_MemAccessor_2D : FRM_Object
@@ -113,18 +135,5 @@ namespace Hcv
 
 		bool m_isLocked;
 	};
-
-	//typedef Image_MemAccessor_2D< float, float, 3 > F32Image3C_FloatAcc;
-	//typedef ObjRef< F32Image3C_FloatAcc > F32Image3C_FloatAcc_Ref;
-
-	typedef Image_MemAccessor_2D< Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
-	typedef ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2D_Ref;
-
-	//typedef Image_MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
-	typedef Image_MemAccessor_2D< Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
-	typedef ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2D_Ref;
-
-	typedef Image_MemAccessor_2D< Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
-	typedef ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2D_Ref;
 
 }

@@ -105,26 +105,19 @@ namespace Hcv
 			return pRet;
 		}
 
+		Image< T > * CloneNew_WithChannels(int a_nNew_nofChnnels)
+		{
+			Image<T> * pRet = Image<T>::Create(this->GetSize(), a_nNew_nofChnnels);
+
+			return pRet;
+		}
+
 		Image< T > * Clone()
 		{
 			CvSize siz = this->GetSize();
 
 			Image<T> * pRet = this->CloneNew();
 			this->CopyTo(pRet);
-
-			//for(int y=0; y < siz.height; y++)
-			//{
-			//	for(int x=0; x < siz.width; x++)
-			//	{
-			//		T * srcPix = this->GetPixAt(x, y);
-			//		T * dstPix = pRet->GetPixAt(x, y);
-
-			//		for(int i=0; i < m_nofChannels; i++)
-			//		{
-			//			dstPix[i] = srcPix[i];
-			//		}
-			//	}
-			//}
 
 			return pRet;
 		}
