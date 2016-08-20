@@ -187,8 +187,9 @@
 #include <Lib\Hcv\ImgClusteringTry.h>
 #include <Lib\Hcv\Image_MemAccessor_2D.h>
 #include <Lib\Hcv\MemAccOperations.h>
-#include <Lib\Hcv\F32ColorVal_Basic.h>
-#include <Lib\Hcv\Type_Basic.h>
+#include <Lib\Hcv\ImageMemAccOperations.h>
+#include <Lib\Hcv\F32ColorVal_Operations.h>
+#include <Lib\Hcv\Element_Operations.h>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.h>

@@ -69,7 +69,7 @@ namespace Hcv
 
 			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
 			{
-				Type_Basic::CopyByPtr<T>(ptr, &a_val);
+				Element_Operations::CopyByPtr<T>(ptr, &a_val);
 			}
 		}
 
@@ -119,7 +119,7 @@ namespace Hcv
 				!ptrItr_Src.IsDone();
 				ptr_Src = ptrItr_Src.Next(), ptr_Dest = ptrItr_Dest.Next())
 			{
-				Type_Basic::CopyByPtr<T>(ptr_Dest, ptr_Src);
+				Element_Operations::CopyByPtr<T>(ptr_Dest, ptr_Src);
 			}
 		}
 
@@ -193,7 +193,7 @@ namespace Hcv
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				ptr_Out = Type_Basic::CalcMag<T>(ptr_Inp);
+				ptr_Out = Element_Operations::CalcMag<T>(ptr_Inp);
 			}
 		}
 

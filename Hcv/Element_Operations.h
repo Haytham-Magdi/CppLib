@@ -14,7 +14,7 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	namespace Type_Basic
+	namespace Element_Operations
 	{
 
 		template<class T>

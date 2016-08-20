@@ -8,15 +8,15 @@
 #include <vector>
 #include <Lib\Hcv\Image.h>
 
-#include <Lib\Hcv\Type_Basic.h>
+#include <Lib\Hcv\Element_Operations.h>
 
 
 namespace Hcv
 {
 	using namespace Hcpl;
 
-	//namespace F32ColorVal_Basic
-	namespace Type_Basic
+	//namespace F32ColorVal_Operations
+	namespace Element_Operations
 	{
 
 		template<> void CopyByPtr<F32ColorVal>(F32ColorVal * a_pDest, F32ColorVal * a_pSrc);
