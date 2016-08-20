@@ -119,8 +119,8 @@ namespace Hcv
 		bool m_isLocked;
 	};
 
-	typedef Image_MemAccessor_2D< float, float, 3 > F32Image3C_Float_MemAccessor_2D;
-	typedef ObjRef< F32Image3C_Float_MemAccessor_2D > F32Image3C_Float_MemAccessor_2D_Ref;
+	//typedef Image_MemAccessor_2D< float, float, 3 > F32Image3C_FloatAcc;
+	//typedef ObjRef< F32Image3C_FloatAcc > F32Image3C_FloatAcc_Ref;
 
 	typedef Image_MemAccessor_2D< Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
 	typedef ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2D_Ref;
