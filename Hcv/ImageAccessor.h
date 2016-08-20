@@ -26,15 +26,15 @@ namespace Hcv
 	//typedef ImageAccessor< float, float, 3 > F32Image3C_FloatAcc;
 	//typedef ObjRef< F32Image3C_FloatAcc > F32Image3C_FloatAcc_Ref;
 
-	typedef ImageAccessor< Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
-	typedef ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2D_Ref;
+	typedef ImageAccessor< Float, F32ColorVal, 3 > F32ImageAccessor3C;
+	typedef ObjRef< F32ImageAccessor3C > F32ImageAccessor3C_Ref;
 
-	//typedef ImageAccessor< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
-	typedef ImageAccessor< Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
-	typedef ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2D_Ref;
+	//typedef ImageAccessor< Hcpl::Float, float, 1 > F32ImageAccessor1C;
+	typedef ImageAccessor< Float, float, 1 > F32ImageAccessor1C;
+	typedef ObjRef< F32ImageAccessor1C > F32ImageAccessor1C_Ref;
 
-	typedef ImageAccessor< Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
-	typedef ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2D_Ref;
+	typedef ImageAccessor< Int32, int, 1 > S32ImageAccessor1C;
+	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
 
 
 

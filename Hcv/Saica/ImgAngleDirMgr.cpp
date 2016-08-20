@@ -41,7 +41,7 @@ namespace Hcv
 			m_srcImg = m_imgRotMgr->GetSrcImg();
 			m_rotImg = m_imgRotMgr->GetResImg();
 
-			F32Image3C_F32ColorVal_MemAccessor_2D_Ref var1 = new F32Image3C_F32ColorVal_MemAccessor_2D(m_rotImg);
+			F32ImageAccessor3C_Ref var1 = new F32ImageAccessor3C(m_rotImg);
 
 			Debug::Assert(m_rotImg->GetSize().width == a_rotMagSqrImg->GetSize().width
 				&& m_rotImg->GetSize().height == a_rotMagSqrImg->GetSize().height);

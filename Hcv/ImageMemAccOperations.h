@@ -24,24 +24,24 @@ namespace Hcv
 
 		////-------------------------------------------------------------------
 
-		//F32Image_Float1C_MemAccessor_2D_Ref FillImage_Stripes(
-		//	F32Image3C_F32ColorVal_MemAccessor_2D_Ref a_imgAcc,
+		//F32ImageAccessor1C_Ref FillImage_Stripes(
+		//	F32ImageAccessor3C_Ref a_imgAcc,
 		//	F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth)
 		
-		F32Image3C_F32ColorVal_MemAccessor_2D_Ref GenFillImage_Stripes(
-			F32Image3C_F32ColorVal_MemAccessor_2D_Ref a_imgAcc,
+		F32ImageAccessor3C_Ref GenFillImage_Stripes(
+			F32ImageAccessor3C_Ref a_imgAcc,
 			F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth)
 		{
-			//F32Image_Float1C_MemAccessor_2D_Ref ret = NULL;
+			//F32ImageAccessor1C_Ref ret = NULL;
 
-			//F32Image_Float1C_MemAccessor_2D_Ref ret =
-			F32Image3C_F32ColorVal_MemAccessor_2D_Ref ret =
-				//new F32Image_Float1C_MemAccessor_2D(a_imgAcc->GetSrcImg()->CloneNew_WithChannels(1));
-				//new F32Image3C_F32ColorVal_MemAccessor_2D(a_imgAcc->GetSrcImg()->CloneNew());
-				new F32Image3C_F32ColorVal_MemAccessor_2D(a_imgAcc->GetSrcImg()->Clone());
-			//new F32Image_Float1C_MemAccessor_2D(a_imgAcc->GetSrcImg()->CloneNew());
+			//F32ImageAccessor1C_Ref ret =
+			F32ImageAccessor3C_Ref ret =
+				//new F32ImageAccessor1C(a_imgAcc->GetSrcImg()->CloneNew_WithChannels(1));
+				//new F32ImageAccessor3C(a_imgAcc->GetSrcImg()->CloneNew());
+				new F32ImageAccessor3C(a_imgAcc->GetSrcImg()->Clone());
+			//new F32ImageAccessor1C(a_imgAcc->GetSrcImg()->CloneNew());
 
-			//new F32Image_Float1C_MemAccessor_2D(a_imgAcc->GetSrcImg()->Clone());
+			//new F32ImageAccessor1C(a_imgAcc->GetSrcImg()->Clone());
 
 			auto aut1 = ret->GetMemAccessor();
 
@@ -59,15 +59,15 @@ namespace Hcv
 
 
 
-		//F32Image_Float1C_MemAccessor_2D_Ref FillImage_Stripes(
-		//	F32Image3C_F32ColorVal_MemAccessor_2D_Ref a_imgAcc,
+		//F32ImageAccessor1C_Ref FillImage_Stripes(
+		//	F32ImageAccessor3C_Ref a_imgAcc,
 		//	F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth)
 		//{
-		//	F32Image_Float1C_MemAccessor_2D_Ref ret = NULL;
-		//		//F32Image_Float1C_MemAccessor_2D_Ref ret = F32Image_Float1C_MemAccessor_2D(
+		//	F32ImageAccessor1C_Ref ret = NULL;
+		//		//F32ImageAccessor1C_Ref ret = F32ImageAccessor1C(
 		//		//F32Image::Create(a_imgAcc->GetSrcImg()->GetSize(), 1));
 
-		//	//F32Image3C_F32ColorVal_MemAccessor_2D_Ref ret = a_imgAcc->CloneNew();
+		//	//F32ImageAccessor3C_Ref ret = a_imgAcc->CloneNew();
 		//	//ret->SetSrcImg(a_imgAcc->GetSrcImg()->CloneNew());
 		//	//ret->Lock();
 
@@ -76,9 +76,9 @@ namespace Hcv
 		//	return ret;
 		//}
 
-		////F32Image3C_F32ColorVal_MemAccessor_2D_Ref imgAcc1 = new F32Image3C_F32ColorVal_MemAccessor_2D(src);
+		////F32ImageAccessor3C_Ref imgAcc1 = new F32ImageAccessor3C(src);
 
-		////F32Image3C_F32ColorVal_MemAccessor_2D_Ref imgAcc0 = new F32Image3C_F32ColorVal_MemAccessor_2D(src->CloneNew());
+		////F32ImageAccessor3C_Ref imgAcc0 = new F32ImageAccessor3C(src->CloneNew());
 		////CopyImage(imgAcc0->GetMemAccessor(), imgAcc1->GetMemAccessor());
 
 
