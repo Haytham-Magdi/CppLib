@@ -52,13 +52,26 @@ namespace Hcv
 			m_isLocked = false;
 		}
 
-		Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneNew()
+		//Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneNew()
+		//{
+		//	Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
+		//		new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
+
+		//	ret->m_srcImg = m_srcImg;
+		//	ret->m_memAccessor = this->m_memAccessor;
+
+		//	return ret;
+		//}
+
+		Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneUnlocked()
 		{
 			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
 				new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
 
-			ret->m_srcImg = m_srcImg;
-			ret->m_memAccessor = this->m_memAccessor;
+			ret->m_srcImg = m_srcImg->Clone();
+
+			ret->m_memAccessor = m_memAccessor->CloneUnlocked();
+			ret->m_memAccessor->Lock();
 
 			return ret;
 		}
