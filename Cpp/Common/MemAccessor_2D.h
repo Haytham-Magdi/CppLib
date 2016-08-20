@@ -114,7 +114,28 @@ namespace Hcpl
 				throw "m_isLocked";
 
 			m_offsetCalc = m_offsetCalc->CloneUnlocked();
-			//m_offsetCalc->SetRange_Relative()
+			m_offsetCalc->SetRange_Relative(a_nBgn_X, a_nEnd_X, a_nBgn_Y, a_nEnd_Y);
+			m_offsetCalc->LockForever();
+		}
+
+		void SetRange_Relative_X(int a_nBgn_X, int a_nEnd_X)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			m_offsetCalc->SetRange_Relative_X(a_nBgn_X, a_nEnd_X);
+			m_offsetCalc->LockForever();
+		}
+
+		void SetRange_Relative_Y(int a_nBgn_Y, int a_nEnd_Y)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			m_offsetCalc->SetRange_Relative_Y(a_nBgn_Y, a_nEnd_Y);
+			m_offsetCalc->LockForever();
 		}
 
 		void SwitchXY()

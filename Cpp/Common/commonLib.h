@@ -29,6 +29,7 @@
 #include <Lib\Cpp\Common\Accessor2D.h>
 #include <Lib\Cpp\Common\MemAccessor_1D.h>
 #include <Lib\Cpp\Common\MemAccessor_2D.h>
+#include <Lib\Cpp\Common\PtrIterator.h>
 #include <Lib\Cpp\Common\MultiListQueMgr.h>
 #include <Lib\Cpp\Common\MaxFinder.h>
 #include <Lib\Cpp\Common\MinFinder.h>

@@ -138,7 +138,7 @@ namespace Hcpl
 				throw "m_isLocked";
 
 			SetRange_Relative_X(a_nBgn_X, a_nEnd_X);
-			SetRange_Relative_X(a_nBgn_Y, a_nEnd_Y);
+			SetRange_Relative_Y(a_nBgn_Y, a_nEnd_Y);
 		}
 
 		OffsetCalc_1D_Ref GetOffsetCalc_X()

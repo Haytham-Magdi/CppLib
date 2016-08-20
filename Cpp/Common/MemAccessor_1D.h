@@ -59,6 +59,17 @@ namespace Hcpl
 			return ret;
 		}
 
+		//PtrIterator<T> GenPtrIterator(int a_nAftBgn, int a_nBefEnd)
+		//{
+		//	T * ptr_P2 = &(this->GetDataPtr())[m_offsetCalc->GetOffsetPart1()];
+		//	
+		//	T * ptr_Bgn = &ptr_P2[a_nAftBgn];
+		//	T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(m_offsetCalc->GetMaxNofSteps() - a_nBefEnd)];
+
+		//	PtrIterator<T> ret(ptr_Bgn, ptr_Lim, m_offsetCalc->GetActualStepSize());
+		//	return ret;
+		//}
+
 		bool IsLocked()
 		{
 			return m_isLocked;
