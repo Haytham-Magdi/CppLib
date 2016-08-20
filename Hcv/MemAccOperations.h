@@ -125,30 +125,6 @@ namespace Hcv
 
 		//-------------------------------------------------------------------
 
-		F32Image_Float1C_MemAccessor_2D_Ref FillImage_Stripes(
-			F32Image3C_F32ColorVal_MemAccessor_2D_Ref a_imgAcc,
-			F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth)
-		{
-			F32Image_Float1C_MemAccessor_2D_Ref ret = NULL;
-				//F32Image_Float1C_MemAccessor_2D_Ref ret = F32Image_Float1C_MemAccessor_2D(
-				//F32Image::Create(a_imgAcc->GetSrcImg()->GetSize(), 1));
-
-			//F32Image3C_F32ColorVal_MemAccessor_2D_Ref ret = a_imgAcc->CloneNew();
-			//ret->SetSrcImg(a_imgAcc->GetSrcImg()->CloneNew());
-			//ret->Lock();
-
-			//FillImage_Stripes(a_imgAcc, a_val1, a_val2, a_stripWidth);
-
-			return ret;
-		}
-
-		//F32Image3C_F32ColorVal_MemAccessor_2D_Ref imgAcc1 = new F32Image3C_F32ColorVal_MemAccessor_2D(src);
-
-		//F32Image3C_F32ColorVal_MemAccessor_2D_Ref imgAcc0 = new F32Image3C_F32ColorVal_MemAccessor_2D(src->CloneNew());
-		//CopyImage(imgAcc0->GetMemAccessor(), imgAcc1->GetMemAccessor());
-
-
-
 		template<class T>
 		void CalcMagImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
 		{
@@ -193,7 +169,57 @@ namespace Hcv
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				ptr_Out = Element_Operations::CalcMag<T>(ptr_Inp);
+				*ptr_Out = Element_Operations::CalcMag<T>(ptr_Inp);
+			}
+		}
+
+		//-------------------------------------------------------------------
+
+		template<class T>
+		void CalcMagSqrImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
+		{
+			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
+
+			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
+
+			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
+				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
+
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0, 0);
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0, 0);
+
+			int i = 0;
+			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+			float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+			for (;
+				!ptrItr_Inp_Y.IsDone();
+				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
+			{
+				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
+				acc_Out_X->SetDataPtr(ptr_Out_Y);
+
+				CalcMagSqrLine<T>(acc_Inp_X, acc_Out_X);
+			}
+		}
+
+		template<class T>
+		void CalcMagSqrLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
+		{
+			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
+				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
+
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0, 0);
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
+
+			T * ptr_Inp = ptrItr_Inp.GetCurrent();
+			float * ptr_Out = ptrItr_Out.GetCurrent();
+			for (;
+				!ptrItr_Inp.IsDone();
+				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
+			{
+				*ptr_Out = Element_Operations::CalcMagSqr<T>(ptr_Inp);
 			}
 		}
 
