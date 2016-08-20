@@ -24,21 +24,22 @@ namespace Hcv
 		Image_MemAccessor_2D(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
 			m_isLocked = false;
-
-			m_srcImg = a_srcImg;
-			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
+			Init(a_srcImg);
 		}
 
 		void Init(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
 			m_srcImg = a_srcImg;
+			m_memAccessor = new MemAccessor_2D<T_AccElm>();
 			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
 		}
 
 		static Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) SelfOrClone_Unlocked(
 			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) a_arg)
 		{
-			throw "Not working!";
 			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
 		}
 
@@ -96,8 +97,10 @@ namespace Hcv
 		{
 			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
 
-			a_pAccessor = new MemAccessor_2D<T_AccElm>((T_AccElm *)a_srcImg->GetPixAt(0, 0), new OffsetCalc_2D(
-				1, a_srcImg->GetSize().width, a_srcImg->GetSize().height));
+			OffsetCalc_2D_Ref calc = new OffsetCalc_2D(1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
+			calc->LockForever();
+
+			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0), calc);
 		}
 
 	protected:

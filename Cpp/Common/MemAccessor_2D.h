@@ -108,6 +108,15 @@ namespace Hcpl
 				m_data, m_offsetCalc->GetOffsetCalc_Y());
 		}
 
+		void SetRange_Relative(int a_nBgn_X, int a_nEnd_X, int a_nBgn_Y, int a_nEnd_Y)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			//m_offsetCalc->SetRange_Relative()
+		}
+
 		void SwitchXY()
 		{
 			OffsetCalc_2D_Ref offsetCalc = m_offsetCalc->CloneUnlocked();
