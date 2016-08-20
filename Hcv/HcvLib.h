@@ -185,7 +185,7 @@
 #include <Lib\Hcv\ImgBiMixGrad.h>
 #include <Lib\Hcv\ImgScanMgr.h>
 #include <Lib\Hcv\ImgClusteringTry.h>
-#include <Lib\Hcv\Image_MemAccessor_2D.h>
+#include <Lib\Hcv\ImageAccessor.h>
 #include <Lib\Hcv\MemAccOperations.h>
 #include <Lib\Hcv\ImageMemAccOperations.h>
 #include <Lib\Hcv\F32ColorVal_Operations.h>

@@ -42,7 +42,7 @@
 #include <Lib\Hcv\ImgBiMixGrad.cpp>
 #include <Lib\Hcv\ImgScanMgr.cpp>
 #include <Lib\Hcv\ImgClusteringTry.cpp>
-#include <Lib\Hcv\Image_MemAccessor_2D.cpp>
+#include <Lib\Hcv\ImageAccessor.cpp>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.cpp>

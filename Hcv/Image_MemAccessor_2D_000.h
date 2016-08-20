@@ -31,7 +31,7 @@ namespace Hcv
 
 
 
-	class Image_MemAccessor_2D : FRM_Object
+	class ImageAccessor : FRM_Object
 	{
 	public:
 

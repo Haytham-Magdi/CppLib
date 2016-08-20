@@ -17,33 +17,33 @@ namespace Hcv
 	//template<class T>
 	//class MemAccessor_2D;
 
-	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
-	class Image_MemAccessor_2D;
+	template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	class ImageAccessor;
 
 
-#define Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ObjRef< Image_MemAccessor_2D< T_ImgElm, T_AccElm, V_SupposedNofChannels >>
+#define ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) ObjRef< ImageAccessor< T_ImgElm, T_AccElm, V_NofChannels >>
 
-	//typedef Image_MemAccessor_2D< float, float, 3 > F32Image3C_FloatAcc;
+	//typedef ImageAccessor< float, float, 3 > F32Image3C_FloatAcc;
 	//typedef ObjRef< F32Image3C_FloatAcc > F32Image3C_FloatAcc_Ref;
 
-	typedef Image_MemAccessor_2D< Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
+	typedef ImageAccessor< Float, F32ColorVal, 3 > F32Image3C_F32ColorVal_MemAccessor_2D;
 	typedef ObjRef< F32Image3C_F32ColorVal_MemAccessor_2D > F32Image3C_F32ColorVal_MemAccessor_2D_Ref;
 
-	//typedef Image_MemAccessor_2D< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
-	typedef Image_MemAccessor_2D< Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
+	//typedef ImageAccessor< Hcpl::Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
+	typedef ImageAccessor< Float, float, 1 > F32Image_Float1C_MemAccessor_2D;
 	typedef ObjRef< F32Image_Float1C_MemAccessor_2D > F32Image_Float1C_MemAccessor_2D_Ref;
 
-	typedef Image_MemAccessor_2D< Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
+	typedef ImageAccessor< Int32, int, 1 > S32Image1C_Int_MemAccessor_2D;
 	typedef ObjRef< S32Image1C_Int_MemAccessor_2D > S32Image1C_Int_MemAccessor_2D_Ref;
 
 
 
-	template<class T_ImgElm, class T_AccElm, int const V_SupposedNofChannels>
-	class Image_MemAccessor_2D : FRM_Object
+	template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	class ImageAccessor : FRM_Object
 	{
 	public:
 
-		Image_MemAccessor_2D(IMAGE_REF(T_ImgElm) a_srcImg)
+		ImageAccessor(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
 			m_isLocked = false;
 			Init(a_srcImg);
@@ -56,7 +56,7 @@ namespace Hcv
 
 			m_srcImg = a_srcImg;
 			m_memAccessor = new MemAccessor_2D<T_AccElm>();
-			Image_MemAccessor_2D::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
+			ImageAccessor::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
 		}
 
 		bool IsLocked()
@@ -74,10 +74,10 @@ namespace Hcv
 			m_isLocked = false;
 		}
 
-		//Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneNew()
+		//ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) CloneNew()
 		//{
-		//	Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
-		//		new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
+		//	ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) ret =
+		//		new ImageAccessor<T_ImgElm, T_AccElm, V_NofChannels>();
 
 		//	ret->m_srcImg = m_srcImg;
 		//	ret->m_memAccessor = this->m_memAccessor;
@@ -85,10 +85,10 @@ namespace Hcv
 		//	return ret;
 		//}
 
-		Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) CloneUnlocked()
+		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) CloneUnlocked()
 		{
-			Image_MemAccessor_2D_REF(T_ImgElm, T_AccElm, V_SupposedNofChannels) ret =
-				new Image_MemAccessor_2D<T_ImgElm, T_AccElm, V_SupposedNofChannels>();
+			ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) ret =
+				new ImageAccessor<T_ImgElm, T_AccElm, V_NofChannels>();
 
 			ret->m_srcImg = m_srcImg->Clone();
 
@@ -120,7 +120,7 @@ namespace Hcv
 			IMAGE_REF(T_ImgElm) a_srcImg,
 			MemAccessor_2D_REF(T_AccElm) a_pAccessor)
 		{
-			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_SupposedNofChannels);
+			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_NofChannels);
 
 			OffsetCalc_2D_Ref calc = new OffsetCalc_2D(1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
 			calc->Lock();
