@@ -39,35 +39,19 @@ namespace Hcpl
 			return pRet;
 		}
 
-		static OffsetCalc_1D_Ref SelfOrClone_Unlocked(OffsetCalc_1D_Ref a_arg)
-		{
-			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
-		}
-
-		static OffsetCalc_1D_Ref SelfOrClone_Locked(OffsetCalc_1D_Ref a_arg)
-		{
-			OffsetCalc_1D_Ref ret = a_arg;
-				
-			if (!ret->IsLocked())
-			{
-				ret = ret->CloneUnlocked();
-				ret->LockForever();
-			}
-
-			return ret;
-		}
-
 		bool IsLocked()
 		{
 			return m_isLocked;
 		}
 
-		void LockForever()
+		void Lock()
 		{
-			if (m_isLocked)
-				return;
-
 			m_isLocked = true;
+		}
+
+		void Unlock()
+		{
+			m_isLocked = false;
 		}
 
 		void SetRange_Relative(int a_nRelativeBgnStep, int a_nRelativeEndStep)

@@ -34,12 +34,14 @@ namespace Hcpl
 			return m_isLocked;
 		}
 
-		void LockForever()
+		void Lock()
 		{
-			if (m_isLocked)
-				return;
-
 			m_isLocked = true;
+		}
+
+		void Unlock()
+		{
+			m_isLocked = false;
 		}
 
 		OffsetCalc_2D * CloneUnlocked()
@@ -53,24 +55,6 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
-		}
-
-		static OffsetCalc_2D_Ref SelfOrClone_Unlocked(OffsetCalc_2D_Ref a_arg)
-		{
-			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
-		}
-
-		static OffsetCalc_2D_Ref SelfOrClone_Locked(OffsetCalc_2D_Ref a_arg)
-		{
-			OffsetCalc_2D_Ref ret = a_arg;
-
-			if (!ret->IsLocked())
-			{
-				ret = ret->CloneUnlocked();
-				ret->LockForever();
-			}
-
-			return ret;
 		}
 
 		void Init(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)

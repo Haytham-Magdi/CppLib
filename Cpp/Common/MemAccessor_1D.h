@@ -24,10 +24,10 @@ namespace Hcpl
 			m_isLocked = false;
 		}
 
-		MemAccessor_1D(T * a_data, OffsetCalc_1D_Ref a_offsetCalc_Locked)
+		MemAccessor_1D(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
 		{
 			m_isLocked = false;
-			Init(a_data, a_offsetCalc_Locked);
+			Init(a_data, a_offsetCalc);
 		}
 
 		MemAccessor_1D<T> * CloneUnlocked()
@@ -39,25 +39,6 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
-		}
-
-		static MemAccessor_1D_REF(T) SelfOrClone_Unlocked(MemAccessor_1D_REF(T) a_arg)
-		{
-			throw "Not working!";
-			return a_arg->IsLocked() ? a_arg->CloneUnlocked() : a_arg;
-		}
-
-		static MemAccessor_1D_REF(T) SelfOrClone_Locked(MemAccessor_1D_REF(T) a_arg)
-		{
-			MemAccessor_1D_REF(T) ret = a_arg;
-
-			if (!ret->IsLocked())
-			{
-				ret = ret->CloneUnlocked();
-				ret->LockForever();
-			}
-
-			return ret;
 		}
 
 		PtrIterator<T> GenPtrIterator(int a_nAftBgn, int a_nBefEnd)
@@ -78,25 +59,24 @@ namespace Hcpl
 			return m_isLocked;
 		}
 
-		void LockForever()
+		void Lock()
 		{
-			if (m_isLocked)
-				return;
-
 			m_isLocked = true;
 		}
 
-		void Init(T * a_data, OffsetCalc_1D_Ref a_offsetCalc_Locked)
+		void Unlock()
+		{
+			m_isLocked = false;
+		}
+
+		void Init(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
 		{
 			if (m_isLocked)
 				throw "m_isLocked";
 
-			if (!a_offsetCalc_Locked->IsLocked())
-				throw "!a_offsetCalc_Locked->IsLocked()";
-
 			m_data = a_data;
 
-			m_offsetCalc = a_offsetCalc_Locked;
+			m_offsetCalc = a_offsetCalc->CloneUnlocked();
 			m_offsetCalc->LockForever();
 		}
 
