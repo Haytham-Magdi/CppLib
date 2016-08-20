@@ -126,23 +126,23 @@ namespace Hcv
 		//-------------------------------------------------------------------
 
 		template<class T>
-		void CalcMagImage(MemAccessor_2D_REF(T) a_outAcc, MemAccessor_2D_REF(T) a_inpAcc)
+		void CalcMagImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Unlocked_Y();
 			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_Unlocked_X();
 
-			MemAccessor_1D_REF(T) acc_Out_Y = a_outAcc->GenAccessor_1D_Unlocked_Y();
-			MemAccessor_1D_REF(T) acc_Out_X = a_outAcc->GenAccessor_1D_Unlocked_X();
+			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Unlocked_Y();
+			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_Unlocked_X();
 
 			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
 
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0, 0);
-			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0, 0);
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0, 0);
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
-			T * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+			float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
 			for (;
 				!ptrItr_Inp_Y.IsDone();
 				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
@@ -150,26 +150,26 @@ namespace Hcv
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				CalcMagLine<T>(acc_Out_X, acc_Inp_X);
+				CalcMagLine<T>(acc_Inp_X, acc_Out_X);
 			}
 		}
 
 		template<class T>
-		void CalcMagLine(MemAccessor_1D_REF(T) a_outAcc, MemAccessor_1D_REF(T) a_inpAcc)
+		void CalcMagLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
 		{
 			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
 				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
 
 			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0, 0);
-			PtrIterator<T> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
 
 			T * ptr_Inp = ptrItr_Inp.GetCurrent();
-			T * ptr_Out = ptrItr_Out.GetCurrent();
+			float * ptr_Out = ptrItr_Out.GetCurrent();
 			for (;
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				Type_Basic::CopyByPtr<T>(ptr_Out, ptr_Inp);
+				ptr_Out = Type_Basic::CalcMag<T>(ptr_Inp);
 			}
 		}
 
