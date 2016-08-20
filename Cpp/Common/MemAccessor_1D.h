@@ -7,6 +7,7 @@
 
 #include <Lib\Cpp\Common\Debug.h>
 #include <Lib\Cpp\Common\OffsetCalc_1D.h>
+#include <Lib\Cpp\Common\PtrIterator.h>
 
 
 namespace Hcpl
@@ -59,16 +60,18 @@ namespace Hcpl
 			return ret;
 		}
 
-		//PtrIterator<T> GenPtrIterator(int a_nAftBgn, int a_nBefEnd)
-		//{
-		//	T * ptr_P2 = &(this->GetDataPtr())[m_offsetCalc->GetOffsetPart1()];
-		//	
-		//	T * ptr_Bgn = &ptr_P2[a_nAftBgn];
-		//	T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(m_offsetCalc->GetMaxNofSteps() - a_nBefEnd)];
+		PtrIterator<T> GenPtrIterator(int a_nAftBgn, int a_nBefEnd)
+		{
+			T * ptr_P2 = &(this->GetDataPtr())[m_offsetCalc->GetOffsetPart1()];
+			
+			T * ptr_Bgn = &ptr_P2[a_nAftBgn];
+			T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(m_offsetCalc->GetMaxNofSteps() - a_nBefEnd)];
 
-		//	PtrIterator<T> ret(ptr_Bgn, ptr_Lim, m_offsetCalc->GetActualStepSize());
-		//	return ret;
-		//}
+			PtrIterator<T> ret(ptr_Bgn, ptr_Lim, m_offsetCalc->GetActualStepSize());
+			//PtrIterator<T> ret(NULL, NULL, m_offsetCalc->GetActualStepSize());
+
+			return ret;
+		}
 
 		bool IsLocked()
 		{

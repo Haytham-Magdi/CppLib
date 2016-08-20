@@ -13,16 +13,15 @@ namespace Hcpl
 {
 
 	template<class T>
-	class PtrIterator : FRM_Object
+	class PtrIterator //: FRM_Object
 	{
 	public:
 
 		PtrIterator(T * a_bgn, T * a_lim, int a_nStepSize)
 		{
-			m_bgn = a_bgn;
 			m_current = a_bgn;
 			m_lim = a_lim;
-			m_nStepSize = m_nStepSize;
+			m_nStepSize = a_nStepSize;
 		}
 
 		bool IsDone()
@@ -30,9 +29,11 @@ namespace Hcpl
 			return m_current == m_lim;
 		}
 
-		void Next()
+		T * Next()
 		{
+			//m_current += m_nStepSize;
 			m_current += m_nStepSize;
+			return m_current;
 		}
 
 		T * GetCurrent()
@@ -42,7 +43,6 @@ namespace Hcpl
 
 	protected:
 
-		T * m_bgn;
 		T * m_current;
 		T * m_lim;
 		int m_nStepSize;
