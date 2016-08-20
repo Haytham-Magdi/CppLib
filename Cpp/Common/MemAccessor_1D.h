@@ -35,7 +35,9 @@ namespace Hcpl
 			MemAccessor_1D<T> * pRet = new MemAccessor_1D<T>();
 
 			pRet->m_data = m_data;
-			pRet->m_offsetCalc = m_offsetCalc;
+
+			pRet->m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			pRet->m_offsetCalc->Lock();
 
 			pRet->m_isLocked = false;
 			return pRet;

@@ -48,8 +48,11 @@ namespace Hcpl
 		{
 			OffsetCalc_2D * pRet = new OffsetCalc_2D();
 
-			pRet->m_offsetCalc_X = m_offsetCalc_X;
-			pRet->m_offsetCalc_Y = m_offsetCalc_Y;
+			pRet->m_offsetCalc_X = m_offsetCalc_X->CloneUnlocked();
+			pRet->m_offsetCalc_X->Lock();
+
+			pRet->m_offsetCalc_Y = m_offsetCalc_Y->CloneUnlocked();
+			pRet->m_offsetCalc_Y->Lock();
 
 			pRet->m_nOuterLimOffset = m_nOuterLimOffset;
 
