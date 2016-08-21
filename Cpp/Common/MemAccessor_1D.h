@@ -8,6 +8,7 @@
 #include <Lib\Cpp\Common\Debug.h>
 #include <Lib\Cpp\Common\OffsetCalc_1D.h>
 #include <Lib\Cpp\Common\PtrIterator.h>
+#include <Lib\Cpp\Common\MemSimpleAccessor_1D.h>
 
 
 namespace Hcpl
@@ -41,6 +42,11 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
+		}
+
+		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> & a_pSac)
+		{
+			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), m_offsetCalc->GetActualStepSize());
 		}
 
 		PtrIterator<T> GenPtrIterator(int a_nAftBgn, int a_nBefEnd)

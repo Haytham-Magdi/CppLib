@@ -26,7 +26,7 @@ namespace Hcv
 		template<class T>
 		float CalcMagSqr(T * a_pArg)
 		{
-			throw "Not Implemented.";
+			Sqr<T>(*a_pArg);
 		}
 
 		template<class T>

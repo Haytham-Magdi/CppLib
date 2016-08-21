@@ -9,6 +9,7 @@
 #include <Lib\Cpp\Common\Object.h>
 #include <Lib\Cpp\Common\ObjRef.h>
 #include <Lib\Cpp\Common\OffsetCalc_2D.h>
+#include <Lib\Cpp\Common\MemSimpleAccessor_1D.h>
 
 
 namespace Hcpl
@@ -88,6 +89,14 @@ namespace Hcpl
 		{
 			return new MemAccessor_1D<T>(
 				m_data, m_offsetCalc->GetOffsetCalc_Y());
+		}
+
+		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> & a_pSac)
+		{
+			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), 
+				m_offsetCalc->GetOffsetCalc_X()->GetActualStepSize(),
+				m_offsetCalc->GetOffsetCalc_Y()->GetActualStepSize()
+				);
 		}
 
 		void SetRange_Relative(int a_nBgn_X, int a_nEnd_X, int a_nBgn_Y, int a_nEnd_Y)
