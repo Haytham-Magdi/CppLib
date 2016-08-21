@@ -28,9 +28,9 @@ namespace Hcpl
 			Init(a_nOuterMaxNofSteps, a_nAbsoluteStepSize);
 		}
 
-		OffsetCalc_1D * CloneUnlocked()
+		OffsetCalc_1D_Ref CloneUnlocked()
 		{
-			OffsetCalc_1D * pRet = new OffsetCalc_1D();
+			OffsetCalc_1D_Ref pRet = new OffsetCalc_1D();
 
 			//	This could be dangerous in case that any ref member exists!
 			*pRet = *this;

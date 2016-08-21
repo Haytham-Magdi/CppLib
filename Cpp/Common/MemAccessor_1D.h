@@ -30,9 +30,9 @@ namespace Hcpl
 			Init(a_data, a_offsetCalc);
 		}
 
-		MemAccessor_1D<T> * CloneUnlocked()
+		MemAccessor_1D_REF(T) CloneUnlocked()
 		{
-			MemAccessor_1D<T> * pRet = new MemAccessor_1D<T>();
+			MemAccessor_1D_REF(T) pRet = new MemAccessor_1D<T>();
 
 			pRet->m_data = m_data;
 

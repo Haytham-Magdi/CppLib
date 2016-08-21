@@ -45,9 +45,9 @@ namespace Hcpl
 			m_offsetCalc->Lock();
 		}
 
-		MemAccessor_2D<T> * CloneUnlocked()
+		MemAccessor_2D_REF(T) CloneUnlocked()
 		{
-			MemAccessor_2D<T> * pRet = new MemAccessor_2D<T>();
+			MemAccessor_2D_REF(T) pRet = new MemAccessor_2D<T>();
 
 			pRet->m_data = m_data;
 
