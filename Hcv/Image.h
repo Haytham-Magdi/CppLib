@@ -129,8 +129,6 @@ namespace Hcv
 			Hcpl_ASSERT(GetSize1D_InBytes() == destImg->GetSize1D_InBytes());
 
 			memcpy(destImg->GetDataPtr(), this->GetDataPtr(), this->GetSize1D_InBytes());
-
-			throw "Not Implemented.";
 		}
 
 	protected:

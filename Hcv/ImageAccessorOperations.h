@@ -16,7 +16,7 @@
 
 namespace Hcv
 {
-	namespace ImageMemAccOperations
+	namespace ImageAccessorOperations
 	{
 		using namespace Hcpl;
 		using namespace Hcv::MemAccOperations;
@@ -30,31 +30,7 @@ namespace Hcv
 		
 		F32ImageAccessor3C_Ref GenFillImage_Stripes(
 			F32ImageAccessor3C_Ref a_imgAcc,
-			F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth)
-		{
-			//F32ImageAccessor1C_Ref ret = NULL;
-
-			//F32ImageAccessor1C_Ref ret =
-			F32ImageAccessor3C_Ref ret =
-				//new F32ImageAccessor1C(a_imgAcc->GetSrcImg()->CloneNew_WithChannels(1));
-				//new F32ImageAccessor3C(a_imgAcc->GetSrcImg()->CloneNew());
-				new F32ImageAccessor3C(a_imgAcc->GetSrcImg()->Clone());
-			//new F32ImageAccessor1C(a_imgAcc->GetSrcImg()->CloneNew());
-
-			//new F32ImageAccessor1C(a_imgAcc->GetSrcImg()->Clone());
-
-			auto aut1 = ret->GetMemAccessor();
-
-			FillImage_Stripes<F32ColorVal>(aut1, a_val1, a_val2, a_stripWidth);
-
-
-			//FillImage_Stripes(a_imgAcc, a_val1, a_val2, a_stripWidth);
-			////FillImage_Stripes(ret->GetMemAccessor(), a_val1, a_val2, a_stripWidth);
-
-			//CalcMagSqrImage(a_imgAcc->GetMemAccessor(), ret->GetMemAccessor());
-
-			return ret;
-		}
+			F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth);
 
 
 
