@@ -186,7 +186,7 @@
 #include <Lib\Hcv\ImgScanMgr.h>
 #include <Lib\Hcv\ImgClusteringTry.h>
 #include <Lib\Hcv\ImageAccessor.h>
-#include <Lib\Hcv\MemAccOperations.h>
+#include <Lib\Hcv\ImageOperations.h>
 #include <Lib\Hcv\ImageAccessorOperations.h>
 #include <Lib\Hcv\F32ColorVal_Operations.h>
 #include <Lib\Hcv\Element_Operations.h>

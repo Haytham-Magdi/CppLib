@@ -14,8 +14,9 @@
 namespace Hcv
 {
 	using namespace Hcpl;
+	using namespace Hcv::ImageOperation;
 
-	namespace MemAccOperations
+	namespace LineOperations
 	{
 		template<class T>
 		void FillImage_Stripes(MemAccessor_2D_REF(T) a_memAcc, T & a_val1, T & a_val2, int a_stripWidth)
