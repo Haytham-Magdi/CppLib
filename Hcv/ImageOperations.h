@@ -7,6 +7,7 @@
 #include <Lib\Hcv\funcs1.h>
 #include <vector>
 #include <Lib\Hcv\Image.h>
+#include <Lib\Hcv\LineOperations.h>
 //#include <Lib\Cpp\Common\commonLib.h>
 
 
@@ -14,6 +15,7 @@
 namespace Hcv
 {
 	using namespace Hcpl;
+	using namespace LineOperations;
 
 	namespace ImageOperations
 	{
