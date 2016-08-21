@@ -30,13 +30,13 @@ namespace Hcpl
 			Init(a_data, a_offsetCalc);
 		}
 
-		MemAccessor_1D_REF(T) CloneUnlocked()
+		MemAccessor_1D_REF(T) Clone()
 		{
 			MemAccessor_1D_REF(T) pRet = new MemAccessor_1D<T>();
 
 			pRet->m_data = m_data;
 
-			pRet->m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			pRet->m_offsetCalc = m_offsetCalc->Clone();
 			pRet->m_offsetCalc->Lock();
 
 			pRet->m_isLocked = false;
@@ -78,7 +78,7 @@ namespace Hcpl
 
 			m_data = a_data;
 
-			m_offsetCalc = a_offsetCalc->CloneUnlocked();
+			m_offsetCalc = a_offsetCalc->Clone();
 			m_offsetCalc->Lock();
 		}
 

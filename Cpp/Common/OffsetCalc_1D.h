@@ -28,7 +28,7 @@ namespace Hcpl
 			Init(a_nOuterMaxNofSteps, a_nAbsoluteStepSize);
 		}
 
-		OffsetCalc_1D_Ref CloneUnlocked()
+		OffsetCalc_1D_Ref Clone()
 		{
 			OffsetCalc_1D_Ref pRet = new OffsetCalc_1D();
 

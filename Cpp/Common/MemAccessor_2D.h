@@ -41,17 +41,17 @@ namespace Hcpl
 
 			m_data = a_data;
 
-			m_offsetCalc = a_offsetCalc->CloneUnlocked();
+			m_offsetCalc = a_offsetCalc->Clone();
 			m_offsetCalc->Lock();
 		}
 
-		MemAccessor_2D_REF(T) CloneUnlocked()
+		MemAccessor_2D_REF(T) Clone()
 		{
 			MemAccessor_2D_REF(T) pRet = new MemAccessor_2D<T>();
 
 			pRet->m_data = m_data;
 
-			pRet->m_offsetCalc = m_offsetCalc->CloneUnlocked();
+			pRet->m_offsetCalc = m_offsetCalc->Clone();
 			pRet->m_offsetCalc->Lock();
 
 			pRet->m_isLocked = false;

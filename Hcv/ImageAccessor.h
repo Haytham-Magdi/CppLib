@@ -85,14 +85,14 @@ namespace Hcv
 		//	return ret;
 		//}
 
-		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) CloneUnlocked()
+		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) Clone()
 		{
 			ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) ret =
 				new ImageAccessor<T_ImgElm, T_AccElm, V_NofChannels>();
 
 			ret->m_srcImg = m_srcImg->Clone();
 
-			ret->m_memAccessor = m_memAccessor->CloneUnlocked();
+			ret->m_memAccessor = m_memAccessor->Clone();
 			ret->m_memAccessor->Lock();
 
 			return ret;

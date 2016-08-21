@@ -44,14 +44,14 @@ namespace Hcpl
 			m_isLocked = false;
 		}
 
-		OffsetCalc_2D_Ref CloneUnlocked()
+		OffsetCalc_2D_Ref Clone()
 		{
 			OffsetCalc_2D_Ref pRet = new OffsetCalc_2D();
 
-			pRet->m_offsetCalc_X = m_offsetCalc_X->CloneUnlocked();
+			pRet->m_offsetCalc_X = m_offsetCalc_X->Clone();
 			pRet->m_offsetCalc_X->Lock();
 
-			pRet->m_offsetCalc_Y = m_offsetCalc_Y->CloneUnlocked();
+			pRet->m_offsetCalc_Y = m_offsetCalc_Y->Clone();
 			pRet->m_offsetCalc_Y->Lock();
 
 			pRet->m_nOuterLimOffset = m_nOuterLimOffset;
