@@ -98,9 +98,9 @@ namespace Hcv
 			return GetPixAt(0, 0);
 		}
 
-		Image< T > * CloneNew()
+		IMAGE_REF(T) CloneNew()
 		{
-			Image<T> * pRet = Image<T>::Create(this->GetSize(), this->GetNofChannels());
+			IMAGE_REF(T) pRet = Image<T>::Create(this->GetSize(), this->GetNofChannels());
 
 			return pRet;
 		}
@@ -112,11 +112,11 @@ namespace Hcv
 			return pRet;
 		}
 
-		Image< T > * Clone()
+		IMAGE_REF(T) Clone()
 		{
 			CvSize siz = this->GetSize();
 
-			Image<T> * pRet = this->CloneNew();
+			IMAGE_REF(T) pRet = this->CloneNew();
 			this->CopyTo(pRet);
 
 			return pRet;
