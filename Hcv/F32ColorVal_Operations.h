@@ -15,7 +15,6 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	//namespace F32ColorVal_Operations
 	namespace Element_Operations
 	{
 
@@ -29,6 +28,7 @@ namespace Hcv
 
 		template<> void DivideSelfByNum_ByPtr(F32ColorVal * a_pArg, float a_num);
 
+		template<> void SetToZero_ByPtr(F32ColorVal * a_pArg);
 
 	};
 }

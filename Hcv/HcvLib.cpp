@@ -44,6 +44,7 @@
 #include <Lib\Hcv\ImgClusteringTry.cpp>
 #include <Lib\Hcv\ImageAccessor.cpp>
 #include <Lib\Hcv\ImageAccessorOperations.cpp>
+#include <Lib\Hcv\TempImageAccessor.cpp>
 
 #include <Lib\Hcv\F32ColorVal_Operations.cpp>
 

@@ -53,6 +53,12 @@ namespace Hcv
 			*a_pArg = *a_pArg / a_num;
 		}
 
+		template<class T>
+		void SetToZero_ByPtr(T * a_pArg)
+		{
+			*a_pArg = 0;
+		}
+
 
 
 

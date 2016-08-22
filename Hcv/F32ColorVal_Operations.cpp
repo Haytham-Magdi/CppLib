@@ -48,5 +48,12 @@ namespace Hcv
 			a_pArg->DividSelfBy(a_num);
 		}
 
+		void SetToZero_ByPtr(F32ColorVal * a_pArg)
+		{
+			a_pArg->val0 = 0;
+			a_pArg->val1 = 0;
+			a_pArg->val2 = 0;
+		}
+
 	};
 }
