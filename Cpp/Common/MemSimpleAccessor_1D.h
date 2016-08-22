@@ -19,21 +19,31 @@ namespace Hcpl
 		{
 		}
 
-		void Init(T * a_data, int a_nStepSize)
+		void Init(T * a_data, int a_nMaxNofSteps, int a_nStepSize)
 		{
-			T * m_data = a_data;
+			m_data = a_data;
+			m_nMaxNofSteps = a_nMaxNofSteps;
 			m_nStepSize = a_nStepSize;
 		}
 
 		T & operator[](int a_pos)
 		{
+			Hcpl_ASSERT(a_pos >= 0);
+			Hcpl_ASSERT(a_pos < m_nMaxNofSteps);
+
 			return m_data[a_pos * m_nStepSize];
+		}
+
+		int GetSize()
+		{
+			return m_nMaxNofSteps;
 		}
 
 	protected:
 
 		T * m_data;
 		int m_nStepSize;
+		int m_nMaxNofSteps;
 	};
 	
 }

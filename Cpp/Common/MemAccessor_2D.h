@@ -91,7 +91,7 @@ namespace Hcpl
 				m_data, m_offsetCalc->GetOffsetCalc_Y());
 		}
 
-		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> & a_pSac)
+		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> * a_pSac)
 		{
 			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), 
 				m_offsetCalc->GetOffsetCalc_X()->GetActualStepSize(),

@@ -97,7 +97,57 @@ namespace Hcv
 			}
 		}
 
+		template<class T>
+		void AvgLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_winRange)
+		{
+			Hcpl_ASSERT(a_inpAcc->GetMaxNofSteps() == a_outAcc->GetMaxNofSteps());
+			Hcpl_ASSERT(a_winRange.GetBgn() <= 0);
+			Hcpl_ASSERT(0 <= a_winRange.GetEnd());
 
+			T zeroVal;
+			SetToZero_ByPtr<T>(&zeroVal);
+		
+			FillLine<T>(a_outAcc, zeroVal);
+
+			MemSimpleAccessor_1D<T> sac_Inp;
+			a_inpAcc->PrepareSimpleAccessor(&sac_Inp);
+
+			MemSimpleAccessor_1D<T> sac_Out;
+			a_outAcc->PrepareSimpleAccessor(&sac_Out);
+
+			const int nSize_1D = a_inpAcc->GetMaxNofSteps();
+
+			int nMdlEnd = nSize_1D - 1 - a_winRange.GetEnd();
+
+			int nWinLen = -a_winRange.GetBgn() + 1 + a_winRange.GetEnd();
+
+
+			T sum;
+			//T avg;
+			T * pDest;
+			SetToZero_ByPtr<T>(&sum);
+
+			for (int i = 0; i < nWinLen; i++)
+			{
+				Add_ByPtr(&sum, &sac_Inp[i], &sum);
+			}
+			pDest = &sac_Out[- a_winRange.GetBgn()];
+			Copy_ByPtr(pDest, &sum);
+			DivideSelfByNum_ByPtr(pDest, nWinLen);
+			
+			for (int i = - a_winRange.GetBgn() + 1; i <= nMdlEnd; i++)
+			{
+				pDest = &sac_Out[i];
+
+				Subtract_ByPtr(&sum, &sac_Inp[(i - 1) + a_winRange.GetBgn()], &sum);
+				Add_ByPtr(&sum, &sac_Inp[i + a_winRange.GetEnd()], &sum);
+
+				Copy_ByPtr(pDest, &sum);
+				DivideSelfByNum_ByPtr(pDest, nWinLen);
+			}
+
+
+		}
 
 	};
 }

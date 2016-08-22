@@ -168,7 +168,7 @@ namespace Hcv
 
 		template<class T>
 		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
-			Range<int> & winRange_X, Range<int> & winRange_Y)
+			Range<int> & a_winRange_X, Range<int> & a_winRange_Y)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
@@ -179,20 +179,13 @@ namespace Hcv
 			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
 
-			T zeroVal;
-			SetToZero_ByPtr<T>(&zeroVal);
-			FillImage<T>(a_outAcc, zeroVal);
-
-			return;
-
-
-
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
 			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
 			T * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+
 			for (;
 				!ptrItr_Inp_Y.IsDone();
 				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
@@ -200,15 +193,15 @@ namespace Hcv
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				//CalcMagLine<T>(acc_Inp_X, acc_Out_X);
+				AvgLine(acc_Inp_X, acc_Out_X, a_winRange_X);
 			}
 		}
 
 		template<class T>
 		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
-			Range<int> & winRange_X, Range<int> & winRange_Y)
+			Range<int> & a_winRange_X, Range<int> & a_winRange_Y)
 		{
-			AvgImage_H<T>(a_inpAcc, a_outAcc, winRange_X, winRange_Y);
+			AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X, a_winRange_Y);
 		}
 
 

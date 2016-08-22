@@ -44,12 +44,18 @@ namespace Hcpl
 			return pRet;
 		}
 
-		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> & a_pSac)
+		int GetMaxNofSteps()
 		{
-			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), m_offsetCalc->GetActualStepSize());
+			return m_offsetCalc->GetMaxNofSteps();
 		}
 
-		PtrIterator<T> GenPtrIterator(int a_nBgn, int a_nEnd)
+		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> * a_pSac)
+		{
+			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), GetMaxNofSteps(),
+				m_offsetCalc->GetActualStepSize());
+		}
+
+		PtrIterator<T> GenPtrIterator(int a_nBgn)
 		{
 			return GenPtrIterator(a_nBgn, this->GetOffsetCalc()->GetMaxNofSteps() - 1);
 		}
@@ -59,11 +65,9 @@ namespace Hcpl
 			T * ptr_P2 = &(this->GetDataPtr())[m_offsetCalc->GetOffsetPart1()];
 			
 			T * ptr_Bgn = &ptr_P2[a_nBgn];
-			//T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(m_offsetCalc->GetMaxNofSteps() - a_nEnd)];
-			T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(a_nEnd)];
+			T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(a_nEnd + 1)];
 
 			PtrIterator<T> ret(ptr_Bgn, ptr_Lim, m_offsetCalc->GetActualStepSize());
-			//PtrIterator<T> ret(NULL, NULL, m_offsetCalc->GetActualStepSize());
 
 			return ret;
 		}

@@ -21,16 +21,28 @@ namespace Hcpl
 
 		void Init(T a_bgn, T a_end)
 		{
+			//Hcpl_ASSERT(a_end);
+
 			m_bgn = a_bgn;
 			m_end = a_end;
 		}
 
-		static Range & New(T a_bgn, T a_end)
+		static Range New(T a_bgn, T a_end)
 		{
 			Range ret;
 			ret.Init(a_bgn, a_end);
 
 			return ret;
+		}
+
+		T & GetBgn()
+		{
+			return m_bgn;
+		}
+
+		T & GetEnd()
+		{
+			return m_end;
 		}
 
 	protected:
