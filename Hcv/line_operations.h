@@ -157,7 +157,7 @@ namespace Hcv
 				for (int i = 0; i < nBefDiff; i++)
 				{
 					pDest = &sac_Out[i];
-					Copy_ByPtr(pDest, &sum);
+					Copy_ByPtr(pDest, pSrc);
 				}
 			}
 
@@ -168,7 +168,7 @@ namespace Hcv
 				for (int i = nSrcIdx + 1; i < nSize_1D; i++)
 				{
 					pDest = &sac_Out[i];
-					Copy_ByPtr(pDest, &sum);
+					Copy_ByPtr(pDest, pSrc);
 				}
 			}
 

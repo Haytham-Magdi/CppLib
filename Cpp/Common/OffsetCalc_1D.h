@@ -174,7 +174,8 @@ namespace Hcpl
 			Hcpl_ASSERT(a_nInnerEndStep >= 0);
 			Hcpl_ASSERT(a_nInnerEndStep < m_nOuterMaxNofSteps);
 
-			int nInnerRangeDiff = a_nInnerEndStep - a_nInnerBgnStep;
+			//int nInnerRangeDiff = a_nInnerEndStep - a_nInnerBgnStep;
+			int nInnerRangeDiff = (a_nInnerEndStep + 1) - a_nInnerBgnStep;
 			Hcpl_ASSERT(0 != nInnerRangeDiff);
 
 			m_nMaxNofSteps = abs(nInnerRangeDiff);

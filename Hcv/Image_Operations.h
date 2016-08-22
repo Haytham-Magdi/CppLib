@@ -205,7 +205,10 @@ namespace Hcv
 			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc);
 
 			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_winRange_X);
+			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X);
 		
+			//return;
+
 			MemAccessor_2D_REF(T) outAcc2 = a_outAcc->Clone();
 			outAcc2->SwitchXY();
 

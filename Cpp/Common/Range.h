@@ -35,12 +35,12 @@ namespace Hcpl
 			return ret;
 		}
 
-		T & GetBgn()
+		T GetBgn()
 		{
 			return m_bgn;
 		}
 
-		T & GetEnd()
+		T GetEnd()
 		{
 			return m_end;
 		}
