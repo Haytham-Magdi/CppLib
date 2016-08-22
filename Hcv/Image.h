@@ -68,7 +68,7 @@ namespace Hcv
 
 		int GetSize1D_InBytes()
 		{
-			return GetSize1D() * sizeof(T);
+			return GetNofChannels() * GetSize1D() * sizeof(T);
 		}
 
 		CvMat* GetMatPtr()

@@ -43,25 +43,10 @@ namespace Hcv
 	{
 	public:
 
-		ImageAccessor()
-		{
-
-		}
-
 		ImageAccessor(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
 			m_isLocked = false;
 			Init(a_srcImg);
-		}
-
-		void Init(IMAGE_REF(T_ImgElm) a_srcImg)
-		{
-			if (m_isLocked)
-				throw "m_isLocked";
-
-			m_srcImg = a_srcImg;
-			m_memAccessor = new MemAccessor_2D<T_AccElm>();
-			ImageAccessor::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
 		}
 
 		bool IsLocked()
@@ -90,17 +75,14 @@ namespace Hcv
 		//	return ret;
 		//}
 
-		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) Clone()
+		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) CloneAccAndImage()
 		{
-			ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) ret =
-				new ImageAccessor<T_ImgElm, T_AccElm, V_NofChannels>();
+			return Clone(true);
+		}
 
-			ret->m_srcImg = m_srcImg->Clone();
-
-			ret->m_memAccessor = m_memAccessor->Clone();
-			ret->m_memAccessor->Lock();
-
-			return ret;
+		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) CloneAccessorOnly()
+		{
+			return Clone(false);
 		}
 
 		MemAccessor_2D_REF(T_AccElm) GetMemAccessor()
@@ -127,10 +109,57 @@ namespace Hcv
 		{
 			Hcpl_ASSERT(a_srcImg->GetNofChannels() == V_NofChannels);
 
-			OffsetCalc_2D_Ref calc = new OffsetCalc_2D(1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
-			calc->Lock();
+			OffsetCalc_2D_Ref offsetCalc = new OffsetCalc_2D(1, a_srcImg->GetSize().width, a_srcImg->GetSize().height);
+			offsetCalc->Lock();
 
-			a_pAccessor->Init((T_AccElm *)a_srcImg->GetPixAt(0, 0), calc);
+			a_pAccessor->Init((T_AccElm *)a_srcImg->GetDataPtr(), offsetCalc);
+		}
+
+		void SwitchXY()
+		{
+			m_memAccessor->Unlock();
+			m_memAccessor->SwitchXY();
+			m_memAccessor->Lock();
+		}
+
+	protected:
+
+		ImageAccessor()
+		{
+
+		}
+
+		void Init(IMAGE_REF(T_ImgElm) a_srcImg)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_srcImg = a_srcImg;
+			m_memAccessor = new MemAccessor_2D<T_AccElm>();
+			ImageAccessor::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
+		}
+
+	protected:
+
+		ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) Clone(bool a_bCloneImage)
+		{
+			ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) ret =
+				new ImageAccessor<T_ImgElm, T_AccElm, V_NofChannels>();
+
+			if (a_bCloneImage)
+			{
+				ret->m_srcImg = m_srcImg->Clone();
+			}
+			else
+			{
+				ret->m_srcImg = m_srcImg;
+			}
+
+			ret->m_memAccessor = m_memAccessor->Clone();
+			ret->m_memAccessor->SetDataPtr((F32ColorVal *)ret->m_srcImg->GetDataPtr());
+			ret->m_memAccessor->Lock();
+
+			return ret;
 		}
 
 	protected:
