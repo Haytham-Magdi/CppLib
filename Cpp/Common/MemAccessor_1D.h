@@ -49,12 +49,18 @@ namespace Hcpl
 			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), m_offsetCalc->GetActualStepSize());
 		}
 
-		PtrIterator<T> GenPtrIterator(int a_nAftBgn, int a_nBefEnd)
+		PtrIterator<T> GenPtrIterator(int a_nBgn, int a_nEnd)
+		{
+			return GenPtrIterator(a_nBgn, this->GetOffsetCalc()->GetMaxNofSteps() - 1);
+		}
+
+		PtrIterator<T> GenPtrIterator(int a_nBgn, int a_nEnd)
 		{
 			T * ptr_P2 = &(this->GetDataPtr())[m_offsetCalc->GetOffsetPart1()];
 			
-			T * ptr_Bgn = &ptr_P2[a_nAftBgn];
-			T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(m_offsetCalc->GetMaxNofSteps() - a_nBefEnd)];
+			T * ptr_Bgn = &ptr_P2[a_nBgn];
+			//T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(m_offsetCalc->GetMaxNofSteps() - a_nEnd)];
+			T * ptr_Lim = &ptr_P2[m_offsetCalc->CalcPart2(a_nEnd)];
 
 			PtrIterator<T> ret(ptr_Bgn, ptr_Lim, m_offsetCalc->GetActualStepSize());
 			//PtrIterator<T> ret(NULL, NULL, m_offsetCalc->GetActualStepSize());

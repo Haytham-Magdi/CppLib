@@ -32,7 +32,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
-			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0);
 
 			int i = 0;
 			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
@@ -53,7 +53,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
-			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0);
 
 			int i = 0;
 			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
@@ -69,7 +69,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
-			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0);
 
 			int i = 0;
 			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
@@ -91,8 +91,8 @@ namespace Hcv
 			Hcpl_ASSERT(acc_Src_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Dest_Y->GetOffsetCalc()->GetMaxNofSteps());
 
-			PtrIterator<T> ptrItr_Src_Y = acc_Src_Y->GenPtrIterator(0, 0);
-			PtrIterator<T> ptrItr_Dest_Y = acc_Dest_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Src_Y = acc_Src_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Dest_Y = acc_Dest_Y->GenPtrIterator(0);
 
 			int i = 0;
 			T * ptr_Src_Y = ptrItr_Src_Y.GetCurrent();
@@ -120,8 +120,8 @@ namespace Hcv
 			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0, 0);
-			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
@@ -149,8 +149,8 @@ namespace Hcv
 			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
 				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0, 0);
-			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
@@ -187,8 +187,8 @@ namespace Hcv
 
 
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0, 0);
-			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();

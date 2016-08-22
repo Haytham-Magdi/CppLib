@@ -21,7 +21,7 @@ namespace Hcv
 		template<class T>
 		void FillLine(MemAccessor_1D_REF(T) a_memAcc, T & a_val)
 		{
-			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0);
 
 			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
 			{
@@ -32,7 +32,7 @@ namespace Hcv
 		template<class T>
 		void DivideLineByNum(MemAccessor_1D_REF(T) a_memAcc, float a_num)
 		{
-			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0);
 
 			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
 			{
@@ -46,8 +46,8 @@ namespace Hcv
 			Hcpl_ASSERT(a_srcAcc->GetOffsetCalc()->GetMaxNofSteps() ==
 				a_destAcc->GetOffsetCalc()->GetMaxNofSteps());
 
-			PtrIterator<T> ptrItr_Src = a_srcAcc->GenPtrIterator(0, 0);
-			PtrIterator<T> ptrItr_Dest = a_destAcc->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Src = a_srcAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Dest = a_destAcc->GenPtrIterator(0);
 
 			T * ptr_Src = ptrItr_Src.GetCurrent();
 			T * ptr_Dest = ptrItr_Dest.GetCurrent();
@@ -65,8 +65,8 @@ namespace Hcv
 			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
 				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
 
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0, 0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0);
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0);
 
 			T * ptr_Inp = ptrItr_Inp.GetCurrent();
 			float * ptr_Out = ptrItr_Out.GetCurrent();
@@ -84,8 +84,8 @@ namespace Hcv
 			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
 				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
 
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0, 0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0);
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0);
 
 			T * ptr_Inp = ptrItr_Inp.GetCurrent();
 			float * ptr_Out = ptrItr_Out.GetCurrent();
