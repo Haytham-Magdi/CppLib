@@ -46,8 +46,6 @@ namespace Hcv
 			}
 		}
 
-		//-------------------------------------------------------------------
-
 		template<class T>
 		void FillImage(MemAccessor_2D_REF(T) a_memAcc, T & a_val)
 		{
@@ -63,19 +61,6 @@ namespace Hcv
 				FillLine<T>(acc_X, a_val);
 			}
 		}
-
-		template<class T>
-		void FillLine(MemAccessor_1D_REF(T) a_memAcc, T & a_val)
-		{
-			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0, 0);
-
-			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
-			{
-				Element_Operations::CopyByPtr<T>(ptr, &a_val);
-			}
-		}
-
-		//-------------------------------------------------------------------
 
 		template<class T>
 		void CopyImage(MemAccessor_2D_REF(T) a_destAcc, MemAccessor_2D_REF(T) a_srcAcc)
@@ -107,27 +92,6 @@ namespace Hcv
 		}
 
 		template<class T>
-		void CopyLine(MemAccessor_1D_REF(T) a_destAcc, MemAccessor_1D_REF(T) a_srcAcc)
-		{
-			Hcpl_ASSERT(a_srcAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_destAcc->GetOffsetCalc()->GetMaxNofSteps());
-
-			PtrIterator<T> ptrItr_Src = a_srcAcc->GenPtrIterator(0, 0);
-			PtrIterator<T> ptrItr_Dest = a_destAcc->GenPtrIterator(0, 0);
-
-			T * ptr_Src = ptrItr_Src.GetCurrent();
-			T * ptr_Dest = ptrItr_Dest.GetCurrent();
-			for (;
-				!ptrItr_Src.IsDone();
-				ptr_Src = ptrItr_Src.Next(), ptr_Dest = ptrItr_Dest.Next())
-			{
-				Element_Operations::CopyByPtr<T>(ptr_Dest, ptr_Src);
-			}
-		}
-
-		//-------------------------------------------------------------------
-
-		template<class T>
 		void CalcMagImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
@@ -155,27 +119,6 @@ namespace Hcv
 				CalcMagLine<T>(acc_Inp_X, acc_Out_X);
 			}
 		}
-
-		template<class T>
-		void CalcMagLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
-		{
-			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
-
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0, 0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
-
-			T * ptr_Inp = ptrItr_Inp.GetCurrent();
-			float * ptr_Out = ptrItr_Out.GetCurrent();
-			for (;
-				!ptrItr_Inp.IsDone();
-				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
-			{
-				*ptr_Out = Element_Operations::CalcMag<T>(ptr_Inp);
-			}
-		}
-
-		//-------------------------------------------------------------------
 
 		template<class T>
 		void CalcMagSqrImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
@@ -206,26 +149,6 @@ namespace Hcv
 			}
 		}
 
-		template<class T>
-		void CalcMagSqrLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
-		{
-			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
-
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0, 0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0, 0);
-
-			T * ptr_Inp = ptrItr_Inp.GetCurrent();
-			float * ptr_Out = ptrItr_Out.GetCurrent();
-			for (;
-				!ptrItr_Inp.IsDone();
-				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
-			{
-				*ptr_Out = Element_Operations::CalcMagSqr<T>(ptr_Inp);
-			}
-		}
-
-		//-------------------------------------------------------------------
 
 
 

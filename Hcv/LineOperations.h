@@ -63,7 +63,7 @@ namespace Hcv
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				*ptr_Out = Element_Operations::CalcMag<T>(ptr_Inp);
+				*ptr_Out = Element_Operations::CalcMagByPtr<T>(ptr_Inp);
 			}
 		}
 
@@ -82,7 +82,7 @@ namespace Hcv
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				*ptr_Out = Element_Operations::CalcMagSqr<T>(ptr_Inp);
+				*ptr_Out = Element_Operations::CalcMagSqrByPtr<T>(ptr_Inp);
 			}
 		}
 
