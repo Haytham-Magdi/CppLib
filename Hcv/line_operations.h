@@ -116,10 +116,13 @@ namespace Hcv
 			a_outAcc->PrepareSimpleAccessor(&sac_Out);
 
 			const int nSize_1D = a_inpAcc->GetMaxNofSteps();
+			
+			const int nBefDiff = - a_winRange.GetBgn();
+			const int nAftDiff = a_winRange.GetEnd();
 
-			int nMdlEnd = nSize_1D - 1 - a_winRange.GetEnd();
+			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
+			const int nRangeLen = nBefDiff + 1 + nAftDiff;
 
-			int nWinLen = -a_winRange.GetBgn() + 1 + a_winRange.GetEnd();
 
 
 			T sum;
@@ -127,27 +130,49 @@ namespace Hcv
 			T * pDest;
 			SetToZero_ByPtr<T>(&sum);
 
-			for (int i = 0; i < nWinLen; i++)
+			for (int i = 0; i < nRangeLen; i++)
 			{
 				Add_ByPtr(&sum, &sac_Inp[i], &sum);
 			}
-			pDest = &sac_Out[- a_winRange.GetBgn()];
+			pDest = &sac_Out[nBefDiff];
 			Copy_ByPtr(pDest, &sum);
-			DivideSelfByNum_ByPtr(pDest, nWinLen);
+			DivideSelfByNum_ByPtr(pDest, nRangeLen);
 			
-			for (int i = - a_winRange.GetBgn() + 1; i <= nMdlEnd; i++)
+			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
 				pDest = &sac_Out[i];
 
-				Subtract_ByPtr(&sum, &sac_Inp[(i - 1) + a_winRange.GetBgn()], &sum);
-				Add_ByPtr(&sum, &sac_Inp[i + a_winRange.GetEnd()], &sum);
+				Subtract_ByPtr(&sum, &sac_Inp[(i - 1) - nBefDiff], &sum);
+				Add_ByPtr(&sum, &sac_Inp[i + nAftDiff], &sum);
 
 				Copy_ByPtr(pDest, &sum);
-				DivideSelfByNum_ByPtr(pDest, nWinLen);
+				DivideSelfByNum_ByPtr(pDest, nRangeLen);
+			}
+
+///////////////////////////////
+
+			//	Fill bgn gap in output
+			{
+				T * pSrc = &sac_Out[nBefDiff];
+				for (int i = 0; i < nBefDiff; i++)
+				{
+					pDest = &sac_Out[i];
+					Copy_ByPtr(pDest, &sum);
+				}
+			}
+
+			//	Fill end gap in output
+			{
+				const int nSrcIdx = (nSize_1D - 1) - nAftDiff;
+				T * pSrc = &sac_Out[nSrcIdx];
+				for (int i = nSrcIdx + 1; i < nSize_1D; i++)
+				{
+					pDest = &sac_Out[i];
+					Copy_ByPtr(pDest, &sum);
+				}
 			}
 
 
 		}
-
 	};
 }
