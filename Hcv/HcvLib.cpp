@@ -45,6 +45,8 @@
 #include <Lib\Hcv\ImageAccessor.cpp>
 #include <Lib\Hcv\ImageAccessorOperations.cpp>
 
+#include <Lib\Hcv\F32ColorVal_Operations.cpp>
+
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.cpp>
 //#include <Lib\Hcv\LocHist\ImgDataMgr_2_FactorySet_LocHist.cpp>

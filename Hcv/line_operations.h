@@ -15,7 +15,7 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	namespace LineOperations
+	namespace Line_Operations
 	{
 
 		template<class T>
@@ -25,7 +25,18 @@ namespace Hcv
 
 			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
 			{
-				Element_Operations::CopyByPtr<T>(ptr, &a_val);
+				Element_Operations::Copy_ByPtr<T>(ptr, &a_val);
+			}
+		}
+
+		template<class T>
+		void DivideLineByNum(MemAccessor_1D_REF(T) a_memAcc, float a_num)
+		{
+			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0, 0);
+
+			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
+			{
+				Element_Operations::DivideSelfByNum_ByPtr<T>(ptr, a_num);
 			}
 		}
 
@@ -44,7 +55,7 @@ namespace Hcv
 				!ptrItr_Src.IsDone();
 				ptr_Src = ptrItr_Src.Next(), ptr_Dest = ptrItr_Dest.Next())
 			{
-				Element_Operations::CopyByPtr<T>(ptr_Dest, ptr_Src);
+				Element_Operations::Copy_ByPtr<T>(ptr_Dest, ptr_Src);
 			}
 		}
 
@@ -63,7 +74,7 @@ namespace Hcv
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				*ptr_Out = Element_Operations::CalcMagByPtr<T>(ptr_Inp);
+				*ptr_Out = Element_Operations::CalcMag_ByPtr<T>(ptr_Inp);
 			}
 		}
 
@@ -82,7 +93,7 @@ namespace Hcv
 				!ptrItr_Inp.IsDone();
 				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
 			{
-				*ptr_Out = Element_Operations::CalcMagSqrByPtr<T>(ptr_Inp);
+				*ptr_Out = Element_Operations::CalcMagSqr_ByPtr<T>(ptr_Inp);
 			}
 		}
 

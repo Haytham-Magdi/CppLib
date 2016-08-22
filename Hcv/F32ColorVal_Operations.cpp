@@ -9,6 +9,7 @@
 #include <Lib\Hcv\Image.h>
 
 #include <Lib\Hcv\Element_Operations.h>
+#include <Lib\Hcv\F32ColorVal_Operations.h>
 
 
 namespace Hcv

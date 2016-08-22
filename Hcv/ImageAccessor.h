@@ -43,6 +43,11 @@ namespace Hcv
 	{
 	public:
 
+		ImageAccessor()
+		{
+
+		}
+
 		ImageAccessor(IMAGE_REF(T_ImgElm) a_srcImg)
 		{
 			m_isLocked = false;

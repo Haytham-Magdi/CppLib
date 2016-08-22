@@ -7,7 +7,7 @@
 #include <Lib\Hcv\funcs1.h>
 #include <vector>
 #include <Lib\Hcv\Image.h>
-#include <Lib\Hcv\LineOperations.h>
+#include <Lib\Hcv\Line_Operations.h>
 //#include <Lib\Cpp\Common\commonLib.h>
 
 
@@ -15,9 +15,9 @@
 namespace Hcv
 {
 	using namespace Hcpl;
-	using namespace LineOperations;
+	using namespace Line_Operations;
 
-	namespace ImageOperations
+	namespace Image_Operations
 	{
 		template<class T>
 		void FillImage_Stripes(MemAccessor_2D_REF(T) a_memAcc, T & a_val1, T & a_val2, int a_stripWidth)
@@ -59,6 +59,22 @@ namespace Hcv
 			{
 				acc_X->SetDataPtr(ptr_Y);
 				FillLine<T>(acc_X, a_val);
+			}
+		}
+
+		template<class T>
+		void DivideImageByNum(MemAccessor_2D_REF(T) a_memAcc, float a_num)
+		{
+			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
+
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0, 0);
+
+			int i = 0;
+			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
+			{
+				acc_X->SetDataPtr(ptr_Y);
+				DivideLineByNum<T>(acc_X, a_num);
 			}
 		}
 

@@ -9,7 +9,7 @@
 #include <Lib\Hcv\Image.h>
 //#include <Lib\Cpp\Common\commonLib.h>
 
-#include <Lib\Hcv\ImageOperations.h>
+#include <Lib\Hcv\Image_Operations.h>
 #include <Lib\Hcv\ImageAccessorOperations.h>
 
 
@@ -18,7 +18,7 @@ namespace Hcv
 	namespace ImageAccessorOperations
 	{
 		using namespace Hcpl;
-		using namespace Hcv::ImageOperations;
+		using namespace Hcv::Image_Operations;
 
 
 		////-------------------------------------------------------------------
