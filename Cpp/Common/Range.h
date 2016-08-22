@@ -29,6 +29,8 @@ namespace Hcpl
 		{
 			Range ret;
 			ret.Init(a_bgn, a_end);
+
+			return ret;
 		}
 
 	protected:

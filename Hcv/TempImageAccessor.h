@@ -14,13 +14,13 @@ namespace Hcv
 {
 	using namespace Hcpl;
 
-	template<class T, int const V_NofChannels>
+	template<class T>
 	class TempImageAccessor;
 
 
 #define TempImageAccessor_REF(T) ObjRef< TempImageAccessor< T >>
 
-	template<class class T>
+	template<class T>
 	class TempImageAccessor : FRM_Object
 	{
 	public:

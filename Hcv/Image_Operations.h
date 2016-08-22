@@ -167,7 +167,8 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc)
+		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
+			Range<int> & winRange_X, Range<int> & winRange_Y)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
@@ -201,6 +202,13 @@ namespace Hcv
 
 				//CalcMagLine<T>(acc_Inp_X, acc_Out_X);
 			}
+		}
+
+		template<class T>
+		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
+			Range<int> & winRange_X, Range<int> & winRange_Y)
+		{
+			AvgImage_H<T>(a_inpAcc, a_outAcc, winRange_X, winRange_Y);
 		}
 
 
