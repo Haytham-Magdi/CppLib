@@ -17,10 +17,10 @@ namespace Hcpl
 	{
 	public:
 
-		PtrIterator(T * a_bgn, T * a_lim, int a_nStepSize)
+		PtrIterator(T * a_bgn, T * a_end, int a_nStepSize)
 		{
 			m_current = a_bgn;
-			m_lim = a_lim;
+			m_lim = a_end + a_nStepSize;
 			m_nStepSize = a_nStepSize;
 		}
 
@@ -29,11 +29,13 @@ namespace Hcpl
 			return m_current == m_lim;
 		}
 
-		T * Next()
+		//T * Next()
+		void Next()
 		{
-			//m_current += m_nStepSize;
+			Hcpl_ASSERT(!IsDone());
+
 			m_current += m_nStepSize;
-			return m_current;
+			//return m_current;
 		}
 
 		T * GetCurrent()
@@ -47,5 +49,5 @@ namespace Hcpl
 		T * m_lim;
 		int m_nStepSize;
 	};
-	
+
 }

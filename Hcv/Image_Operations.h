@@ -33,7 +33,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
-			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
 
 			int i = 0;
 			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
@@ -54,7 +54,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
-			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
 
 			int i = 0;
 			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
@@ -70,7 +70,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
-			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
 
 			int i = 0;
 			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
@@ -89,19 +89,20 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Dest_Y = a_destAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Dest_X = a_destAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Src_Y->GetOffsetCalc()->GetMaxNofSteps() ==
-				acc_Dest_Y->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(acc_Src_Y->GetIndexSize() == acc_Dest_Y->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Src_Y = acc_Src_Y->GenPtrIterator(0);
-			PtrIterator<T> ptrItr_Dest_Y = acc_Dest_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Src_Y = acc_Src_Y->GenPtrIterator();
+			PtrIterator<T> ptrItr_Dest_Y = acc_Dest_Y->GenPtrIterator();
 
 			int i = 0;
 			T * ptr_Src_Y = ptrItr_Src_Y.GetCurrent();
 			T * ptr_Dest_Y = ptrItr_Dest_Y.GetCurrent();
-			for (;
-				!ptrItr_Src_Y.IsDone();
-				ptr_Src_Y = ptrItr_Src_Y.Next(), ptr_Dest_Y = ptrItr_Dest_Y.Next(), i++)
+			
+			for (; !ptrItr_Src_Y.IsDone(); ptrItr_Src_Y.Next(), ptrItr_Dest_Y.Next(), i++)
 			{
+				ptr_Src_Y = ptrItr_Src_Y.GetCurrent();
+				ptr_Dest_Y = ptrItr_Dest_Y.GetCurrent();
+
 				acc_Src_X->SetDataPtr(ptr_Src_Y);
 				acc_Dest_X->SetDataPtr(ptr_Dest_Y);
 
@@ -118,11 +119,11 @@ namespace Hcv
 			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
-				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() ==
+				acc_Out_Y->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
-			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
@@ -147,11 +148,11 @@ namespace Hcv
 			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
-				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() ==
+				acc_Out_Y->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
-			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
@@ -168,8 +169,7 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
-			Range<int> & a_winRange_X)
+		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_winRange_X)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
@@ -177,11 +177,11 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
-				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() ==
+				acc_Out_Y->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
-			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
+			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
@@ -199,8 +199,7 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
-			Window<int> & a_window)
+		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Window<int> & a_window)
 		{
 			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc);
 
@@ -226,11 +225,11 @@ namespace Hcv
 			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
-				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() ==
+				acc_Out_Y->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
-			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
 			int i = 0;
 			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();

@@ -91,13 +91,13 @@ namespace Hcpl
 				m_data, m_offsetCalc->GetOffsetCalc_Y());
 		}
 
-		void PrepareSimpleAccessor(MemSimpleAccessor_1D<T> * a_pSac)
-		{
-			a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), 
-				m_offsetCalc->GetOffsetCalc_X()->GetActualStepSize(),
-				m_offsetCalc->GetOffsetCalc_Y()->GetActualStepSize()
-				);
-		}
+		//void GenSimpleAccessor(MemSimpleAccessor_2D<T> * a_pSac)
+		//{
+		//	a_pSac->Init(m_data + m_offsetCalc->GetOffsetPart1(), 
+		//		m_offsetCalc->GetOffsetCalc_X()->GetActualStepSize(),
+		//		m_offsetCalc->GetOffsetCalc_Y()->GetActualStepSize()
+		//		);
+		//}
 
 		void SetRange_Relative(int a_nBgn_X, int a_nEnd_X, int a_nBgn_Y, int a_nEnd_Y)
 		{

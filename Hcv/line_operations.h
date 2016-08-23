@@ -21,7 +21,7 @@ namespace Hcv
 		template<class T>
 		void FillLine(MemAccessor_1D_REF(T) a_memAcc, T & a_val)
 		{
-			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator();
 
 			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
 			{
@@ -32,7 +32,7 @@ namespace Hcv
 		template<class T>
 		void DivideLineByNum(MemAccessor_1D_REF(T) a_memAcc, float a_num)
 		{
-			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator();
 
 			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
 			{
@@ -43,11 +43,11 @@ namespace Hcv
 		template<class T>
 		void CopyLine(MemAccessor_1D_REF(T) a_destAcc, MemAccessor_1D_REF(T) a_srcAcc)
 		{
-			Hcpl_ASSERT(a_srcAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_destAcc->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(a_srcAcc->GetIndexSize() ==
+				a_destAcc->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Src = a_srcAcc->GenPtrIterator(0);
-			PtrIterator<T> ptrItr_Dest = a_destAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Src = a_srcAcc->GenPtrIterator();
+			PtrIterator<T> ptrItr_Dest = a_destAcc->GenPtrIterator();
 
 			T * ptr_Src = ptrItr_Src.GetCurrent();
 			T * ptr_Dest = ptrItr_Dest.GetCurrent();
@@ -62,11 +62,11 @@ namespace Hcv
 		template<class T>
 		void CalcMagLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() ==
+				a_outAcc->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
 			T * ptr_Inp = ptrItr_Inp.GetCurrent();
 			float * ptr_Out = ptrItr_Out.GetCurrent();
@@ -81,11 +81,11 @@ namespace Hcv
 		template<class T>
 		void CalcMagSqrLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() ==
+				a_outAcc->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
 			T * ptr_Inp = ptrItr_Inp.GetCurrent();
 			float * ptr_Out = ptrItr_Out.GetCurrent();
@@ -100,7 +100,7 @@ namespace Hcv
 		template<class T>
 		void AvgLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_winRange)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetMaxNofSteps() == a_outAcc->GetMaxNofSteps());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_outAcc->GetIndexSize());
 			Hcpl_ASSERT(a_winRange.GetBgn() <= 0);
 			Hcpl_ASSERT(0 <= a_winRange.GetEnd());
 
@@ -109,13 +109,10 @@ namespace Hcv
 		
 			FillLine<T>(a_outAcc, zeroVal);
 
-			MemSimpleAccessor_1D<T> sac_Inp;
-			a_inpAcc->PrepareSimpleAccessor(&sac_Inp);
+			MemSimpleAccessor_1D<T> sac_Inp = a_inpAcc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<T> sac_Out = a_outAcc->GenSimpleAccessor();
 
-			MemSimpleAccessor_1D<T> sac_Out;
-			a_outAcc->PrepareSimpleAccessor(&sac_Out);
-
-			const int nSize_1D = a_inpAcc->GetMaxNofSteps();
+			const int nSize_1D = a_inpAcc->GetIndexSize();
 			
 			const int nBefDiff = - a_winRange.GetBgn();
 			const int nAftDiff = a_winRange.GetEnd();
@@ -178,11 +175,11 @@ namespace Hcv
 		template<class T>
 		void CalcSqrtImage(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
-				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() ==
+				a_outAcc->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0);
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0);
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
 			T * ptr_Inp = ptrItr_Inp.GetCurrent();
 			float * ptr_Out = ptrItr_Out.GetCurrent();

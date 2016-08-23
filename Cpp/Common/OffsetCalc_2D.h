@@ -18,15 +18,10 @@ namespace Hcpl
 	{
 	public:
 
-		OffsetCalc_2D()
+		OffsetCalc_2D(int a_nAbsoluteStepSize_X, int a_nOuterIndexSize_X, int a_nOuterIndexSize_Y)
 		{
 			m_isLocked = false;
-		}
-
-		OffsetCalc_2D(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
-		{
-			m_isLocked = false;
-			Init(a_nAbsoluteStepSize_X, a_nOuterMaxNofSteps_X, a_nOuterMaxNofSteps_Y);
+			Init(a_nAbsoluteStepSize_X, a_nOuterIndexSize_X, a_nOuterIndexSize_Y);
 		}
 
 		bool IsLocked()
@@ -58,23 +53,6 @@ namespace Hcpl
 
 			pRet->m_isLocked = false;
 			return pRet;
-		}
-
-		void Init(int a_nAbsoluteStepSize_X, int a_nOuterMaxNofSteps_X, int a_nOuterMaxNofSteps_Y)
-		{
-			if (m_isLocked)
-				throw "m_isLocked";
-
-			m_offsetCalc_X = new OffsetCalc_1D(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
-			m_offsetCalc_X->Lock();
-
-			m_offsetCalc_Y = new OffsetCalc_1D(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
-			m_offsetCalc_Y->Lock();
-
-			//m_offsetCalc_X->Init(a_nOuterMaxNofSteps_X, a_nAbsoluteStepSize_X);
-			//m_offsetCalc_Y->Init(a_nOuterMaxNofSteps_Y, m_offsetCalc_X->GetOuterLimOffset());
-
-			m_nOuterLimOffset = m_offsetCalc_Y->GetOuterLimOffset();
 		}
 
 		int GetOffsetPart1()
@@ -136,6 +114,30 @@ namespace Hcpl
 		OffsetCalc_1D_Ref GetOffsetCalc_Y()
 		{
 			return m_offsetCalc_Y;
+		}
+
+	protected:
+
+		OffsetCalc_2D()
+		{
+			m_isLocked = false;
+		}
+
+		void Init(int a_nAbsoluteStepSize_X, int a_nOuterIndexSize_X, int a_nOuterIndexSize_Y)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_offsetCalc_X = new OffsetCalc_1D(a_nOuterIndexSize_X, a_nAbsoluteStepSize_X);
+			m_offsetCalc_X->Lock();
+
+			m_offsetCalc_Y = new OffsetCalc_1D(a_nOuterIndexSize_Y, m_offsetCalc_X->GetOuterLimOffset());
+			m_offsetCalc_Y->Lock();
+
+			//m_offsetCalc_X->Init(a_nOuterIndexSize_X, a_nAbsoluteStepSize_X);
+			//m_offsetCalc_Y->Init(a_nOuterIndexSize_Y, m_offsetCalc_X->GetOuterLimOffset());
+
+			m_nOuterLimOffset = m_offsetCalc_Y->GetOuterLimOffset();
 		}
 
 	protected:

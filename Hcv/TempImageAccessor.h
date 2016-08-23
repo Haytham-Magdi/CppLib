@@ -28,8 +28,8 @@ namespace Hcv
 
 		TempImageAccessor(MemAccessor_2D_REF(T) a_memAccessor)
 		{
-			int nSize_X = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_X()->GetMaxNofSteps();
-			int nSize_Y = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_Y()->GetMaxNofSteps();
+			int nSize_X = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_X()->GetIndexSize();
+			int nSize_Y = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_Y()->GetIndexSize();
 			int nSize_1D = nSize_X * nSize_Y;
 
 			m_allocVect.SetSize(nSize_1D);
