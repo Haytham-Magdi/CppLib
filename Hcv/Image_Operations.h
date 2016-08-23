@@ -22,7 +22,7 @@ namespace Hcv
 	namespace Image_Operations
 	{
 		template<class T>
-		void FillImage_Stripes(MemAccessor_2D_REF(T) a_memAcc, T & a_val1, T & a_val2, int a_stripWidth)
+		void FillImage_Stripes_H(MemAccessor_2D_REF(T) a_memAcc, T & a_val1, T & a_val2, int a_stripWidth)
 		{
 			T * valArr[2];
 			valArr[0] = &a_val1;
@@ -34,10 +34,11 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
-
-			int i = 0;
-			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
+			
+			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
 			{
+				T * ptr_Y = ptrItr_Y.GetCurrent();
+
 				if (0 == i % a_stripWidth)
 				{
 					valIdx = 1 - valIdx;
@@ -55,10 +56,11 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
-
-			int i = 0;
-			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
+			
+			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
 			{
+				T * ptr_Y = ptrItr_Y.GetCurrent();
+
 				acc_X->SetDataPtr(ptr_Y);
 				FillLine<T>(acc_X, a_val);
 			}
@@ -72,9 +74,10 @@ namespace Hcv
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
 
-			int i = 0;
-			for (T * ptr_Y = ptrItr_Y.GetCurrent(); !ptrItr_Y.IsDone(); ptr_Y = ptrItr_Y.Next(), i++)
+			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
 			{
+				T * ptr_Y = ptrItr_Y.GetCurrent();
+
 				acc_X->SetDataPtr(ptr_Y);
 				DivideLineByNum<T>(acc_X, a_num);
 			}
@@ -94,14 +97,10 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Src_Y = acc_Src_Y->GenPtrIterator();
 			PtrIterator<T> ptrItr_Dest_Y = acc_Dest_Y->GenPtrIterator();
 
-			int i = 0;
-			T * ptr_Src_Y = ptrItr_Src_Y.GetCurrent();
-			T * ptr_Dest_Y = ptrItr_Dest_Y.GetCurrent();
-			
-			for (; !ptrItr_Src_Y.IsDone(); ptrItr_Src_Y.Next(), ptrItr_Dest_Y.Next(), i++)
+			for (; !ptrItr_Src_Y.IsDone(); ptrItr_Src_Y.Next(), ptrItr_Dest_Y.Next())
 			{
-				ptr_Src_Y = ptrItr_Src_Y.GetCurrent();
-				ptr_Dest_Y = ptrItr_Dest_Y.GetCurrent();
+				T * ptr_Src_Y = ptrItr_Src_Y.GetCurrent();
+				T * ptr_Dest_Y = ptrItr_Dest_Y.GetCurrent();
 
 				acc_Src_X->SetDataPtr(ptr_Src_Y);
 				acc_Dest_X->SetDataPtr(ptr_Dest_Y);
@@ -125,13 +124,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
-			int i = 0;
-			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
-			float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
-			for (;
-				!ptrItr_Inp_Y.IsDone();
-				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
+			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next(), ptrItr_Out_Y.Next())
 			{
+				T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+				float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
@@ -154,13 +151,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
-			int i = 0;
-			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
-			float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
-			for (;
-				!ptrItr_Inp_Y.IsDone();
-				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
+			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next(), ptrItr_Out_Y.Next())
 			{
+				T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+				float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
@@ -183,14 +178,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
 			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
-			int i = 0;
-			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
-			T * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
-
-			for (;
-				!ptrItr_Inp_Y.IsDone();
-				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
+			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next(), ptrItr_Out_Y.Next())
 			{
+				T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+				T * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
@@ -231,13 +223,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
-			int i = 0;
-			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
-			float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
-			for (;
-				!ptrItr_Inp_Y.IsDone();
-				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
+			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next(), ptrItr_Out_Y.Next())
 			{
+				T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+				float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 

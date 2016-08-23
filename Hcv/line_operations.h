@@ -23,8 +23,9 @@ namespace Hcv
 		{
 			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator();
 
-			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
+			for (; !ptrItr.IsDone(); ptrItr.Next())
 			{
+				T * ptr = ptrItr.GetCurrent();
 				Element_Operations::Copy_ByPtr<T>(ptr, &a_val);
 			}
 		}
@@ -34,8 +35,9 @@ namespace Hcv
 		{
 			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator();
 
-			for (T * ptr = ptrItr.GetCurrent(); !ptrItr.IsDone(); ptr = ptrItr.Next())
+			for (; !ptrItr.IsDone(); ptrItr.Next())
 			{
+				T * ptr = ptrItr.GetCurrent();
 				Element_Operations::DivideSelfByNum_ByPtr<T>(ptr, a_num);
 			}
 		}
@@ -49,12 +51,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Src = a_srcAcc->GenPtrIterator();
 			PtrIterator<T> ptrItr_Dest = a_destAcc->GenPtrIterator();
 
-			T * ptr_Src = ptrItr_Src.GetCurrent();
-			T * ptr_Dest = ptrItr_Dest.GetCurrent();
-			for (;
-				!ptrItr_Src.IsDone();
-				ptr_Src = ptrItr_Src.Next(), ptr_Dest = ptrItr_Dest.Next())
+			for (; !ptrItr_Src.IsDone(); ptrItr_Src.Next(), ptrItr_Dest.Next())
 			{
+				T * ptr_Src = ptrItr_Src.GetCurrent();
+				T * ptr_Dest = ptrItr_Dest.GetCurrent();
+
 				Element_Operations::Copy_ByPtr<T>(ptr_Dest, ptr_Src);
 			}
 		}
@@ -68,12 +69,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
-			T * ptr_Inp = ptrItr_Inp.GetCurrent();
-			float * ptr_Out = ptrItr_Out.GetCurrent();
-			for (;
-				!ptrItr_Inp.IsDone();
-				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
+			for (; !ptrItr_Inp.IsDone(); ptrItr_Inp.Next(), ptrItr_Out.Next())
 			{
+				T * ptr_Inp = ptrItr_Inp.GetCurrent();
+				float * ptr_Out = ptrItr_Out.GetCurrent();
+
 				*ptr_Out = Element_Operations::CalcMag_ByPtr<T>(ptr_Inp);
 			}
 		}
@@ -87,12 +87,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
-			T * ptr_Inp = ptrItr_Inp.GetCurrent();
-			float * ptr_Out = ptrItr_Out.GetCurrent();
-			for (;
-				!ptrItr_Inp.IsDone();
-				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
+			for (; !ptrItr_Inp.IsDone(); ptrItr_Inp.Next(), ptrItr_Out.Next())
 			{
+				T * ptr_Inp = ptrItr_Inp.GetCurrent();
+				float * ptr_Out = ptrItr_Out.GetCurrent();
+
 				*ptr_Out = Element_Operations::CalcMagSqr_ByPtr<T>(ptr_Inp);
 			}
 		}
@@ -106,15 +105,15 @@ namespace Hcv
 
 			T zeroVal;
 			SetToZero_ByPtr<T>(&zeroVal);
-		
+
 			FillLine<T>(a_outAcc, zeroVal);
 
 			MemSimpleAccessor_1D<T> sac_Inp = a_inpAcc->GenSimpleAccessor();
 			MemSimpleAccessor_1D<T> sac_Out = a_outAcc->GenSimpleAccessor();
 
 			const int nSize_1D = a_inpAcc->GetIndexSize();
-			
-			const int nBefDiff = - a_winRange.GetBgn();
+
+			const int nBefDiff = -a_winRange.GetBgn();
 			const int nAftDiff = a_winRange.GetEnd();
 
 			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
@@ -123,7 +122,6 @@ namespace Hcv
 
 
 			T sum;
-			//T avg;
 			T * pDest;
 			SetToZero_ByPtr<T>(&sum);
 
@@ -134,7 +132,7 @@ namespace Hcv
 			pDest = &sac_Out[nBefDiff];
 			Copy_ByPtr(pDest, &sum);
 			DivideSelfByNum_ByPtr(pDest, nRangeLen);
-			
+
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
 				pDest = &sac_Out[i];
@@ -146,7 +144,7 @@ namespace Hcv
 				DivideSelfByNum_ByPtr(pDest, nRangeLen);
 			}
 
-///////////////////////////////
+			///////////////////////////////
 
 			//	Fill bgn gap in output
 			{
@@ -162,6 +160,7 @@ namespace Hcv
 			{
 				const int nSrcIdx = (nSize_1D - 1) - nAftDiff;
 				T * pSrc = &sac_Out[nSrcIdx];
+				
 				for (int i = nSrcIdx + 1; i < nSize_1D; i++)
 				{
 					pDest = &sac_Out[i];
@@ -181,12 +180,11 @@ namespace Hcv
 			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
-			T * ptr_Inp = ptrItr_Inp.GetCurrent();
-			float * ptr_Out = ptrItr_Out.GetCurrent();
-			for (;
-				!ptrItr_Inp.IsDone();
-				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
+			for (; !ptrItr_Inp.IsDone(); ptrItr_Inp.Next(), ptrItr_Out.Next())
 			{
+				T * ptr_Inp = ptrItr_Inp.GetCurrent();
+				float * ptr_Out = ptrItr_Out.GetCurrent();
+
 				*ptr_Out = Element_Operations::CalcSqrt_ByPtr<T>(ptr_Inp);
 			}
 		}
