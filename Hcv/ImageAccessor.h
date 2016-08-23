@@ -49,6 +49,17 @@ namespace Hcv
 			Init(a_srcImg);
 		}
 
+		ImageAccessor(OffsetCalc_2D_Ref a_offsetCalc)
+		{
+			m_isLocked = false;
+			Init(a_offsetCalc);
+		}
+
+		OffsetCalc_2D_Ref GetOffsetCalc()
+		{
+			return GetMemAccessor()->GetOffsetCalc();
+		}
+
 		CvSize GetSize()
 		{
 			return cvSize(m_memAccessor->GetIndezSize_X(), m_memAccessor->GetIndezSize_Y());
@@ -142,6 +153,20 @@ namespace Hcv
 			m_srcImg = a_srcImg;
 			m_memAccessor = new MemAccessor_2D<T_AccElm>();
 			ImageAccessor::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
+		}
+
+		void Init(OffsetCalc_2D_Ref a_offsetCalc)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_srcImg = F32Image::Create(
+				cvSize(a_offsetCalc->GetOffsetCalc_X()->GetIndexSize(),
+				a_offsetCalc->GetOffsetCalc_Y()->GetIndexSize()),
+				V_NofChannels);
+
+			m_memAccessor = new MemAccessor_2D<T_AccElm>(m_srcImg->GetDataPtr(), a_offsetCalc);
+			//ImageAccessor::PrepareAccessorFromImage(m_srcImg, m_memAccessor);
 		}
 
 	protected:

@@ -32,7 +32,7 @@ namespace Hcv
 		template<class T>
 		float CalcMag_ByPtr(T * a_pArg)
 		{
-			return sqrt((float)CalcMagSqr(a_pArg));
+			return sqrt((float)CalcMagSqr_ByPtr(a_pArg));
 		}
 
 		template<class T>

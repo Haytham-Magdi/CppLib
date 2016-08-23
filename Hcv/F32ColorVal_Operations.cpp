@@ -24,7 +24,7 @@ namespace Hcv
 			memcpy(a_pDest, a_pSrc, sizeof(F32ColorVal));
 		}
 
-		float CalcMagSqr(F32ColorVal * a_pArg)
+		float CalcMagSqr_ByPtr(F32ColorVal * a_pArg)
 		{
 			return a_pArg->CalcMagSqr();
 		}

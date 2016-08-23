@@ -35,6 +35,15 @@ namespace Hcv
 		F32ImageAccessor1C_Ref Create_F32ImageAccessor1C(CvSize & a_imgSize);
 		F32ImageAccessor3C_Ref Create_F32ImageAccessor3C(CvSize & a_imgSize);
 
+		//template<class T_ImgElm, class T_AccElm, int V_NofChannels>
+		//F32ImageAccessor1C_Ref Create_F32ImageAccessor1C(ImageAccessor_REF(T_ImgElm, T_AccElm, V_NofChannels) a_srcImgAcc)
+		//{
+		//	F32ImageRef img = F32Image::Create(a_srcImgAcc->GetSize(), 1);
+		//	F32ImageAccessor1C_Ref ret = new F32ImageAccessor1C(img);
+
+		//	return ret;
+		//}
+
 
 
 		//F32ImageAccessor1C_Ref FillImage_Stripes_H(
