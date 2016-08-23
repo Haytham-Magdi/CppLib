@@ -174,5 +174,25 @@ namespace Hcv
 
 
 		}
+
+		template<class T>
+		void CalcSqrtImage(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
+		{
+			Hcpl_ASSERT(a_inpAcc->GetOffsetCalc()->GetMaxNofSteps() ==
+				a_outAcc->GetOffsetCalc()->GetMaxNofSteps());
+
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator(0);
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator(0);
+
+			T * ptr_Inp = ptrItr_Inp.GetCurrent();
+			float * ptr_Out = ptrItr_Out.GetCurrent();
+			for (;
+				!ptrItr_Inp.IsDone();
+				ptr_Inp = ptrItr_Inp.Next(), ptr_Out = ptrItr_Out.Next())
+			{
+				*ptr_Out = Element_Operations::CalcSqrt_ByPtr<T>(ptr_Inp);
+			}
+		}
+
 	};
 }

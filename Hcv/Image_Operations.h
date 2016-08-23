@@ -217,6 +217,35 @@ namespace Hcv
 			AvgImage_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_window.GetRange_Y());
 		}
 
+		template<class T>
+		void CalcSqrtImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc)
+		{
+			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
+
+			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
+
+			Hcpl_ASSERT(acc_Inp_Y->GetOffsetCalc()->GetMaxNofSteps() ==
+				acc_Out_Y->GetOffsetCalc()->GetMaxNofSteps());
+
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator(0);
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator(0);
+
+			int i = 0;
+			T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+			float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+			for (;
+				!ptrItr_Inp_Y.IsDone();
+				ptr_Inp_Y = ptrItr_Inp_Y.Next(), ptr_Out_Y = ptrItr_Out_Y.Next(), i++)
+			{
+				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
+				acc_Out_X->SetDataPtr(ptr_Out_Y);
+
+				CalcSqrtImage<T>(acc_Inp_X, acc_Out_X);
+			}
+		}
+
 
 
 
