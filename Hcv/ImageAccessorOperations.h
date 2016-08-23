@@ -32,6 +32,8 @@ namespace Hcv
 			F32ImageAccessor3C_Ref a_imgAcc,
 			F32ColorVal & a_val1, F32ColorVal & a_val2, int a_stripWidth);
 
+		F32ImageAccessor1C_Ref Create_F32ImageAccessor1C(CvSize & a_imgSize);
+		F32ImageAccessor3C_Ref Create_F32ImageAccessor3C(CvSize & a_imgSize);
 
 
 

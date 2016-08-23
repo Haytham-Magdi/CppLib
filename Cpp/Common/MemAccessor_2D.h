@@ -74,6 +74,16 @@ namespace Hcpl
 			m_isLocked = false;
 		}
 
+		int GetIndezSize_X()
+		{
+			return m_offsetCalc->GetOffsetCalc_X()->GetIndexSize();
+		}
+
+		int GetIndezSize_Y()
+		{
+			return m_offsetCalc->GetOffsetCalc_Y()->GetIndexSize();
+		}
+
 		OffsetCalc_2D_Ref GetOffsetCalc()
 		{
 			return m_offsetCalc;

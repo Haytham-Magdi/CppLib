@@ -54,6 +54,22 @@ namespace Hcv
 			return ret;
 		}
 
+		F32ImageAccessor1C_Ref Create_F32ImageAccessor1C(CvSize & a_imgSize)
+		{
+			F32ImageRef img = F32Image::Create(a_imgSize, 1);
+			F32ImageAccessor1C_Ref ret = new F32ImageAccessor1C(img);
+
+			return ret;
+		}
+
+		F32ImageAccessor3C_Ref Create_F32ImageAccessor3C(CvSize & a_imgSize)
+		{
+			F32ImageRef img = F32Image::Create(a_imgSize, 3);
+			F32ImageAccessor3C_Ref ret = new F32ImageAccessor3C(img);
+
+			return ret;
+		}
+
 
 
 

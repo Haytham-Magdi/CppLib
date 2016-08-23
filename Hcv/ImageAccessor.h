@@ -49,6 +49,11 @@ namespace Hcv
 			Init(a_srcImg);
 		}
 
+		CvSize GetSize()
+		{
+			return cvSize(m_memAccessor->GetIndezSize_X(), m_memAccessor->GetIndezSize_Y());
+		}
+
 		bool IsLocked()
 		{
 			return m_isLocked;
