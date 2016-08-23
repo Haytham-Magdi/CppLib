@@ -59,12 +59,12 @@ namespace Hcpl
 
 		Range<T> GetRange_X()
 		{
-			return Range::New(m_x1, m_x2);
+			return Range<T>::New(m_x1, m_x2);
 		}
 
 		Range<T> GetRange_Y()
 		{
-			return Range::New(m_y1, m_y2);
+			return Range<T>::New(m_y1, m_y2);
 		}
 
 	protected:

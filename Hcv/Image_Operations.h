@@ -200,11 +200,11 @@ namespace Hcv
 
 		template<class T>
 		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc,
-			Range<int> & a_winRange_X, Range<int> & a_winRange_Y)
+			Window<int> & a_window)
 		{
 			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc);
 
-			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_winRange_X);
+			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
 			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X);
 		
 			//return;
@@ -214,7 +214,7 @@ namespace Hcv
 
 			tmpImgAcc->SwitchXY();
 
-			AvgImage_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_winRange_Y);
+			AvgImage_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_window.GetRange_Y());
 		}
 
 
