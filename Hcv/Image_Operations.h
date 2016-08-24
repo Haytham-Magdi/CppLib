@@ -34,7 +34,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
-			
+
 			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
 			{
 				T * ptr_Y = ptrItr_Y.GetCurrent();
@@ -56,7 +56,7 @@ namespace Hcv
 			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
-			
+
 			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
 			{
 				T * ptr_Y = ptrItr_Y.GetCurrent();
@@ -197,7 +197,7 @@ namespace Hcv
 
 			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
 			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X);
-		
+
 			//return;
 
 			MemAccessor_2D_REF(T) outAcc2 = a_outAcc->Clone();
@@ -231,7 +231,42 @@ namespace Hcv
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				CalcSqrtImage<T>(acc_Inp_X, acc_Out_X);
+				CalcSqrtLine<T>(acc_Inp_X, acc_Out_X);
+			}
+		}
+
+		template<class T>
+		void CalcStandevImage(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
+			MemAccessor_2D_REF(float) a_outAcc)
+		{
+			MemAccessor_1D_REF(T) acc_Avg_Y = a_avg_Acc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Avg_X = a_avg_Acc->GenAccessor_1D_X();
+
+			MemAccessor_1D_REF(float) acc_Avg_MagSqr_Y = a_avg_MagSqr_Acc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(float) acc_Avg_MagSqr_X = a_avg_MagSqr_Acc->GenAccessor_1D_X();
+
+			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
+
+			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Avg_MagSqr_Y->GetIndexSize());
+			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Out_Y->GetIndexSize());
+
+			PtrIterator<T> ptrItr_Avg_Y = acc_Avg_Y->GenPtrIterator();
+			PtrIterator<float> ptrItr_Avg_MagSqr_Y = acc_Avg_MagSqr_Y->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
+
+			for (; !ptrItr_Avg_Y.IsDone();
+				ptrItr_Avg_Y.Next(), ptrItr_Avg_MagSqr_Y.Next(), ptrItr_Out_Y.Next())
+			{
+				T * ptr_Avg_Y = ptrItr_Avg_Y.GetCurrent();
+				float * ptr_Avg_MagSqr_Y = ptrItr_Avg_MagSqr_Y.GetCurrent();
+				float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+
+				acc_Avg_X->SetDataPtr(ptr_Avg_Y);
+				acc_Avg_MagSqr_X->SetDataPtr(ptr_Avg_MagSqr_Y);
+				acc_Out_X->SetDataPtr(ptr_Out_Y);
+
+				CalcStandevLine<T>(acc_Avg_X, acc_Avg_MagSqr_X, acc_Out_X);
 			}
 		}
 

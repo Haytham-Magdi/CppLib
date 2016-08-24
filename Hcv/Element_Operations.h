@@ -65,6 +65,17 @@ namespace Hcv
 			return sqrt((float)*a_pArg);
 		}
 
+		template<class T>
+		float CalcStandev_ByPtr(T * a_pAvg, float a_avg_MagSqr)
+		{
+			float magSqr_Avg = CalcMagSqr_ByPtr(a_pAvg);
+
+			float variance = fabs(a_avg_MagSqr - magSqr_Avg);
+			float standev = sqrt(variance);
+			
+			return standev;
+		}
+
 
 
 
