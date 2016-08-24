@@ -17,7 +17,6 @@ namespace Hcv
 
 	namespace Line_Operations
 	{
-
 		template<class T>
 		void FillLine(MemAccessor_1D_REF(T) a_memAcc, T & a_val)
 		{
@@ -200,7 +199,7 @@ namespace Hcv
 			PtrIterator<float> ptrItr_Avg_MagSqr = a_avg_MagSqr_Acc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
-			for (; !ptrItr_Avg.IsDone(); 
+			for (; !ptrItr_Avg.IsDone();
 				ptrItr_Avg.Next(), ptrItr_Avg_MagSqr.Next(), ptrItr_Out.Next())
 			{
 				T * ptr_Avg = ptrItr_Avg.GetCurrent();
@@ -208,6 +207,28 @@ namespace Hcv
 				float * ptr_Out = ptrItr_Out.GetCurrent();
 
 				*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
+			}
+		}
+
+		template<class T>
+		void CalcConflictLine(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
+			MemAccessor_1D_REF(float) a_outAcc)
+		{
+			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
+			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_outAcc->GetIndexSize());
+
+			PtrIterator<T> ptrItr_Avg = a_avg_Acc->GenPtrIterator();
+			PtrIterator<float> ptrItr_Avg_MagSqr = a_avg_MagSqr_Acc->GenPtrIterator();
+			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
+
+			for (; !ptrItr_Avg.IsDone();
+				ptrItr_Avg.Next(), ptrItr_Avg_MagSqr.Next(), ptrItr_Out.Next())
+			{
+				T * ptr_Avg = ptrItr_Avg.GetCurrent();
+				float * ptr_Avg_MagSqr = ptrItr_Avg_MagSqr.GetCurrent();
+				float * ptr_Out = ptrItr_Out.GetCurrent();
+
+				*ptr_Out = Element_Operations::CalcConflict_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
 			}
 		}
 
