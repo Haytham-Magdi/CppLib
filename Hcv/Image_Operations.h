@@ -272,7 +272,7 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictImage_H(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_2D_REF(float) a_outAcc)
+			MemAccessor_2D_REF(float) a_outAcc, Range<int> & a_winRange_X)
 		{
 			MemAccessor_1D_REF(T) acc_Avg_Y = a_avg_Acc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Avg_X = a_avg_Acc->GenAccessor_1D_X();

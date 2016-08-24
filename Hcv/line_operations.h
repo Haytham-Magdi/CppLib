@@ -118,8 +118,6 @@ namespace Hcv
 			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
 			const int nRangeLen = nBefDiff + 1 + nAftDiff;
 
-
-
 			T sum;
 			T * pDest;
 			SetToZero_ByPtr<T>(&sum);
@@ -166,7 +164,6 @@ namespace Hcv
 					Copy_ByPtr(pDest, pSrc);
 				}
 			}
-
 
 		}
 
