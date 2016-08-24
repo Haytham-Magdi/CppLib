@@ -209,23 +209,34 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictLine(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_1D_REF(float) a_outAcc)
+			MemAccessor_1D_REF(float) a_outAcc, Range<int> & a_winRange)
 		{
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_outAcc->GetIndexSize());
 
-			PtrIterator<T> ptrItr_Avg = a_avg_Acc->GenPtrIterator();
-			PtrIterator<float> ptrItr_Avg_MagSqr = a_avg_MagSqr_Acc->GenPtrIterator();
-			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
+			MemSimpleAccessor_1D<T> sac_Avg = a_avg_Acc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<float> sac_Avg_MagSqr = a_avg_MagSqr_Acc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<float> sac_Out = a_outAcc->GenSimpleAccessor();
 
-			for (; !ptrItr_Avg.IsDone();
-				ptrItr_Avg.Next(), ptrItr_Avg_MagSqr.Next(), ptrItr_Out.Next())
+			const int nSize_1D = a_outAcc->GetIndexSize();
+
+			const int nBefDiff = -a_winRange.GetBgn();
+			const int nAftDiff = a_winRange.GetEnd();
+
+			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
+			const int nRangeLen = nBefDiff + 1 + nAftDiff;
+
+			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
-				T * ptr_Avg = ptrItr_Avg.GetCurrent();
-				float * ptr_Avg_MagSqr = ptrItr_Avg_MagSqr.GetCurrent();
-				float * ptr_Out = ptrItr_Out.GetCurrent();
+				float * pOut = &sac_Out[i];
 
-				*ptr_Out = Element_Operations::CalcConflict_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
+				T * pAvg_1 = &sac_Avg[i - nBefDiff];
+				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
+
+				T * pAvg_2 = &sac_Avg[i + nAftDiff];
+				float * pAvg_MagSqr_2 = &sac_Avg_MagSqr[i + nAftDiff];
+
+				*pOut = Element_Operations::CalcConflict_ByPtr(pAvg_1, *pAvg_MagSqr_1, pAvg_2, *pAvg_MagSqr_2);
 			}
 		}
 

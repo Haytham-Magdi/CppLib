@@ -301,7 +301,7 @@ namespace Hcv
 				acc_Avg_MagSqr_X->SetDataPtr(ptr_Avg_MagSqr_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				CalcConflictLine<T>(acc_Avg_X, acc_Avg_MagSqr_X, acc_Out_X);
+				CalcConflictLine<T>(acc_Avg_X, acc_Avg_MagSqr_X, acc_Out_X, a_winRange_X);
 			}
 		}
 
