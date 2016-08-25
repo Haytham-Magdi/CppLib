@@ -211,6 +211,9 @@ namespace Hcv
 		void CalcConflictLine(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
 			MemAccessor_1D_REF(float) a_outAcc, Range<int> & a_winRange)
 		{
+			float zero = 0;
+			FillLine<float>(a_outAcc, zero);
+
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_outAcc->GetIndexSize());
 

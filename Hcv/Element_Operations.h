@@ -90,14 +90,20 @@ namespace Hcv
 			float magSqr_Avg_2 = CalcMagSqr_ByPtr(a_pAvg_2);
 			float magSqr_Avg_12 = CalcMagSqr_ByPtr(&avg_12);
 
-			float standev_1 = sCalcStandev_ByPtr(a_pAvg_1, a_avg_MagSqr_1);
-			float standev_2 = sCalcStandev_ByPtr(a_pAvg_2, a_avg_MagSqr_2);
-			float standev_12 = sCalcStandev_ByPtr(&avg_12, avg_MagSqr_12);
+			float standev_1 = CalcStandev_ByPtr(a_pAvg_1, a_avg_MagSqr_1);
+			float standev_2 = CalcStandev_ByPtr(a_pAvg_2, a_avg_MagSqr_2);
+			float standev_12 = CalcStandev_ByPtr(&avg_12, avg_MagSqr_12);
 
+			float standev_MaxSide = (standev_1 > standev_2) ? standev_1 : standev_2;
 
-			throw "Not working";
-
-			//return standev;
+			if (standev_12 > 20 && standev_12 > standev_MaxSide * 2)
+			{
+				return 255;
+			}
+			else
+			{
+				return 0;
+			}
 		}
 
 
