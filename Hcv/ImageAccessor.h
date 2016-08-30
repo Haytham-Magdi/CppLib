@@ -161,8 +161,10 @@ namespace Hcv
 				throw "m_isLocked";
 
 			m_srcImg = F32Image::Create(
-				cvSize(a_offsetCalc->GetOffsetCalc_X()->GetIndexSize(),
-				a_offsetCalc->GetOffsetCalc_Y()->GetIndexSize()),
+				cvSize(a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize(),
+				a_offsetCalc->GetOffsetCalc_Y_Org()->GetIndexSize()),
+				//cvSize(a_offsetCalc->GetOffsetCalc_Y()->GetIndexSize(),
+				//a_offsetCalc->GetOffsetCalc_X()->GetIndexSize()),
 				V_NofChannels);
 
 			m_memAccessor = new MemAccessor_2D<T_AccElm>(m_srcImg->GetDataPtr(), a_offsetCalc);

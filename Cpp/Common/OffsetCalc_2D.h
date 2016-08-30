@@ -45,9 +45,11 @@ namespace Hcpl
 
 			pRet->m_offsetCalc_X = m_offsetCalc_X->Clone();
 			pRet->m_offsetCalc_X->Lock();
+			pRet->m_offsetCalc_X_Org = m_offsetCalc_X_Org;
 
 			pRet->m_offsetCalc_Y = m_offsetCalc_Y->Clone();
 			pRet->m_offsetCalc_Y->Lock();
+			pRet->m_offsetCalc_Y_Org = m_offsetCalc_Y_Org;
 
 			pRet->m_nOuterLimOffset = m_nOuterLimOffset;
 
@@ -116,6 +118,16 @@ namespace Hcpl
 			return m_offsetCalc_Y;
 		}
 
+		OffsetCalc_1D_Ref GetOffsetCalc_X_Org()
+		{
+			return m_offsetCalc_X_Org;
+		}
+
+		OffsetCalc_1D_Ref GetOffsetCalc_Y_Org()
+		{
+			return m_offsetCalc_Y_Org;
+		}
+
 	protected:
 
 		OffsetCalc_2D()
@@ -130,9 +142,12 @@ namespace Hcpl
 
 			m_offsetCalc_X = new OffsetCalc_1D(a_nOuterIndexSize_X, a_nAbsoluteStepSize_X);
 			m_offsetCalc_X->Lock();
+			m_offsetCalc_X_Org = m_offsetCalc_X;
+
 
 			m_offsetCalc_Y = new OffsetCalc_1D(a_nOuterIndexSize_Y, m_offsetCalc_X->GetOuterLimOffset());
 			m_offsetCalc_Y->Lock();
+			m_offsetCalc_Y_Org = m_offsetCalc_Y;
 
 			//m_offsetCalc_X->Init(a_nOuterIndexSize_X, a_nAbsoluteStepSize_X);
 			//m_offsetCalc_Y->Init(a_nOuterIndexSize_Y, m_offsetCalc_X->GetOuterLimOffset());
@@ -144,6 +159,9 @@ namespace Hcpl
 
 		OffsetCalc_1D_Ref m_offsetCalc_X;
 		OffsetCalc_1D_Ref m_offsetCalc_Y;
+
+		OffsetCalc_1D_Ref m_offsetCalc_X_Org;
+		OffsetCalc_1D_Ref m_offsetCalc_Y_Org;
 
 		int m_nOuterLimOffset;
 

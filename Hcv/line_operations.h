@@ -199,8 +199,8 @@ namespace Hcv
 			PtrIterator<float> ptrItr_Avg_MagSqr = a_avg_MagSqr_Acc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
-			int i = 0;
-			const float rate1 = 0.5;
+			//int i = 0;
+			//const float rate1 = 0.5;
 
 			for (; !ptrItr_Avg.IsDone();
 				ptrItr_Avg.Next(), ptrItr_Avg_MagSqr.Next(), ptrItr_Out.Next())
@@ -209,8 +209,8 @@ namespace Hcv
 				float * ptr_Avg_MagSqr = ptrItr_Avg_MagSqr.GetCurrent();
 				float * ptr_Out = ptrItr_Out.GetCurrent();
 
-				//*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
-				*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr, rate1 * i++);
+				*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
+				//*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr, rate1 * i++);
 			}
 		}
 
