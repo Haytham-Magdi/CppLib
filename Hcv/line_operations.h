@@ -80,11 +80,13 @@ namespace Hcv
 		template<class T>
 		void CalcMagSqrLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_outAcc)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetIndexSize() ==
-				a_outAcc->GetIndexSize());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_outAcc->GetIndexSize());
 
 			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
+
+			const float rate1 = 0.5;
+			int i = 0;
 
 			for (; !ptrItr_Inp.IsDone(); ptrItr_Inp.Next(), ptrItr_Out.Next())
 			{
@@ -92,6 +94,7 @@ namespace Hcv
 				float * ptr_Out = ptrItr_Out.GetCurrent();
 
 				*ptr_Out = Element_Operations::CalcMagSqr_ByPtr<T>(ptr_Inp);
+				//*ptr_Out = rate1 * i++;
 			}
 		}
 
@@ -196,6 +199,9 @@ namespace Hcv
 			PtrIterator<float> ptrItr_Avg_MagSqr = a_avg_MagSqr_Acc->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out = a_outAcc->GenPtrIterator();
 
+			int i = 0;
+			const float rate1 = 0.5;
+
 			for (; !ptrItr_Avg.IsDone();
 				ptrItr_Avg.Next(), ptrItr_Avg_MagSqr.Next(), ptrItr_Out.Next())
 			{
@@ -203,7 +209,8 @@ namespace Hcv
 				float * ptr_Avg_MagSqr = ptrItr_Avg_MagSqr.GetCurrent();
 				float * ptr_Out = ptrItr_Out.GetCurrent();
 
-				*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
+				//*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr);
+				*ptr_Out = Element_Operations::CalcStandev_ByPtr<T>(ptr_Avg, *ptr_Avg_MagSqr, rate1 * i++);
 			}
 		}
 

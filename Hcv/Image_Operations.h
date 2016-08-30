@@ -145,8 +145,7 @@ namespace Hcv
 			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() ==
-				acc_Out_Y->GetIndexSize());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() == acc_Out_Y->GetIndexSize());
 
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
 			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
@@ -250,6 +249,9 @@ namespace Hcv
 
 			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Avg_MagSqr_Y->GetIndexSize());
 			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Out_Y->GetIndexSize());
+
+			//Hcpl_ASSERT(acc_Avg_X->GetIndexSize() == acc_Avg_MagSqr_X->GetIndexSize());
+			//Hcpl_ASSERT(acc_Avg_X->GetIndexSize() == acc_Out_X->GetIndexSize());
 
 			PtrIterator<T> ptrItr_Avg_Y = acc_Avg_Y->GenPtrIterator();
 			PtrIterator<float> ptrItr_Avg_MagSqr_Y = acc_Avg_MagSqr_Y->GenPtrIterator();

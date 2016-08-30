@@ -66,12 +66,26 @@ namespace Hcv
 		}
 
 		template<class T>
-		float CalcStandev_ByPtr(T * a_pAvg, float a_avg_MagSqr)
+		float CalcStandev_ByPtr(T * a_pAvg, float a_avg_MagSqr, float a_val1 = 0)
 		{
 			float magSqr_Avg = CalcMagSqr_ByPtr(a_pAvg);
 
 			float variance = a_avg_MagSqr - magSqr_Avg;
-			float standev = sqrt(fabs(variance));
+			//float standev = sqrt(fabs(variance));
+
+			//static int i = 0;
+			//float val1 = 0.5;
+
+			//float standev = sqrt(magSqr_Avg) / 2;
+			//float standev = 170;
+			//float standev = val1 * i++;
+			
+			float standev = a_val1;
+
+			//if (val1 * i > 255)
+			//	i = 0;
+
+			//Hcpl_ASSERT(standev < 300 && standev >= -1);
 
 			return standev;
 		}
