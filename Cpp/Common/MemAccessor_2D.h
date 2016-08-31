@@ -74,12 +74,12 @@ namespace Hcpl
 			m_isLocked = false;
 		}
 
-		int GetIndezSize_X()
+		int GetIndexSize_X()
 		{
 			return m_offsetCalc->GetOffsetCalc_X()->GetIndexSize();
 		}
 
-		int GetIndezSize_Y()
+		int GetIndexSize_Y()
 		{
 			return m_offsetCalc->GetOffsetCalc_Y()->GetIndexSize();
 		}

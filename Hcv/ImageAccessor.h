@@ -62,7 +62,7 @@ namespace Hcv
 
 		CvSize GetSize()
 		{
-			return cvSize(m_memAccessor->GetIndezSize_X(), m_memAccessor->GetIndezSize_Y());
+			return cvSize(m_memAccessor->GetIndexSize_X(), m_memAccessor->GetIndexSize_Y());
 		}
 
 		bool IsLocked()
@@ -161,8 +161,10 @@ namespace Hcv
 				throw "m_isLocked";
 
 			m_srcImg = F32Image::Create(
-				cvSize(a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize(),
-				a_offsetCalc->GetOffsetCalc_Y_Org()->GetIndexSize()),
+				//cvSize(a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize(),
+				//a_offsetCalc->GetOffsetCalc_Y_Org()->GetIndexSize()),
+				cvSize(a_offsetCalc->GetOffsetCalc_X_Org()->GetOuterIndexSize(),
+				a_offsetCalc->GetOffsetCalc_Y_Org()->GetOuterIndexSize()),
 				//cvSize(a_offsetCalc->GetOffsetCalc_Y()->GetIndexSize(),
 				//a_offsetCalc->GetOffsetCalc_X()->GetIndexSize()),
 				V_NofChannels);

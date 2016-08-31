@@ -118,10 +118,10 @@ namespace Hcpl
 			return m_nOuterLimOffset;
 		}
 
-		//int GetOuterIndexSize()
-		//{
-		//	return m_nOuterIndexSize;
-		//}
+		int GetOuterIndexSize()
+		{
+			return m_nOuterIndexSize;
+		}
 
 		int GetIndexSize()
 		{
