@@ -47,10 +47,16 @@ namespace Hcv
 			*a_pOut = *a_pInp1 - *a_pInp2;
 		}
 
+		//template<class T>
+		//void DivideByNum_ByPtr(T * a_pArg, float a_num)
+		//{
+		//	*a_pArg = *a_pArg / a_num;
+		//}
+
 		template<class T>
-		void DivideSelfByNum_ByPtr(T * a_pArg, float a_num)
+		void DivideByNum_ByPtr(T * a_pInp, float a_num, T * a_pOut)
 		{
-			*a_pArg = *a_pArg / a_num;
+			*a_pOut = *a_pInp / a_num;
 		}
 
 		template<class T>
@@ -82,7 +88,7 @@ namespace Hcv
 		{
 			T avg_12;
 			Add_ByPtr(a_pAvg_1, a_pAvg_2, &avg_12);
-			DivideSelfByNum_ByPtr(&avg_12, 2);
+			DivideByNum_ByPtr(&avg_12, 2);
 
 			float avg_MagSqr_12 = (a_avg_MagSqr_1 + a_avg_MagSqr_2) / 2;
 

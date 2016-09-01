@@ -37,7 +37,7 @@ namespace Hcv
 			for (; !ptrItr.IsDone(); ptrItr.Next())
 			{
 				T * ptr = ptrItr.GetCurrent();
-				Element_Operations::DivideSelfByNum_ByPtr<T>(ptr, a_num);
+				Element_Operations::DivideByNum_ByPtr<T>(ptr, a_num);
 			}
 		}
 
@@ -131,7 +131,7 @@ namespace Hcv
 			}
 			pDest = &sac_Out[nBefDiff];
 			Copy_ByPtr(pDest, &sum);
-			DivideSelfByNum_ByPtr(pDest, nRangeLen);
+			DivideByNum_ByPtr(pDest, nRangeLen);
 
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
@@ -141,7 +141,7 @@ namespace Hcv
 				Add_ByPtr(&sum, &sac_Inp[i + nAftDiff], &sum);
 
 				Copy_ByPtr(pDest, &sum);
-				DivideSelfByNum_ByPtr(pDest, nRangeLen);
+				DivideByNum_ByPtr(pDest, nRangeLen);
 			}
 
 			///////////////////////////////
