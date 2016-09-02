@@ -26,7 +26,9 @@ namespace Hcv
 
 		template<> void Subtract_ByPtr(F32ColorVal * a_pInp1, F32ColorVal * a_pInp2, F32ColorVal * a_pOut);
 
-		template<> void DivideByNum_ByPtr(F32ColorVal * a_pArg, float a_num);
+		template<> void DivideByNum_ByPtr(T * a_pInp, float a_num, T * a_pOut);
+		
+		template<> void MultiplyByNum_ByPtr(T * a_pInp, float a_num, T * a_pOut);
 
 		template<> void SetToZero_ByPtr(F32ColorVal * a_pArg);
 

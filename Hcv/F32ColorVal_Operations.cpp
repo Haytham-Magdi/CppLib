@@ -43,9 +43,18 @@ namespace Hcv
 			a_pOut->val2 = a_pInp1->val2 - a_pInp2->val2;
 		}
 
-		void DivideByNum_ByPtr(F32ColorVal * a_pArg, float a_num)
+		void DivideByNum_ByPtr(F32ColorVal * a_pInp, float a_num, F32ColorVal * a_pOut)
 		{
-			a_pArg->DividSelfBy(a_num);
+			a_pOut->val0 = a_pInp->val0 / a_num;
+			a_pOut->val1 = a_pInp->val1 / a_num;
+			a_pOut->val2 = a_pInp->val2 / a_num;
+		}
+
+		void MultiplyByNum_ByPtr(F32ColorVal * a_pInp, float a_num, F32ColorVal * a_pOut)
+		{
+			a_pOut->val0 = a_pInp->val0 * a_num;
+			a_pOut->val1 = a_pInp->val1 * a_num;
+			a_pOut->val2 = a_pInp->val2 * a_num;
 		}
 
 		void SetToZero_ByPtr(F32ColorVal * a_pArg)

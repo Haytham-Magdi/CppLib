@@ -131,7 +131,7 @@ namespace Hcv
 			}
 			pDest = &sac_Out[nBefDiff];
 			Copy_ByPtr(pDest, &sum);
-			DivideByNum_ByPtr(pDest, nRangeLen);
+			DivideByNum_ByPtr(pDest, nRangeLen, pDest);
 
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
@@ -141,7 +141,7 @@ namespace Hcv
 				Add_ByPtr(&sum, &sac_Inp[i + nAftDiff], &sum);
 
 				Copy_ByPtr(pDest, &sum);
-				DivideByNum_ByPtr(pDest, nRangeLen);
+				DivideByNum_ByPtr(pDest, nRangeLen, pDest);
 			}
 
 			///////////////////////////////
