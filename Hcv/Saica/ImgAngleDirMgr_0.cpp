@@ -51,6 +51,9 @@ namespace Hcv
 			else
 				nRet = (int)(a_num - m_nRound);
 
+			nRet /= m_nScale;
+			nRet *= m_nScale;
+
 			return nRet;
 		}
 
@@ -63,6 +66,9 @@ namespace Hcv
 				nRet = (int)(a_num + m_nRoundByMin);
 			else
 				nRet = (int)(a_num - m_nRoundByMin);
+
+			nRet /= m_nScale;
+			nRet *= m_nScale;
 
 			return nRet;
 		}
