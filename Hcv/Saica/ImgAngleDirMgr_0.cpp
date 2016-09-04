@@ -84,8 +84,8 @@ namespace Hcv
 
 			CvPoint bgnPnt;
 
-			int nSafeMarg = 0;
-			//int nSafeMarg = 20;
+			//int nSafeMarg = 0;
+			int nSafeMarg = 20;
 
 			{
 				//int nofLinesBef = AddRound(
@@ -138,12 +138,15 @@ namespace Hcv
 			int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
 			m_srcToResMapImg = S32Image::Create(srcSiz, 1);
-			int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
+			int * srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
+
+			m_srcToResMapImg_Scaled = S32Image::Create(srcSiz, 1);
+			int * srcToResBuf_Scaled = (int *)m_srcToResMapImg_Scaled->GetPixAt(0, 0);
 
 			S32ImageRef srcMinDistImg = S32Image::Create(srcSiz, 1);
-			int *  srcMinDistBuf = (int *)srcMinDistImg->GetPixAt(0, 0);
+			int * srcMinDistBuf = (int *)srcMinDistImg->GetPixAt(0, 0);
 
-			const int nGreatDist = 10000000;
+			const int nGreatDist = 1000000000;
 			srcMinDistImg->SetAll(nGreatDist);
 
 			int nMappedSrcCnt = 0;
