@@ -113,7 +113,6 @@ namespace Hcv
 			bgnPnt.x = nofLinesBef * m_nSin;
 			bgnPnt.y = -nofLinesBef * m_nCos;
 
-			//int nofLinesAft = AddRound(
 			int nofLinesAft = AddRoundByMin(
 				m_nCos * (srcSiz.height + nSafeMarg));
 
@@ -153,14 +152,22 @@ namespace Hcv
 		m_resToSrcMapImg = S32Image::Create(m_resSiz, 1);
 		int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
-		//m_resToSrcMapImg_Scaled = S32Image::Create(m_resSiz, 1);
-		//int * resToSrcBuf_Scaled = (int *)m_resToSrcMapImg_Scaled->GetPixAt(0, 0);
+		//m_resToSrcMapImg_X_Scaled = S32Image::Create(m_resSiz, 1);
+		//int * resToSrcBuf_X_Scaled = (int *)m_resToSrcMapImg_X_Scaled->GetPixAt(0, 0);
+
+		//m_resToSrcMapImg_Y_Scaled = S32Image::Create(m_resSiz, 1);
+		//int * resToSrcBuf_Y_Scaled = (int *)m_resToSrcMapImg_Y_Scaled->GetPixAt(0, 0);
 
 		m_srcToResMapImg = S32Image::Create(srcSiz, 1);
 		int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
 
 		S32ImageRef srcMinDistImg = S32Image::Create(srcSiz, 1);
 		int *  srcMinDistBuf = (int *)srcMinDistImg->GetPixAt(0, 0);
+
+		m_resImg = F32Image::Create(m_resSiz, 3);
+		F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
+
+		F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
 
 		const int nGreatDist = 10000000;
 		srcMinDistImg->SetAll(nGreatDist);
@@ -195,16 +202,17 @@ namespace Hcv
 				curPnt_X.x = curPnt_Y.x + x * m_nCos;
 				curPnt_X.y = curPnt_Y.y + x * m_nSin;
 
+				//resToSrcBuf_X_Scaled[idxCalc_Res.Calc(x, y)] =
 
 				{
 					int nX1, nX2, nY1, nY2;
 
 					nY1 = (curPnt_X.y / m_nScale) * m_nScale;
 
+					nX1 = (curPnt_X.x / m_nScale) * m_nScale;
+
 					if (!(nY1 >= 0 && nY1 < nScaled_SrcHeight))
 						goto SrcToResEnd;
-
-					nX1 = (curPnt_X.x / m_nScale) * m_nScale;
 
 					if (!(nX1 >= 0 && nX1 < nScaled_SrcWidth))
 						goto SrcToResEnd;
@@ -217,23 +225,15 @@ namespace Hcv
 
 					nX2 = AddRoundByMin(curPnt_X.x);
 
-					if ((nY2 >= 0 && nY2 < nScaled_SrcHeight) &&
-						(nX2 >= 0 && nX2 < nScaled_SrcWidth))
-					{
-						srcPntArr.PushBack(cvPoint(nX2, nY1));
-						srcPntArr.PushBack(cvPoint(nX2, nY2));
-						srcPntArr.PushBack(cvPoint(nX1, nY2));
-					}
-					else if (nY2 >= 0 && nY2 < nScaled_SrcHeight)
-					{
-						srcPntArr.PushBack(cvPoint(nX1, nY2));
-					}
-					else if (nX2 >= 0 && nX2 < nScaled_SrcWidth)
-					{
-						srcPntArr.PushBack(cvPoint(nX2, nY1));
-					}
+					if (nY2 < 0 || nY2 >= nScaled_SrcHeight)
+						nY2 = nY1;
 
+					if (nX2 < 0 || nX2 >= nScaled_SrcWidth)
+						nX2 = nX1;
 
+					srcPntArr.PushBack(cvPoint(nX2, nY1));
+					srcPntArr.PushBack(cvPoint(nX2, nY2));
+					srcPntArr.PushBack(cvPoint(nX1, nY2));
 
 				SrcToResEnd:
 
@@ -258,12 +258,8 @@ namespace Hcv
 							srcToResBuf[nIdx_Src] = nIdx_Res;
 						}
 
-
-
 					}
-
 				}
-
 
 
 				bool bInImg = true;
@@ -283,12 +279,42 @@ namespace Hcv
 				int nIdx_Src = -1;
 
 				if (bInImg)
+				{
 					nIdx_Src = idxCalc_Src.Calc(nX_Src, nY_Src);
+				}
 
 				resToSrcBuf[nIdx_Res] = nIdx_Src;
 
-				if (93339 == nIdx_Src)
-					nIdx_Src = nIdx_Src;
+
+
+
+				//	PrepareResImg
+				{
+					F32ColorVal & rColor_Res = resBuf[nIdx_Res];
+
+					int nIdx_Src = resToSrcBuf[nIdx_Res];
+
+
+					if (nIdx_Src >= 0)
+					{
+						F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+
+						rColor_Res.AssignVal(rColor_Src);
+					}
+					else
+					{
+						//rColor_Res.AssignVal( 0, 120, 0 );
+						rColor_Res.AssignVal(0, 0, 0);
+					}
+
+				}
+
+
+
+
+
+
+
 			}
 		}
 
@@ -375,47 +401,7 @@ namespace Hcv
 		PrepareImageItrMgr();
 
 
-
-		if (false)
-		{
-			F32ImageRef img1 = F32Image::Create(srcSiz, 3);
-
-			img1->SetAll(0);
-
-			F32ColorVal * img1_Buf =
-				(F32ColorVal *)img1->GetPixAt(0, 0);
-
-			//for( int i=0; i < nSrcSiz1D; i++ )
-
-			int i = 0;
-			for (int y = 0; y < srcSiz.height; y++)
-			{
-				for (int x = 0; x < srcSiz.width; x++, i++)
-				{
-					//F32ColorVal & rColor1 = img1_Buf[ i ];
-
-					if (nGreatDist == srcMinDistBuf[i])
-					{
-						//rColor1.AssignVal( 0, 180, 0 );
-
-						DrawCircle(img1, F32Point(x, y),
-							//u8ColorVal( 0, 180, 0 ), 7 );
-							u8ColorVal(0, 180, 0), 1);
-					}
-
-
-				}
-
-			}
-
-			ShowImage(img1, "img1");
-		}
-
-
-
-
-
-		PrepareResImg();
+		//PrepareResImg();
 
 		//ShowImage( m_resImg, "m_resImg" );
 
@@ -437,15 +423,13 @@ namespace Hcv
 
 		m_resImg = F32Image::Create(m_resSiz, 3);
 
-		F32ColorVal * resBuf =
-			(F32ColorVal *)m_resImg->GetPixAt(0, 0);
+		F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
 
 		CvSize srcSiz = m_srcImg->GetSize();
 
 		//int nSrcSiz1D = srcSiz.width * srcSiz.height;
 
-		F32ColorVal * srcBuf =
-			(F32ColorVal *)m_srcImg->GetPixAt(0, 0);
+		F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
 
 		int nResSiz1D = m_resSiz.width * m_resSiz.height;
 
@@ -468,54 +452,6 @@ namespace Hcv
 				rColor_Res.AssignVal(0, 0, 0);
 			}
 		}
-
-		if (false)
-		{
-			IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
-
-			ImageLineItrProvider & rProv = m_imageItrMgr->GetItrProvAt(0);
-			//ImageLineItrProvider & rProv = m_imageItrMgr->GetItrProvAt( 1 );
-			//ImageLineItrProvider & rProv = m_imageItrMgr->GetItrProvAt( 3 );
-
-			int nStartIdx = idxCalc_Res.Calc(
-				m_resSiz.width / 3, m_resSiz.height / 3);
-
-			ImageLineItr & rLineItr =
-				rProv.GetItrForPixIdx(nStartIdx);
-
-			//NumberIterator itr = rLineItr.GenBgnToEndItr();
-			//itr.SetCurVal( nStartIdx );
-
-			//NumberIterator itr;
-			//itr.Init( rLineItr.GetFarBgn(),
-			//	rLineItr.GetBgn() - rLineItr.GetIncVal(),
-			//	rLineItr.GetIncVal() );
-
-			NumberIterator itr;
-			itr.Init(rLineItr.GetFarBgn(),
-				rLineItr.GetAftBgn(-1), rLineItr.GetIncVal());
-
-			//itr.GotoBgn();
-
-			int i = 0;
-
-			//while( itr.IsCurValid() )
-			for (int j = itr.CalcCurStep();
-				j < itr.GetLimStep(); j++, itr.MoveNext())
-			{
-				//int nCurIdx = rLineItr.GetCurIndex();
-				int nCurIdx = itr.GetCurVal();
-
-				//rLineItr.GoNext();
-				//itr.MoveNext();
-
-				F32ColorVal & rColor_Res = resBuf[nCurIdx];
-
-				rColor_Res.AssignVal(0, i, i);
-				i++;
-			}
-		}//	End of : Line draw try.
-
 
 	}
 
