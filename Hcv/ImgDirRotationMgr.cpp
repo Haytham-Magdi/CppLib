@@ -36,6 +36,12 @@ namespace Hcv
 		m_nCos = cos(m_angRad) * m_nScale;
 		m_nSin = sin(m_angRad) * m_nScale;
 
+		m_nCos++;
+		m_nSin++;
+
+		int mag1 = Sqr(m_nCos) + Sqr(m_nSin);
+		Hcpl_ASSERT(mag1 >= Sqr(m_nScale));
+
 		Prepare();
 	}
 
