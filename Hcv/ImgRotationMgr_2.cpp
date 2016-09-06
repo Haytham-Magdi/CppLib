@@ -153,6 +153,9 @@ namespace Hcv
 		m_resToSrcMapImg = S32Image::Create(m_resSiz, 1);
 		int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
+		//m_resToSrcMapImg_Scaled = S32Image::Create(m_resSiz, 1);
+		//int * resToSrcBuf_Scaled = (int *)m_resToSrcMapImg_Scaled->GetPixAt(0, 0);
+
 		m_srcToResMapImg = S32Image::Create(srcSiz, 1);
 		int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
 

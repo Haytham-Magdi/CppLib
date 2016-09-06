@@ -87,9 +87,10 @@ namespace Hcv
 
 		CvSize m_resSiz;
 		S32ImageRef m_resToSrcMapImg;
+		S32ImageRef m_resToSrcMapImg_Scaled;
 		F32ImageRef m_resImg;
 		S32ImageRef m_srcToResMapImg;
-		S32ImageRef m_srcToResMapImg_Scaled;
+		//S32ImageRef m_srcToResMapImg_Scaled;
 
 		FixedVector< LineLimit > m_lineLimit_H_Arr;
 		FixedVector< LineLimit > m_lineLimit_V_Arr;
