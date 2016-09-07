@@ -204,7 +204,7 @@ namespace Hcv
 
 				//resToSrcBuf_X_Scaled[idxCalc_Res.Calc(x, y)] =
 
-				{
+				//{
 					int nX1, nX2, nY1, nY2;
 
 					nY1 = (curPnt_X.y / m_nScale) * m_nScale;
@@ -259,7 +259,7 @@ namespace Hcv
 						}
 
 					}
-				}
+				//}
 
 
 				bool bInImg = true;
@@ -285,8 +285,8 @@ namespace Hcv
 
 				resToSrcBuf[nIdx_Res] = nIdx_Src;
 
-
-
+				
+				
 
 				//	PrepareResImg
 				{
@@ -297,9 +297,32 @@ namespace Hcv
 
 					if (nIdx_Src >= 0)
 					{
-						F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+						//F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+						
+						F32ColorVal & rColor_Src_X1_Y1 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY1 / m_nScale)];
+						F32ColorVal & rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY2 / m_nScale)];
+						F32ColorVal & rColor_Src_X2_Y1 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
+						F32ColorVal & rColor_Src_X2_Y2 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
 
-						rColor_Res.AssignVal(rColor_Src);
+						rColor_Src_X1_Y1.MultSelfBy(curPnt_X.x - nX1);
+						rColor_Src_X2_Y1.MultSelfBy(curPnt_X.x - nX2);
+
+						F32ColorVal rColor_Src_X_Y1 = F32ColorVal::Add(rColor_Src_X1_Y1, rColor_Src_X2_Y1);
+						
+						
+						rColor_Src_X1_Y2.MultSelfBy(curPnt_X.x - nX1);
+						rColor_Src_X2_Y2.MultSelfBy(curPnt_X.x - nX2);
+
+						F32ColorVal rColor_Src_X_Y2 = F32ColorVal::Add(rColor_Src_X1_Y2, rColor_Src_X2_Y2);
+							
+						
+						
+						
+						
+						
+						//F32ColorVal rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1, nY2)];
+
+						//rColor_Res.AssignVal(rColor_Src);
 					}
 					else
 					{
