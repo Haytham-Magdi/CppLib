@@ -205,60 +205,60 @@ namespace Hcv
 				//resToSrcBuf_X_Scaled[idxCalc_Res.Calc(x, y)] =
 
 				//{
-					int nX1, nX2, nY1, nY2;
+				int nX1, nX2, nY1, nY2;
 
-					nY1 = (curPnt_X.y / m_nScale) * m_nScale;
+				nY1 = (curPnt_X.y / m_nScale) * m_nScale;
 
-					nX1 = (curPnt_X.x / m_nScale) * m_nScale;
+				nX1 = (curPnt_X.x / m_nScale) * m_nScale;
 
-					if (!(nY1 >= 0 && nY1 < nScaled_SrcHeight))
-						goto SrcToResEnd;
+				if (!(nY1 >= 0 && nY1 < nScaled_SrcHeight))
+					goto SrcToResEnd;
 
-					if (!(nX1 >= 0 && nX1 < nScaled_SrcWidth))
-						goto SrcToResEnd;
+				if (!(nX1 >= 0 && nX1 < nScaled_SrcWidth))
+					goto SrcToResEnd;
 
-					srcPntArr.ResetSize();
+				srcPntArr.ResetSize();
 
-					srcPntArr.PushBack(cvPoint(nX1, nY1));
+				srcPntArr.PushBack(cvPoint(nX1, nY1));
 
-					nY2 = AddRoundByMin(curPnt_X.y);
+				nY2 = AddRoundByMin(curPnt_X.y);
 
-					nX2 = AddRoundByMin(curPnt_X.x);
+				nX2 = AddRoundByMin(curPnt_X.x);
 
-					if (nY2 < 0 || nY2 >= nScaled_SrcHeight)
-						nY2 = nY1;
+				if (nY2 < 0 || nY2 >= nScaled_SrcHeight)
+					nY2 = nY1;
 
-					if (nX2 < 0 || nX2 >= nScaled_SrcWidth)
-						nX2 = nX1;
+				if (nX2 < 0 || nX2 >= nScaled_SrcWidth)
+					nX2 = nX1;
 
-					srcPntArr.PushBack(cvPoint(nX2, nY1));
-					srcPntArr.PushBack(cvPoint(nX2, nY2));
-					srcPntArr.PushBack(cvPoint(nX1, nY2));
+				srcPntArr.PushBack(cvPoint(nX2, nY1));
+				srcPntArr.PushBack(cvPoint(nX2, nY2));
+				srcPntArr.PushBack(cvPoint(nX1, nY2));
 
-				SrcToResEnd:
+			SrcToResEnd:
 
-					for (int i = 0; i < srcPntArr.GetSize(); i++)
+				for (int i = 0; i < srcPntArr.GetSize(); i++)
+				{
+					CvPoint & rSrcPnt = srcPntArr[i];
+
+					int nIdx_Src = idxCalc_Src.Calc(
+						rSrcPnt.x / m_nScale, rSrcPnt.y / m_nScale);
+
+					int nOldDist = srcMinDistBuf[nIdx_Src];
+
+					if (nGreatDist == nOldDist)
+						nMappedSrcCnt++;
+
+					int nNewDist = abs(curPnt_X.x - rSrcPnt.x) +
+						abs(curPnt_X.y - rSrcPnt.y);
+
+					if (nNewDist < nOldDist)
 					{
-						CvPoint & rSrcPnt = srcPntArr[i];
-
-						int nIdx_Src = idxCalc_Src.Calc(
-							rSrcPnt.x / m_nScale, rSrcPnt.y / m_nScale);
-
-						int nOldDist = srcMinDistBuf[nIdx_Src];
-
-						if (nGreatDist == nOldDist)
-							nMappedSrcCnt++;
-
-						int nNewDist = abs(curPnt_X.x - rSrcPnt.x) +
-							abs(curPnt_X.y - rSrcPnt.y);
-
-						if (nNewDist < nOldDist)
-						{
-							srcMinDistBuf[nIdx_Src] = nNewDist;
-							srcToResBuf[nIdx_Src] = nIdx_Res;
-						}
-
+						srcMinDistBuf[nIdx_Src] = nNewDist;
+						srcToResBuf[nIdx_Src] = nIdx_Res;
 					}
+
+				}
 				//}
 
 
@@ -285,8 +285,8 @@ namespace Hcv
 
 				resToSrcBuf[nIdx_Res] = nIdx_Src;
 
-				
-				
+
+
 
 				//	PrepareResImg
 				{
@@ -298,28 +298,34 @@ namespace Hcv
 					if (nIdx_Src >= 0)
 					{
 						//F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
-						
+
 						F32ColorVal & rColor_Src_X1_Y1 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY1 / m_nScale)];
 						F32ColorVal & rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY2 / m_nScale)];
 						F32ColorVal & rColor_Src_X2_Y1 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
 						F32ColorVal & rColor_Src_X2_Y2 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
 
-						rColor_Src_X1_Y1.MultSelfBy(curPnt_X.x - nX1);
-						rColor_Src_X2_Y1.MultSelfBy(curPnt_X.x - nX2);
+						//rColor_Src_X1_Y1.MultSelfBy(abs(curPnt_X.x - nX1));
+						//rColor_Src_X2_Y1.MultSelfBy(abs(curPnt_X.x - nX2));
 
-						F32ColorVal rColor_Src_X_Y1 = F32ColorVal::Add(rColor_Src_X1_Y1, rColor_Src_X2_Y1);
-						
-						
-						rColor_Src_X1_Y2.MultSelfBy(curPnt_X.x - nX1);
-						rColor_Src_X2_Y2.MultSelfBy(curPnt_X.x - nX2);
+						F32ColorVal rColor_Src_X_Y1 = F32ColorVal::Add(
+							rColor_Src_X1_Y1.MultBy(abs(curPnt_X.x - nX1)),
+							rColor_Src_X2_Y1.MultBy(abs(curPnt_X.x - nX2))
+							).DividBy(m_nScale);
 
-						F32ColorVal rColor_Src_X_Y2 = F32ColorVal::Add(rColor_Src_X1_Y2, rColor_Src_X2_Y2);
-							
-						
-						
-						
-						
-						
+
+						//rColor_Src_X1_Y2.MultSelfBy(abs(curPnt_X.x - nX1));
+						//rColor_Src_X2_Y2.MultSelfBy(abs(curPnt_X.x - nX2));
+
+						F32ColorVal rColor_Src_X_Y2 = F32ColorVal::Add(
+							rColor_Src_X1_Y2.MultBy(abs(curPnt_X.x - nX1)),
+							rColor_Src_X2_Y2.MultBy(abs(curPnt_X.x - nX2))
+							).DividBy(m_nScale);
+
+						rColor_Res = F32ColorVal::Add(
+							rColor_Src_X_Y1.MultBy(abs(curPnt_X.y - nY1)),
+							rColor_Src_X_Y2.MultBy(abs(curPnt_X.y - nY2))
+							).DividBy(m_nScale);
+
 						//F32ColorVal rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1, nY2)];
 
 						//rColor_Res.AssignVal(rColor_Src);
