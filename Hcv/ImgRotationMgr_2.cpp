@@ -289,6 +289,7 @@ namespace Hcv
 
 
 				//	PrepareResImg
+				//if (bInImg)
 				{
 					F32ColorVal & rColor_Res = resBuf[nIdx_Res];
 
@@ -297,44 +298,48 @@ namespace Hcv
 
 					if (nIdx_Src >= 0)
 					{
-						//F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+						//Hcpl_ASSERT(nX1 >= 0);
+						//Hcpl_ASSERT(nY1 >= 0);
+
+						//Hcpl_ASSERT(nX2 >= 0);
+						//Hcpl_ASSERT(nY2 >= 0);
 
 						F32ColorVal & rColor_Src_X1_Y1 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY1 / m_nScale)];
 						F32ColorVal & rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY2 / m_nScale)];
 						F32ColorVal & rColor_Src_X2_Y1 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
 						F32ColorVal & rColor_Src_X2_Y2 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
 
-						//rColor_Src_X1_Y1.MultSelfBy(abs(curPnt_X.x - nX1));
-						//rColor_Src_X2_Y1.MultSelfBy(abs(curPnt_X.x - nX2));
+						//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
+						int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
+						Hcpl_ASSERT(nWt_X1 <= m_nScale);
 
 						F32ColorVal rColor_Src_X_Y1 = F32ColorVal::Add(
-							rColor_Src_X1_Y1.MultBy(abs(curPnt_X.x - nX1)),
-							rColor_Src_X2_Y1.MultBy(abs(curPnt_X.x - nX2))
+							rColor_Src_X1_Y1.MultBy(nWt_X1),
+							rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
 							).DividBy(m_nScale);
-
-
-						//rColor_Src_X1_Y2.MultSelfBy(abs(curPnt_X.x - nX1));
-						//rColor_Src_X2_Y2.MultSelfBy(abs(curPnt_X.x - nX2));
-
-						//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
-						int nWt_X1 = (nX1 == nX2) ? 1 : abs(curPnt_X.x - nX2);
 
 						F32ColorVal rColor_Src_X_Y2 = F32ColorVal::Add(
-							rColor_Src_X1_Y2.MultBy(abs(nCur_X - nX1)),
-							rColor_Src_X2_Y2.MultBy(abs(nCur_X - nX2))
+							rColor_Src_X1_Y2.MultBy(nWt_X1),
+							rColor_Src_X2_Y2.MultBy(m_nScale - nWt_X1)
 							).DividBy(m_nScale);
 
-						int nCur_Y = (nY1 == nY2) ? nY1 : curPnt_X.y;
+						//int nCur_Y = (nY1 == nY2) ? nY1 : curPnt_X.y;
+						int nWt_Y1 = (nY1 == nY2) ? m_nScale : abs(curPnt_X.y - nY2);
+						Hcpl_ASSERT(nWt_Y1 <= m_nScale);
 
 						rColor_Res = F32ColorVal::Add(
-							rColor_Src_X_Y1.MultBy(abs(nCur_Y - nY1)),
-							rColor_Src_X_Y2.MultBy(abs(nCur_Y - nY2))
+							rColor_Src_X_Y1.MultBy(nWt_Y1),
+							rColor_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
 							).DividBy(m_nScale);
 
 
 						//F32ColorVal rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1, nY2)];
 
+						//F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
 						//rColor_Res.AssignVal(rColor_Src);
+						
+						//rColor_Res.AssignVal(rColor_Src_X1_Y1);
+						//rColor_Res.AssignVal(rColor_Src_X2_Y2);
 					}
 					else
 					{
