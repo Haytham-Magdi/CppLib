@@ -316,15 +316,21 @@ namespace Hcv
 						//rColor_Src_X1_Y2.MultSelfBy(abs(curPnt_X.x - nX1));
 						//rColor_Src_X2_Y2.MultSelfBy(abs(curPnt_X.x - nX2));
 
+						//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
+						int nWt_X1 = (nX1 == nX2) ? 1 : abs(curPnt_X.x - nX2);
+
 						F32ColorVal rColor_Src_X_Y2 = F32ColorVal::Add(
-							rColor_Src_X1_Y2.MultBy(abs(curPnt_X.x - nX1)),
-							rColor_Src_X2_Y2.MultBy(abs(curPnt_X.x - nX2))
+							rColor_Src_X1_Y2.MultBy(abs(nCur_X - nX1)),
+							rColor_Src_X2_Y2.MultBy(abs(nCur_X - nX2))
 							).DividBy(m_nScale);
 
+						int nCur_Y = (nY1 == nY2) ? nY1 : curPnt_X.y;
+
 						rColor_Res = F32ColorVal::Add(
-							rColor_Src_X_Y1.MultBy(abs(curPnt_X.y - nY1)),
-							rColor_Src_X_Y2.MultBy(abs(curPnt_X.y - nY2))
+							rColor_Src_X_Y1.MultBy(abs(nCur_Y - nY1)),
+							rColor_Src_X_Y2.MultBy(abs(nCur_Y - nY2))
 							).DividBy(m_nScale);
+
 
 						//F32ColorVal rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1, nY2)];
 
