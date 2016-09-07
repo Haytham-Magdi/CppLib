@@ -12,7 +12,7 @@
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
 
-#include <Lib\Hcv\ImgRotationMgr.h>
+#include <Lib\Hcv\ImgRotationMgr_2.h>
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 
 
@@ -25,7 +25,7 @@ namespace Hcv
 		{
 		public:
 
-			ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
+			ImgAngleDirMgr(ImgRotationMgr_2_Ref a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
 
 			F32ImageRef GetSrcImg()
 			{
@@ -49,7 +49,7 @@ namespace Hcv
 			int m_nAprLen_1; 
 			int m_nAprLen_2;
 
-			ImgRotationMgrRef m_imgRotMgr;
+			ImgRotationMgr_2_Ref m_imgRotMgr;
 
 		};
 	

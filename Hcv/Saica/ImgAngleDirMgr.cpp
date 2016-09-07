@@ -21,7 +21,7 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
-		ImgAngleDirMgr::ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, 
+		ImgAngleDirMgr::ImgAngleDirMgr(ImgRotationMgr_2_Ref a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv,
 			int a_nAprLen_1, int a_nAprLen_2)
 		{
 			Debug::Assert(a_hv == 'H' || a_hv == 'V');

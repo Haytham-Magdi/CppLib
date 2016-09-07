@@ -44,7 +44,7 @@ namespace Hcv
 
 			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
 			{
-				ImgRotationMgrRef rotMgr = m_rotMgrColl->GetRotAt(i);
+				ImgRotationMgr_2_Ref rotMgr = m_rotMgrColl->GetRotAt(i);
 				F32ImageRef rotImg = rotMgr->GetResImg();
 				F32ImageRef rotMagSqrImg = GenMagSqrImg(rotImg);
 

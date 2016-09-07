@@ -27,7 +27,7 @@ namespace Hcv
 
 			RotationMgrColl(F32ImageRef a_srcImg, int a_nofRots);
 
-			ImgRotationMgrRef GetRotAt(int a_nRotIdx)
+			ImgRotationMgr_2_Ref GetRotAt(int a_nRotIdx)
 			{
 				return m_rotMgrArr[a_nRotIdx];
 			}
@@ -51,7 +51,7 @@ namespace Hcv
 			F32ImageRef m_srcImg;
 
 			int m_nofRots;
-			FixedVector< ImgRotationMgrRef > m_rotMgrArr;
+			FixedVector< ImgRotationMgr_2_Ref > m_rotMgrArr;
 		};
 
 		typedef Hcpl::ObjRef< RotationMgrColl > RotationMgrCollRef;
