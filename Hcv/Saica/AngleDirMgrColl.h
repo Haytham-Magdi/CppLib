@@ -25,7 +25,8 @@ namespace Hcv
 		{
 		public:
 
-			AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2);
+			//AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2);
+			AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl);
 
 			//ImgAngleDirMgrRef GetRotAt(int a_nRotIdx)
 			//{
@@ -51,8 +52,8 @@ namespace Hcv
 			RotationMgrCollRef m_rotMgrColl;
 			//F32ImageRef m_srcImg;
 
-			int m_nAprLen_1;
-			int m_nAprLen_2;
+			//int m_nAprLen_1;
+			//int m_nAprLen_2;
 
 			//int m_nofRots;
 			FixedVector< ImgAngleDirMgrRef > m_angleDirMgrArr;

@@ -29,12 +29,15 @@ namespace Hcv
 		//	Prepare();
 		//}
 
-		AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2)
+		//AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2)
+		AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl)
 		{
-			m_rotMgrColl = a_rotMgrColl;			
-			
-			m_nAprLen_1 = a_nAprLen_1;
-			m_nAprLen_2 = a_nAprLen_2;
+			m_rotMgrColl = a_rotMgrColl;
+
+			//m_nAprLen_1 = a_nAprLen_1;
+			//m_nAprLen_2 = a_nAprLen_2;
+
+			Prepare();
 
 		}
 
