@@ -72,7 +72,7 @@ namespace Hcv
 
 		void Prepare();
 		
-		void PrepareResImg();
+		//void PrepareResImg();
 
 		int AddRound( int a_num );
 

@@ -457,43 +457,43 @@ namespace Hcv
 
 
 
-	void ImgRotationMgr_2::PrepareResImg()
-	{
-		int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
+	//void ImgRotationMgr_2::PrepareResImg()
+	//{
+	//	int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
-		m_resImg = F32Image::Create(m_resSiz, 3);
+	//	m_resImg = F32Image::Create(m_resSiz, 3);
 
-		F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
+	//	F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
 
-		CvSize srcSiz = m_srcImg->GetSize();
+	//	CvSize srcSiz = m_srcImg->GetSize();
 
-		//int nSrcSiz1D = srcSiz.width * srcSiz.height;
+	//	//int nSrcSiz1D = srcSiz.width * srcSiz.height;
 
-		F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
+	//	F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
 
-		int nResSiz1D = m_resSiz.width * m_resSiz.height;
+	//	int nResSiz1D = m_resSiz.width * m_resSiz.height;
 
-		for (int i = 0; i < nResSiz1D; i++)
-		{
-			F32ColorVal & rColor_Res = resBuf[i];
+	//	for (int i = 0; i < nResSiz1D; i++)
+	//	{
+	//		F32ColorVal & rColor_Res = resBuf[i];
 
 
-			int nIdx_Src = resToSrcBuf[i];
+	//		int nIdx_Src = resToSrcBuf[i];
 
-			if (nIdx_Src >= 0)
-			{
-				F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+	//		if (nIdx_Src >= 0)
+	//		{
+	//			F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
 
-				rColor_Res.AssignVal(rColor_Src);
-			}
-			else
-			{
-				//rColor_Res.AssignVal( 0, 120, 0 );
-				rColor_Res.AssignVal(0, 0, 0);
-			}
-		}
+	//			rColor_Res.AssignVal(rColor_Src);
+	//		}
+	//		else
+	//		{
+	//			//rColor_Res.AssignVal( 0, 120, 0 );
+	//			rColor_Res.AssignVal(0, 0, 0);
+	//		}
+	//	}
 
-	}
+	//}
 
 
 
