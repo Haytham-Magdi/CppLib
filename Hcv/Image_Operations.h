@@ -309,36 +309,47 @@ namespace Hcv
 
 		template<class T>
 		
-			//void Cala_inpAcccAvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
-		void Cala_inpAcccAvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_outAcc,
-			Range<int> a_standevRange_X, Range<int> a_avgRange_Y)
+			//void Cala_AvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
+		void Cala_AvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_magSqrAcc,
+			MemAccessor_2D_REF(float) a_outAcc, Range<int> a_standevRange_X, Range<int> a_avgRange_Y)
 		{
 			TempImageAccessor_REF(T) tmpAvgAcc_H = new TempImageAccessor<T>(a_inpAcc);
-			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_standevRange_X);
+			AvgImage_H<T>(a_inpAcc, tmpAvgAcc_H->GetMemAccessor(), a_standevRange_X);
 
-			
+			TempImageAccessor_REF(float) tmpAvg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc);
+			AvgImage_H<T>(a_magSqrAcc, tmpAvg_MagSqr_H_Acc->GetMemAccessor(), a_standevRange_X);
 
-			TempImageAccessor_REF(float) avg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc);
-			//F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
-			{
-				//F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
-				TempImageAccessor_REF(float) magSqr_Acc = new TempImageAccessor<float>(a_outAcc);
-				
+			TempImageAccessor_REF(float) tmpStandev_H_Acc = new TempImageAccessor<float>(a_outAcc);
+			CalcStandevImage(tmpAvgAcc_H->GetMemAccessor(), tmpAvg_MagSqr_H_Acc->GetMemAccessor(),
+				tmpStandev_H_Acc->GetMemAccessor());
+
+			MemAccessor_2D_REF(float) outAcc_2 = a_outAcc->Clone();
+			outAcc_2->SwitchXY();
+
+			MemAccessor_2D_REF(float) standev_H_Acc_2 = tmpStandev_H_Acc->GetMemAccessor()->Clone();
+			standev_H_Acc_2->SwitchXY();
+
+			AvgImage_H(standev_H_Acc_2, a_outAcc_2, a_avgRange_Y);
 
 
 
 
+			//TempImageAccessor_REF(float) avg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc);
+			////F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
+			//{
+			//	//F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
+			//	//TempImageAccessor_REF(float) magSqr_Acc = new TempImageAccessor<float>(a_outAcc);
+			//	
+			//	TempImageAccessor_REF(float) avg_MagSqr_Acc = new TempImageAccessor<float>(a_outAcc);
+			//	
 
+			//	//CalcMagSqrImage(org_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
 
+			//	//ShowImage(magSqr_Img->GetSrcImg(), "magSqr_Img->GetSrcImg()");
+			//	//return;
 
-
-				CalcMagSqrImage(org_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
-
-				//ShowImage(magSqr_Img->GetSrcImg(), "magSqr_Img->GetSrcImg()");
-				//return;
-
-				AvgImage(magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), avgWin);
-			}
+			//	AvgImage_H(a_magSqrAcc, avg_MagSqr_Acc->GetMemAccessor(), avgWin);
+			//}
 
 
 
