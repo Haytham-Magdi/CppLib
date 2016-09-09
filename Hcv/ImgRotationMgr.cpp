@@ -36,6 +36,16 @@ namespace Hcv
 		m_nCos = cos(m_angRad) * m_nScale;
 		m_nSin = sin(m_angRad) * m_nScale;
 
+		m_nCos++;
+		m_nSin++;
+
+		int mag1 = Sqr(m_nCos) + Sqr(m_nSin);
+		Hcpl_ASSERT(mag1 >= Sqr(m_nScale));
+
+		// tmp only
+		//m_nCos *= 1.3;
+		//m_nSin *= 1.3;
+
 		Prepare();
 	}
 
@@ -103,7 +113,6 @@ namespace Hcv
 			bgnPnt.x = nofLinesBef * m_nSin;
 			bgnPnt.y = -nofLinesBef * m_nCos;
 
-			//int nofLinesAft = AddRound(
 			int nofLinesAft = AddRoundByMin(
 				m_nCos * (srcSiz.height + nSafeMarg));
 
@@ -143,11 +152,22 @@ namespace Hcv
 		m_resToSrcMapImg = S32Image::Create(m_resSiz, 1);
 		int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
+		//m_resToSrcMapImg_X_Scaled = S32Image::Create(m_resSiz, 1);
+		//int * resToSrcBuf_X_Scaled = (int *)m_resToSrcMapImg_X_Scaled->GetPixAt(0, 0);
+
+		//m_resToSrcMapImg_Y_Scaled = S32Image::Create(m_resSiz, 1);
+		//int * resToSrcBuf_Y_Scaled = (int *)m_resToSrcMapImg_Y_Scaled->GetPixAt(0, 0);
+
 		m_srcToResMapImg = S32Image::Create(srcSiz, 1);
 		int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
 
 		S32ImageRef srcMinDistImg = S32Image::Create(srcSiz, 1);
 		int *  srcMinDistBuf = (int *)srcMinDistImg->GetPixAt(0, 0);
+
+		m_resImg = F32Image::Create(m_resSiz, 3);
+		F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
+
+		F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
 
 		const int nGreatDist = 10000000;
 		srcMinDistImg->SetAll(nGreatDist);
@@ -182,75 +202,64 @@ namespace Hcv
 				curPnt_X.x = curPnt_Y.x + x * m_nCos;
 				curPnt_X.y = curPnt_Y.y + x * m_nSin;
 
+				//resToSrcBuf_X_Scaled[idxCalc_Res.Calc(x, y)] =
 
+				//{
+				int nX1, nX2, nY1, nY2;
+
+				nY1 = (curPnt_X.y / m_nScale) * m_nScale;
+
+				nX1 = (curPnt_X.x / m_nScale) * m_nScale;
+
+				if (!(nY1 >= 0 && nY1 < nScaled_SrcHeight))
+					goto SrcToResEnd;
+
+				if (!(nX1 >= 0 && nX1 < nScaled_SrcWidth))
+					goto SrcToResEnd;
+
+				srcPntArr.ResetSize();
+
+				srcPntArr.PushBack(cvPoint(nX1, nY1));
+
+				nY2 = AddRoundByMin(curPnt_X.y);
+
+				nX2 = AddRoundByMin(curPnt_X.x);
+
+				if (nY2 < 0 || nY2 >= nScaled_SrcHeight)
+					nY2 = nY1;
+
+				if (nX2 < 0 || nX2 >= nScaled_SrcWidth)
+					nX2 = nX1;
+
+				srcPntArr.PushBack(cvPoint(nX2, nY1));
+				srcPntArr.PushBack(cvPoint(nX2, nY2));
+				srcPntArr.PushBack(cvPoint(nX1, nY2));
+
+			SrcToResEnd:
+
+				for (int i = 0; i < srcPntArr.GetSize(); i++)
 				{
-					int nX1, nX2, nY1, nY2;
+					CvPoint & rSrcPnt = srcPntArr[i];
 
-					nY1 = (curPnt_X.y / m_nScale) * m_nScale;
+					int nIdx_Src = idxCalc_Src.Calc(
+						rSrcPnt.x / m_nScale, rSrcPnt.y / m_nScale);
 
-					if (!(nY1 >= 0 && nY1 < nScaled_SrcHeight))
-						goto SrcToResEnd;
+					int nOldDist = srcMinDistBuf[nIdx_Src];
 
-					nX1 = (curPnt_X.x / m_nScale) * m_nScale;
+					if (nGreatDist == nOldDist)
+						nMappedSrcCnt++;
 
-					if (!(nX1 >= 0 && nX1 < nScaled_SrcWidth))
-						goto SrcToResEnd;
+					int nNewDist = abs(curPnt_X.x - rSrcPnt.x) +
+						abs(curPnt_X.y - rSrcPnt.y);
 
-					srcPntArr.ResetSize();
-
-					srcPntArr.PushBack(cvPoint(nX1, nY1));
-
-					nY2 = AddRoundByMin(curPnt_X.y);
-
-					nX2 = AddRoundByMin(curPnt_X.x);
-
-					if ((nY2 >= 0 && nY2 < nScaled_SrcHeight) &&
-						(nX2 >= 0 && nX2 < nScaled_SrcWidth))
+					if (nNewDist < nOldDist)
 					{
-						srcPntArr.PushBack(cvPoint(nX2, nY1));
-						srcPntArr.PushBack(cvPoint(nX2, nY2));
-						srcPntArr.PushBack(cvPoint(nX1, nY2));
-					}
-					else if (nY2 >= 0 && nY2 < nScaled_SrcHeight)
-					{
-						srcPntArr.PushBack(cvPoint(nX1, nY2));
-					}
-					else if (nX2 >= 0 && nX2 < nScaled_SrcWidth)
-					{
-						srcPntArr.PushBack(cvPoint(nX2, nY1));
-					}
-
-
-
-				SrcToResEnd:
-
-					for (int i = 0; i < srcPntArr.GetSize(); i++)
-					{
-						CvPoint & rSrcPnt = srcPntArr[i];
-
-						int nIdx_Src = idxCalc_Src.Calc(
-							rSrcPnt.x / m_nScale, rSrcPnt.y / m_nScale);
-
-						int nOldDist = srcMinDistBuf[nIdx_Src];
-
-						if (nGreatDist == nOldDist)
-							nMappedSrcCnt++;
-
-						int nNewDist = abs(curPnt_X.x - rSrcPnt.x) +
-							abs(curPnt_X.y - rSrcPnt.y);
-
-						if (nNewDist < nOldDist)
-						{
-							srcMinDistBuf[nIdx_Src] = nNewDist;
-							srcToResBuf[nIdx_Src] = nIdx_Res;
-						}
-
-
-
+						srcMinDistBuf[nIdx_Src] = nNewDist;
+						srcToResBuf[nIdx_Src] = nIdx_Res;
 					}
 
 				}
-
+				//}
 
 
 				bool bInImg = true;
@@ -270,12 +279,82 @@ namespace Hcv
 				int nIdx_Src = -1;
 
 				if (bInImg)
+				{
 					nIdx_Src = idxCalc_Src.Calc(nX_Src, nY_Src);
+				}
 
 				resToSrcBuf[nIdx_Res] = nIdx_Src;
 
-				if (93339 == nIdx_Src)
-					nIdx_Src = nIdx_Src;
+
+
+
+				//	PrepareResImg
+				//if (bInImg)
+				{
+					F32ColorVal & rColor_Res = resBuf[nIdx_Res];
+
+					int nIdx_Src = resToSrcBuf[nIdx_Res];
+
+
+					if (nIdx_Src >= 0)
+					{
+						//Hcpl_ASSERT(nX1 >= 0);
+						//Hcpl_ASSERT(nY1 >= 0);
+
+						//Hcpl_ASSERT(nX2 >= 0);
+						//Hcpl_ASSERT(nY2 >= 0);
+
+						F32ColorVal & rColor_Src_X1_Y1 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY1 / m_nScale)];
+						F32ColorVal & rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY2 / m_nScale)];
+						F32ColorVal & rColor_Src_X2_Y1 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
+						F32ColorVal & rColor_Src_X2_Y2 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
+
+						//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
+						int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
+						Hcpl_ASSERT(nWt_X1 <= m_nScale);
+
+						F32ColorVal rColor_Src_X_Y1 = F32ColorVal::Add(
+							rColor_Src_X1_Y1.MultBy(nWt_X1),
+							rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
+							).DividBy(m_nScale);
+
+						F32ColorVal rColor_Src_X_Y2 = F32ColorVal::Add(
+							rColor_Src_X1_Y2.MultBy(nWt_X1),
+							rColor_Src_X2_Y2.MultBy(m_nScale - nWt_X1)
+							).DividBy(m_nScale);
+
+						//int nCur_Y = (nY1 == nY2) ? nY1 : curPnt_X.y;
+						int nWt_Y1 = (nY1 == nY2) ? m_nScale : abs(curPnt_X.y - nY2);
+						Hcpl_ASSERT(nWt_Y1 <= m_nScale);
+
+						rColor_Res = F32ColorVal::Add(
+							rColor_Src_X_Y1.MultBy(nWt_Y1),
+							rColor_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
+							).DividBy(m_nScale);
+
+
+						//F32ColorVal rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1, nY2)];
+
+						//F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+						//rColor_Res.AssignVal(rColor_Src);
+						
+						//rColor_Res.AssignVal(rColor_Src_X1_Y1);
+						//rColor_Res.AssignVal(rColor_Src_X2_Y2);
+					}
+					else
+					{
+						//rColor_Res.AssignVal( 0, 120, 0 );
+						rColor_Res.AssignVal(0, 0, 0);
+					}
+
+				}
+
+
+
+
+
+
+
 			}
 		}
 
@@ -362,47 +441,7 @@ namespace Hcv
 		PrepareImageItrMgr();
 
 
-
-		if (false)
-		{
-			F32ImageRef img1 = F32Image::Create(srcSiz, 3);
-
-			img1->SetAll(0);
-
-			F32ColorVal * img1_Buf =
-				(F32ColorVal *)img1->GetPixAt(0, 0);
-
-			//for( int i=0; i < nSrcSiz1D; i++ )
-
-			int i = 0;
-			for (int y = 0; y < srcSiz.height; y++)
-			{
-				for (int x = 0; x < srcSiz.width; x++, i++)
-				{
-					//F32ColorVal & rColor1 = img1_Buf[ i ];
-
-					if (nGreatDist == srcMinDistBuf[i])
-					{
-						//rColor1.AssignVal( 0, 180, 0 );
-
-						DrawCircle(img1, F32Point(x, y),
-							//u8ColorVal( 0, 180, 0 ), 7 );
-							u8ColorVal(0, 180, 0), 1);
-					}
-
-
-				}
-
-			}
-
-			ShowImage(img1, "img1");
-		}
-
-
-
-
-
-		PrepareResImg();
+		//PrepareResImg();
 
 		//ShowImage( m_resImg, "m_resImg" );
 
@@ -418,93 +457,43 @@ namespace Hcv
 
 
 
-	void ImgRotationMgr::PrepareResImg()
-	{
-		int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
+	//void ImgRotationMgr::PrepareResImg()
+	//{
+	//	int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
-		m_resImg = F32Image::Create(m_resSiz, 3);
+	//	m_resImg = F32Image::Create(m_resSiz, 3);
 
-		F32ColorVal * resBuf =
-			(F32ColorVal *)m_resImg->GetPixAt(0, 0);
+	//	F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
 
-		CvSize srcSiz = m_srcImg->GetSize();
+	//	CvSize srcSiz = m_srcImg->GetSize();
 
-		//int nSrcSiz1D = srcSiz.width * srcSiz.height;
+	//	//int nSrcSiz1D = srcSiz.width * srcSiz.height;
 
-		F32ColorVal * srcBuf =
-			(F32ColorVal *)m_srcImg->GetPixAt(0, 0);
+	//	F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
 
-		int nResSiz1D = m_resSiz.width * m_resSiz.height;
+	//	int nResSiz1D = m_resSiz.width * m_resSiz.height;
 
-		for (int i = 0; i < nResSiz1D; i++)
-		{
-			F32ColorVal & rColor_Res = resBuf[i];
+	//	for (int i = 0; i < nResSiz1D; i++)
+	//	{
+	//		F32ColorVal & rColor_Res = resBuf[i];
 
 
-			int nIdx_Src = resToSrcBuf[i];
+	//		int nIdx_Src = resToSrcBuf[i];
 
-			if (nIdx_Src >= 0)
-			{
-				F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
+	//		if (nIdx_Src >= 0)
+	//		{
+	//			F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
 
-				rColor_Res.AssignVal(rColor_Src);
-			}
-			else
-			{
-				//rColor_Res.AssignVal( 0, 120, 0 );
-				rColor_Res.AssignVal(0, 0, 0);
-			}
-		}
+	//			rColor_Res.AssignVal(rColor_Src);
+	//		}
+	//		else
+	//		{
+	//			//rColor_Res.AssignVal( 0, 120, 0 );
+	//			rColor_Res.AssignVal(0, 0, 0);
+	//		}
+	//	}
 
-		if (false)
-		{
-			IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
-
-			ImageLineItrProvider & rProv = m_imageItrMgr->GetItrProvAt(0);
-			//ImageLineItrProvider & rProv = m_imageItrMgr->GetItrProvAt( 1 );
-			//ImageLineItrProvider & rProv = m_imageItrMgr->GetItrProvAt( 3 );
-
-			int nStartIdx = idxCalc_Res.Calc(
-				m_resSiz.width / 3, m_resSiz.height / 3);
-
-			ImageLineItr & rLineItr =
-				rProv.GetItrForPixIdx(nStartIdx);
-
-			//NumberIterator itr = rLineItr.GenBgnToEndItr();
-			//itr.SetCurVal( nStartIdx );
-
-			//NumberIterator itr;
-			//itr.Init( rLineItr.GetFarBgn(),
-			//	rLineItr.GetBgn() - rLineItr.GetIncVal(),
-			//	rLineItr.GetIncVal() );
-
-			NumberIterator itr;
-			itr.Init(rLineItr.GetFarBgn(),
-				rLineItr.GetAftBgn(-1), rLineItr.GetIncVal());
-
-			//itr.GotoBgn();
-
-			int i = 0;
-
-			//while( itr.IsCurValid() )
-			for (int j = itr.CalcCurStep();
-				j < itr.GetLimStep(); j++, itr.MoveNext())
-			{
-				//int nCurIdx = rLineItr.GetCurIndex();
-				int nCurIdx = itr.GetCurVal();
-
-				//rLineItr.GoNext();
-				//itr.MoveNext();
-
-				F32ColorVal & rColor_Res = resBuf[nCurIdx];
-
-				rColor_Res.AssignVal(0, i, i);
-				i++;
-			}
-		}//	End of : Line draw try.
-
-
-	}
+	//}
 
 
 

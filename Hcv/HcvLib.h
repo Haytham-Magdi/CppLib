@@ -170,7 +170,6 @@
 #include <Lib\Hcv\ImgDataElm_C07.h>
 #include <Lib\Hcv\ImgDataElm_CovMat.h>
 #include <Lib\Hcv\ImgRotationMgr.h>
-#include <Lib\Hcv\ImgRotationMgr_2.h>
 #include <Lib\Hcv\ImageLineItr.h>
 #include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>

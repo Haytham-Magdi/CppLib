@@ -53,7 +53,7 @@ namespace Hcv
 			{
 				float angDig = i * angStep;
 
-				ImgRotationMgr_2_Ref rot = new ImgRotationMgr_2(m_srcImg, angDig);
+				ImgRotationMgrRef rot = new ImgRotationMgr(m_srcImg, angDig);
 
 				m_rotMgrArr.PushBack(rot);
 			}
