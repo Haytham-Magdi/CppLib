@@ -51,17 +51,20 @@ namespace Hcv
 				F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly();
 				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly();
 
+				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(rotMgr,
+					org_Img_V, magSqr_Img_V, 'V');
 
+				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V);
+				m_angleDirMgrArr.PushBack(angleDirMgr_H);
 
+				ImgAngleDirMgrRef angleDirMgr_V = new ImgAngleDirMgr(dirContext_V, dirContext_H);
+				m_angleDirMgrArr.PushBack(angleDirMgr_V);
+			}
 
-
-				////ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H', m_nAprLen_1, m_nAprLen_2);
-				//ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H');
-				//m_angleDirMgrArr.PushBack(angleDirMgrH);
-
-				////ImgAngleDirMgrRef angleDirMgrV = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'V', m_nAprLen_2, m_nAprLen_1);
-				//ImgAngleDirMgrRef angleDirMgrV = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'V');
-				//m_angleDirMgrArr.PushBack(angleDirMgrV);
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++)
+			{
+				ImgAngleDirMgrRef angleDirMgr = m_angleDirMgrArr[i];
+				angleDirMgr->Proceed_1();
 			}
 
 		}

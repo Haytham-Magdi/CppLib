@@ -58,9 +58,7 @@ namespace Hcv
 				return m_normalContext;
 			}
 
-		protected:
-
-			void Prepare();
+			void Proceed_1();
 
 		protected:
 

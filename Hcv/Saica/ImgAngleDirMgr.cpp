@@ -25,11 +25,6 @@ namespace Hcv
 		{
 			m_context = a_context;
 			m_normalContext = a_normalContext;
-
-
-
-
-			//Prepare();
 		}
 
 		ImgAngleDirMgr::Context::Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, 
@@ -44,7 +39,7 @@ namespace Hcv
 			m_hv = a_hv;
 		}
 
-		void ImgAngleDirMgr::Prepare()
+		void ImgAngleDirMgr::Proceed_1()
 		{
 		
 		}
