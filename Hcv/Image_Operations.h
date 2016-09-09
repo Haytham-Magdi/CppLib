@@ -308,19 +308,22 @@ namespace Hcv
 		}
 
 		template<class T>
-		void Cala_AvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_magSqrAcc,
+		void Cala_AvgStandevImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_magSqrAcc,
 			MemAccessor_2D_REF(float) a_outAcc, Range<int> a_standevRange_X, Range<int> a_avgRange_Y)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_magSqrAcc->GetIndexSize());
-			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == acc_Out->GetIndexSize());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize_X() == a_magSqrAcc->GetIndexSize_X());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize_X() == a_outAcc->GetIndexSize_X());
+
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize_Y() == a_magSqrAcc->GetIndexSize_Y());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize_Y() == a_outAcc->GetIndexSize_Y());
 
 
 
 			TempImageAccessor_REF(T) tmpAvgAcc_H = new TempImageAccessor<T>(a_inpAcc);
-			AvgImage_H<T>(a_inpAcc, tmpAvgAcc_H->GetMemAccessor(), a_standevRange_X);
+			AvgImage_H(a_inpAcc, tmpAvgAcc_H->GetMemAccessor(), a_standevRange_X);
 
 			TempImageAccessor_REF(float) tmpAvg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc);
-			AvgImage_H<T>(a_magSqrAcc, tmpAvg_MagSqr_H_Acc->GetMemAccessor(), a_standevRange_X);
+			AvgImage_H(a_magSqrAcc, tmpAvg_MagSqr_H_Acc->GetMemAccessor(), a_standevRange_X);
 
 			TempImageAccessor_REF(float) tmpStandev_H_Acc = new TempImageAccessor<float>(a_outAcc);
 			CalcStandevImage(tmpAvgAcc_H->GetMemAccessor(), tmpAvg_MagSqr_H_Acc->GetMemAccessor(),
@@ -332,7 +335,7 @@ namespace Hcv
 			MemAccessor_2D_REF(float) standev_H_Acc_2 = tmpStandev_H_Acc->GetMemAccessor()->Clone();
 			standev_H_Acc_2->SwitchXY();
 
-			AvgImage_H(standev_H_Acc_2, a_outAcc_2, a_avgRange_Y);
+			AvgImage_H(standev_H_Acc_2, outAcc_2, a_avgRange_Y);
 		}
 
 
