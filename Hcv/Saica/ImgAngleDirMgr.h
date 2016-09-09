@@ -44,15 +44,18 @@ namespace Hcv
 				ImgRotationMgrRef m_imgRotMgr;
 			};
 
-			typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
-
 		public:
 
-			ImgAngleDirMgr(ImgAngleDirMgr_Context_Ref a_context, ImgAngleDirMgr_Context_Ref a_normalContext);
+			ImgAngleDirMgr(Hcpl::ObjRef< ImgAngleDirMgr::Context > a_context, Hcpl::ObjRef< ImgAngleDirMgr::Context > a_normalContext);
 
-			ImgAngleDirMgr_Context_Ref GetContext()
+			Hcpl::ObjRef< ImgAngleDirMgr::Context > GetContext()
 			{
 				return m_context;
+			}
+
+			Hcpl::ObjRef< ImgAngleDirMgr::Context > GetNormalContext()
+			{
+				return m_normalContext;
 			}
 
 		protected:
@@ -61,12 +64,16 @@ namespace Hcv
 
 		protected:
 
-			ImgAngleDirMgr_Context_Ref m_context;
-			ImgAngleDirMgr_Context_Ref m_normalContext;
+			//ImgAngleDirMgr_Context_Ref m_context;
+			//ImgAngleDirMgr_Context_Ref m_normalContext;
 
+			Hcpl::ObjRef< ImgAngleDirMgr::Context > m_context;
+			Hcpl::ObjRef< ImgAngleDirMgr::Context > m_normalContext;
 		};
 
 		typedef Hcpl::ObjRef< ImgAngleDirMgr > ImgAngleDirMgrRef;
+		typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
+
 	};
 
 

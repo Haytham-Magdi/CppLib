@@ -190,7 +190,7 @@ namespace Hcv
 			}
 
 			ret->m_memAccessor = m_memAccessor->Clone();
-			ret->m_memAccessor->SetDataPtr((F32ColorVal *)ret->m_srcImg->GetDataPtr());
+			ret->m_memAccessor->SetDataPtr((T_AccElm *)ret->m_srcImg->GetDataPtr());
 			ret->m_memAccessor->Lock();
 
 			return ret;

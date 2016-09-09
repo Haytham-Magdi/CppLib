@@ -40,13 +40,19 @@ namespace Hcv
 			{
 				ImgRotationMgrRef rotMgr = m_rotMgrColl->GetRotAt(i);
 
-				F32ImageAccessor3C_Ref org_Img = new F32ImageAccessor3C(rotMgr->GetResImg());
+				F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(rotMgr->GetResImg());
 
-				F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
-				CalcMagSqrImage(org_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
+				F32ImageAccessor1C_Ref magSqr_Img_H = new F32ImageAccessor1C(org_Img_H->GetOffsetCalc());
+				CalcMagSqrImage(org_Img_H->GetMemAccessor(), magSqr_Img_H->GetMemAccessor());
 
-				//ImgAngleDirMgr_Context_Ref r1;
-				ImgAngleDirMgr::Context * r1;
+				ImgAngleDirMgr_Context_Ref dirContext_H = new ImgAngleDirMgr::Context(rotMgr,
+					org_Img_H, magSqr_Img_H, 'H');
+
+				F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly();
+				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly();
+
+
+
 
 
 				////ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H', m_nAprLen_1, m_nAprLen_2);
