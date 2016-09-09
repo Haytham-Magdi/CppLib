@@ -51,10 +51,14 @@ namespace Hcv
 				F32ImageRef rotImg = rotMgr->GetResImg();
 				F32ImageRef rotMagSqrImg = GenMagSqrImg(rotImg);
 
-				ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H', m_nAprLen_1, m_nAprLen_2);
+
+
+				//ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H', m_nAprLen_1, m_nAprLen_2);
+				ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H');
 				m_angleDirMgrArr.PushBack(angleDirMgrH);
 
-				ImgAngleDirMgrRef angleDirMgrV = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'V', m_nAprLen_2, m_nAprLen_1);
+				//ImgAngleDirMgrRef angleDirMgrV = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'V', m_nAprLen_2, m_nAprLen_1);
+				ImgAngleDirMgrRef angleDirMgrV = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'V');
 				m_angleDirMgrArr.PushBack(angleDirMgrV);
 			}
 
