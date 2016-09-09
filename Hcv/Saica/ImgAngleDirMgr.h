@@ -27,40 +27,47 @@ namespace Hcv
 
 			class Context : FRM_Object
 			{
+			public:
 
+				Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv)
+				{
+					m_imgRotMgr = a_imgRotMgr;
 
+					m_org_Img = a_org_Img;
+					m_magSqr_Img = a_magSqr_Img;
+			
+					Hcpl_ASSERT(a_hv == 'H' || a_hv == 'V');
+					m_hv = a_hv;
+				}
+
+			protected:
+
+				F32ImageAccessor3C_Ref m_org_Img;
+				F32ImageAccessor1C_Ref m_magSqr_Img;
+
+				char m_hv;
+				ImgRotationMgrRef m_imgRotMgr;
 			};
 
 			typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
 
 		public:
 
-			//ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
-			ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv);
+			ImgAngleDirMgr(ImgAngleDirMgr_Context_Ref a_context, ImgAngleDirMgr_Context_Ref a_normalContext);
 
-			F32ImageRef GetSrcImg()
+			ImgAngleDirMgr_Context_Ref GetContext()
 			{
-				return m_srcImg;
+				return m_context;
 			}
 
 		protected:
 
-			//void Prepare();
+			void Prepare();
 
 		protected:
 
-
-			F32ImageRef m_srcImg;
-			F32ImageRef m_rotImg;
-			F32ImageRef m_rotMagSqrImg;
-
-			//const char m_hv;
-			char m_hv;
-
-			int m_nAprLen_1; 
-			int m_nAprLen_2;
-
-			ImgRotationMgrRef m_imgRotMgr;
+			ImgAngleDirMgr_Context_Ref m_context;
+			ImgAngleDirMgr_Context_Ref m_normalContext;
 
 		};
 	

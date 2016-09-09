@@ -21,42 +21,21 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
-		//ImgAngleDirMgr::ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv,
-		//int a_nAprLen_1, int a_nAprLen_2)
-		ImgAngleDirMgr::ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv)
+		ImgAngleDirMgr::ImgAngleDirMgr(ImgAngleDirMgr_Context_Ref a_context, ImgAngleDirMgr_Context_Ref a_normalContext)
 		{
-			Debug::Assert(a_hv == 'H' || a_hv == 'V');
+			m_context = a_context;
+			m_normalContext = a_normalContext;
 
-			m_hv = a_hv;
-
-
-			//if (a_hv != 'H' && a_hv != 'V')
-			//	throw "Invalid a_hv";
-
-
-			m_imgRotMgr = a_imgRotMgr;
-
-			//m_nAprLen_1 = a_nAprLen_1;
-			//m_nAprLen_2 = a_nAprLen_2;
-
-			m_srcImg = m_imgRotMgr->GetSrcImg();
-			m_rotImg = m_imgRotMgr->GetResImg();
-
-			F32ImageAccessor3C_Ref var1 = new F32ImageAccessor3C(m_rotImg);
-
-			Debug::Assert(m_rotImg->GetSize().width == a_rotMagSqrImg->GetSize().width
-				&& m_rotImg->GetSize().height == a_rotMagSqrImg->GetSize().height);
-			m_rotMagSqrImg = a_rotMagSqrImg;
 
 
 
 			//Prepare();
 		}
 
-		//void ImgAngleDirMgr::Prepare()
-		//{
-		//
-		//}
+		void ImgAngleDirMgr::Prepare()
+		{
+		
+		}
 
 
 	}
