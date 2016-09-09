@@ -25,6 +25,16 @@ namespace Hcv
 		{
 		public:
 
+			class Context : FRM_Object
+			{
+
+
+			};
+
+			typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
+
+		public:
+
 			//ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv, int a_nAprLen_1, int a_nAprLen_2);
 			ImgAngleDirMgr(ImgRotationMgrRef a_imgRotMgr, F32ImageRef a_rotMagSqrImg, char a_hv);
 

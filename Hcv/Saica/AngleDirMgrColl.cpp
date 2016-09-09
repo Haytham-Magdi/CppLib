@@ -18,6 +18,10 @@ namespace Hcv
 	using namespace Hcpl;
 	//using namespace Hcpl::Math;
 
+	using namespace Hcv;
+	using namespace Hcv::Image_Operations;
+	using namespace Hcv::ImageAccessorOperations;
+
 	namespace Ns_Saica
 	{
 
@@ -48,6 +52,14 @@ namespace Hcv
 			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
 			{
 				ImgRotationMgrRef rotMgr = m_rotMgrColl->GetRotAt(i);
+
+				F32ImageAccessor3C_Ref org_Img = new F32ImageAccessor3C(rotMgr->GetResImg());
+
+				F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
+				CalcMagSqrImage(org_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
+
+
+
 				F32ImageRef rotImg = rotMgr->GetResImg();
 				F32ImageRef rotMagSqrImg = GenMagSqrImg(rotImg);
 
