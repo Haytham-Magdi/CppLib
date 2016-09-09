@@ -308,11 +308,14 @@ namespace Hcv
 		}
 
 		template<class T>
-		
-			//void Cala_AvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
 		void Cala_AvgStandev_1D_Image_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_magSqrAcc,
 			MemAccessor_2D_REF(float) a_outAcc, Range<int> a_standevRange_X, Range<int> a_avgRange_Y)
 		{
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_magSqrAcc->GetIndexSize());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == acc_Out->GetIndexSize());
+
+
+
 			TempImageAccessor_REF(T) tmpAvgAcc_H = new TempImageAccessor<T>(a_inpAcc);
 			AvgImage_H<T>(a_inpAcc, tmpAvgAcc_H->GetMemAccessor(), a_standevRange_X);
 
@@ -330,97 +333,6 @@ namespace Hcv
 			standev_H_Acc_2->SwitchXY();
 
 			AvgImage_H(standev_H_Acc_2, a_outAcc_2, a_avgRange_Y);
-
-
-
-
-			//TempImageAccessor_REF(float) avg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc);
-			////F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
-			//{
-			//	//F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
-			//	//TempImageAccessor_REF(float) magSqr_Acc = new TempImageAccessor<float>(a_outAcc);
-			//	
-			//	TempImageAccessor_REF(float) avg_MagSqr_Acc = new TempImageAccessor<float>(a_outAcc);
-			//	
-
-			//	//CalcMagSqrImage(org_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
-
-			//	//ShowImage(magSqr_Img->GetSrcImg(), "magSqr_Img->GetSrcImg()");
-			//	//return;
-
-			//	AvgImage_H(a_magSqrAcc, avg_MagSqr_Acc->GetMemAccessor(), avgWin);
-			//}
-
-
-
-			
-			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc);
-			
-			
-			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc);
-
-
-
-
-
-
-
-			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
-			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X);
-
-			//return;
-
-			MemAccessor_2D_REF(T) outAcc2 = a_outAcc->Clone();
-			outAcc2->SwitchXY();
-
-			tmpImgAcc->SwitchXY();
-
-			AvgImage_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_window.GetRange_Y());
-
-
-
-
-
-
-
-
-
-
-
-
-
-			MemAccessor_1D_REF(T) acc_Avg_Y = a_avg_Acc->GenAccessor_1D_Y();
-			MemAccessor_1D_REF(T) acc_Avg_X = a_avg_Acc->GenAccessor_1D_X();
-
-			MemAccessor_1D_REF(float) acc_Avg_MagSqr_Y = a_avg_MagSqr_Acc->GenAccessor_1D_Y();
-			MemAccessor_1D_REF(float) acc_Avg_MagSqr_X = a_avg_MagSqr_Acc->GenAccessor_1D_X();
-
-			MemAccessor_1D_REF(float) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
-			MemAccessor_1D_REF(float) acc_Out_X = a_outAcc->GenAccessor_1D_X();
-
-			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Avg_MagSqr_Y->GetIndexSize());
-			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Out_Y->GetIndexSize());
-
-			//Hcpl_ASSERT(acc_Avg_X->GetIndexSize() == acc_Avg_MagSqr_X->GetIndexSize());
-			//Hcpl_ASSERT(acc_Avg_X->GetIndexSize() == acc_Out_X->GetIndexSize());
-
-			PtrIterator<T> ptrItr_Avg_Y = acc_Avg_Y->GenPtrIterator();
-			PtrIterator<float> ptrItr_Avg_MagSqr_Y = acc_Avg_MagSqr_Y->GenPtrIterator();
-			PtrIterator<float> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
-
-			for (; !ptrItr_Avg_Y.IsDone();
-				ptrItr_Avg_Y.Next(), ptrItr_Avg_MagSqr_Y.Next(), ptrItr_Out_Y.Next())
-			{
-				T * ptr_Avg_Y = ptrItr_Avg_Y.GetCurrent();
-				float * ptr_Avg_MagSqr_Y = ptrItr_Avg_MagSqr_Y.GetCurrent();
-				float * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
-
-				acc_Avg_X->SetDataPtr(ptr_Avg_Y);
-				acc_Avg_MagSqr_X->SetDataPtr(ptr_Avg_MagSqr_Y);
-				acc_Out_X->SetDataPtr(ptr_Out_Y);
-
-				CalcStandevLine<T>(acc_Avg_X, acc_Avg_MagSqr_X, acc_Out_X);
-			}
 		}
 
 
