@@ -29,16 +29,7 @@ namespace Hcv
 			{
 			public:
 
-				Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv)
-				{
-					m_imgRotMgr = a_imgRotMgr;
-
-					m_org_Img = a_org_Img;
-					m_magSqr_Img = a_magSqr_Img;
-			
-					Hcpl_ASSERT(a_hv == 'H' || a_hv == 'V');
-					m_hv = a_hv;
-				}
+				Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv);
 
 			protected:
 
@@ -70,7 +61,7 @@ namespace Hcv
 			ImgAngleDirMgr_Context_Ref m_normalContext;
 
 		};
-	
+
 		typedef Hcpl::ObjRef< ImgAngleDirMgr > ImgAngleDirMgrRef;
 	};
 
