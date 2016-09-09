@@ -32,7 +32,8 @@ namespace Hcv
 			//Prepare();
 		}
 
-		ImgAngleDirMgr::Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv)
+		ImgAngleDirMgr::Context::Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, 
+			F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv)
 		{
 			m_imgRotMgr = a_imgRotMgr;
 

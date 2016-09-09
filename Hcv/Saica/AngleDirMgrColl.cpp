@@ -24,22 +24,9 @@ namespace Hcv
 
 	namespace Ns_Saica
 	{
-
-		//AngleDirMgrColl::AngleDirMgrColl(F32ImageRef a_srcImg, int a_nofRots)
-		//{
-		//	m_srcImg = a_srcImg;
-		//	m_nofRots = a_nofRots;
-
-		//	Prepare();
-		//}
-
-		//AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2)
 		AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl)
 		{
 			m_rotMgrColl = a_rotMgrColl;
-
-			//m_nAprLen_1 = a_nAprLen_1;
-			//m_nAprLen_2 = a_nAprLen_2;
 
 			Prepare();
 
@@ -58,11 +45,8 @@ namespace Hcv
 				F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(org_Img->GetOffsetCalc());
 				CalcMagSqrImage(org_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
 
-
-
-				F32ImageRef rotImg = rotMgr->GetResImg();
-				F32ImageRef rotMagSqrImg = GenMagSqrImg(rotImg);
-
+				//ImgAngleDirMgr_Context_Ref r1;
+				ImgAngleDirMgr::Context * r1;
 
 
 				////ImgAngleDirMgrRef angleDirMgrH = new ImgAngleDirMgr(rotMgr, rotMagSqrImg, 'H', m_nAprLen_1, m_nAprLen_2);

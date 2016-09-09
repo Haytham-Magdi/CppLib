@@ -21,6 +21,10 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
+		//class ImgAngleDirMgr;
+		//class ImgAngleDirMgr::Context;
+		//typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
+
 		class ImgAngleDirMgr : FRM_Object
 		{
 		public:
