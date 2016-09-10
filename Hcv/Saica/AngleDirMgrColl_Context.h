@@ -11,6 +11,8 @@
 
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
+#include <Lib\Hcv\TempImageAccessor.h>
+#include <Lib\Hcv\PixelStandevInfo.h>
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 #include <Lib\Hcv\Saica\RotationMgrColl.h>
@@ -24,6 +26,10 @@ namespace Hcv
 		class AngleDirMgrColl_Context : FRM_Object
 		{
 		public:
+
+			TempImageAccessor_REF(PixelStandevInfo) m_standevInfoImg;
+			//TempImageAccessor_REF(int) m_standevInfoImg;
+			//PixelStandevInfo psi;
 
 		};
 
