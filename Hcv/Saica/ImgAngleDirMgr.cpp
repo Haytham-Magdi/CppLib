@@ -24,7 +24,8 @@ namespace Hcv
 	namespace Ns_Saica
 	{
 
-		ImgAngleDirMgr::ImgAngleDirMgr(ImgAngleDirMgr_Context_Ref a_context, ImgAngleDirMgr_Context_Ref a_normalContext)
+		ImgAngleDirMgr::ImgAngleDirMgr(ImgAngleDirMgr_Context_Ref a_context, ImgAngleDirMgr_Context_Ref a_normalContext,
+			Hcpl::ObjRef< AngleDirMgrColl::Context > a_parentContext)
 		{
 			m_context = a_context;
 			m_normalContext = a_normalContext;

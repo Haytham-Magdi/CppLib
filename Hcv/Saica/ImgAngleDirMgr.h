@@ -26,6 +26,9 @@ namespace Hcv
 		//class ImgAngleDirMgr::Context;
 		//typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
 
+		class AngleDirMgrColl;
+		class AngleDirMgrColl::Context;
+
 		class ImgAngleDirMgr : FRM_Object
 		{
 		public:
@@ -58,7 +61,8 @@ namespace Hcv
 
 		public:
 
-			ImgAngleDirMgr(Hcpl::ObjRef< ImgAngleDirMgr::Context > a_context, Hcpl::ObjRef< ImgAngleDirMgr::Context > a_normalContext);
+			ImgAngleDirMgr(Hcpl::ObjRef< ImgAngleDirMgr::Context > a_context, Hcpl::ObjRef< ImgAngleDirMgr::Context > a_normalContext,
+				Hcpl::ObjRef< AngleDirMgrColl::Context > a_parentContext);
 
 			Hcpl::ObjRef< ImgAngleDirMgr::Context > GetContext()
 			{
