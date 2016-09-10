@@ -113,7 +113,7 @@ namespace Hcv
 	S16ImageRef GenS16FromU8Image(U8ImageRef a_src);
 	U8ImageRef GenU8FromS16Image(S16ImageRef a_src);
 	S16ImageRef GenScaledS16FromS32Image(S32ImageRef a_src);
-	void ShowImage(IplImage * a_iplImagePtr, char * a_sWndName);
+	void ShowImage(IplImage * a_iplImagePtr, const char * a_sWndName);
 	S16ImageRef GenMinimaImage(S16ImageRef a_src);
 	S16ImageRef GenMaximaImage(S16ImageRef a_src);
 	S32ImageRef GenNeighbourhoodImage(S16ImageRef a_src);
@@ -154,8 +154,8 @@ namespace Hcv
 	S16ImageRef GenFlattenedImg(S16ImageRef a_src, S16ImageRef a_srcGrad, int a_nAprSiz);
 	S16ImageRef GenTriChGrayImg( S16ImageRef a_src );
 
-	void ShowImage(U8ImageRef dsp, char * a_sWndName);
-	void ShowImage(S16ImageRef a_src, char * a_sWndName);
+	void ShowImage(U8ImageRef dsp, const char * a_sWndName);
+	void ShowImage(S16ImageRef a_src, const char * a_sWndName);
 	void SaveImage(S16ImageRef a_src, char * a_sFilePath);
 
 	S16ImageRef GenMorphGradImg(S16ImageRef a_src, int a_nAprSiz);

@@ -883,7 +883,7 @@ namespace Hcv
 	U8ImageRef GenU8FromF32Image(F32ImageRef a_src);
 	U8ImageRef GenU8FromS16Image(S16ImageRef a_src);
 	S16ImageRef GenScaledS16FromS32Image(S32ImageRef a_src);
-	void ShowImage(IplImage * a_iplImagePtr, char * a_sWndName);
+	void ShowImage(IplImage * a_iplImagePtr, const char * a_sWndName);
 	S16ImageRef GenMinimaImage(S16ImageRef a_src);
 	S16ImageRef GenMaximaImage(S16ImageRef a_src);
 	S32ImageRef GenNeighbourhoodImage(S16ImageRef a_src);
@@ -954,9 +954,9 @@ namespace Hcv
 	S16ImageRef GenTriChGrayImg( S16ImageRef a_src );
 	F32ImageRef GenTriChGrayImg( F32ImageRef a_src );
 
-	void ShowImage(U8ImageRef dsp, char * a_sWndName);
-	void ShowImage(S16ImageRef a_src, char * a_sWndName);
-	void ShowImage(F32ImageRef a_src, char * a_sWndName);
+	void ShowImage(U8ImageRef dsp, const char * a_sWndName);
+	void ShowImage(S16ImageRef a_src, const char * a_sWndName);
+	void ShowImage(F32ImageRef a_src, const char * a_sWndName);
 	void SaveImage(S16ImageRef a_src, char * a_sFilePath);
 	void SaveImage(F32ImageRef a_src, char * a_sFilePath);
 

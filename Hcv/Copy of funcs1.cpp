@@ -845,7 +845,7 @@ namespace Hcv
 		return ret;
 	}
 
-	void ShowImage(IplImage * a_iplImagePtr, char * a_sWndName)
+	void ShowImage(IplImage * a_iplImagePtr, const char * a_sWndName)
 	{
 		HCV_CALL( cvNamedWindow( a_sWndName, 1 ) );
 		HCV_CALL( cvShowImage( a_sWndName, a_iplImagePtr) );
@@ -1746,12 +1746,12 @@ namespace Hcv
 	}
 
 
-	void ShowImage(U8ImageRef dsp, char * a_sWndName)
+	void ShowImage(U8ImageRef dsp, const char * a_sWndName)
 	{
 		ShowImage(dsp->GetIplImagePtr(), a_sWndName);
 	}
 
-	void ShowImage(S16ImageRef a_src, char * a_sWndName)
+	void ShowImage(S16ImageRef a_src, const char * a_sWndName)
 	{
 		U8ImageRef dsp = GenU8FromS16Image(a_src);
 		ShowImage(dsp->GetIplImagePtr(), a_sWndName);

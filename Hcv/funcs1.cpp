@@ -986,7 +986,7 @@ namespace Hcv
 		return ret;
 	}
 
-	void ShowImage(IplImage * a_iplImagePtr, char * a_sWndName)
+	void ShowImage(IplImage * a_iplImagePtr, const char * a_sWndName)
 	{
 		//	hthm 241012
 		//return;
@@ -3137,18 +3137,18 @@ namespace Hcv
 	}
 
 
-	void ShowImage(U8ImageRef dsp, char * a_sWndName)
+	void ShowImage(U8ImageRef dsp, const char * a_sWndName)
 	{
 		ShowImage(dsp->GetIplImagePtr(), a_sWndName);
 	}
 
-	void ShowImage(S16ImageRef a_src, char * a_sWndName)
+	void ShowImage(S16ImageRef a_src, const char * a_sWndName)
 	{
 		U8ImageRef dsp = GenU8FromS16Image(a_src);
 		ShowImage(dsp->GetIplImagePtr(), a_sWndName);
 	}
 
-	void ShowImage(F32ImageRef a_src, char * a_sWndName)
+	void ShowImage(F32ImageRef a_src, const char * a_sWndName)
 	{
 		U8ImageRef dsp = GenU8FromF32Image(a_src);
 		ShowImage(dsp->GetIplImagePtr(), a_sWndName);
