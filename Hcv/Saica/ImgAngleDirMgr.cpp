@@ -18,6 +18,9 @@ namespace Hcv
 	using namespace Hcpl;
 	//using namespace Hcpl::Math;
 
+	using namespace Hcv::Image_Operations;
+	using namespace Hcv::ImageAccessorOperations;
+
 	namespace Ns_Saica
 	{
 
@@ -51,10 +54,15 @@ namespace Hcv
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
 
-			//ShowImage(cx.m_org_Img->GetSrcImg(), (char *)(std::string("org_Img->GetSrcImg()") + idStr).c_str());
-			ShowImage(cx.m_org_Img->GetSrcImg(), cx.MakeStrWithId("org_Img->GetSrcImg()").c_str());
+			//ShowImage(cx.m_org_Img->GetSrcImg(), cx.MakeStrWithId("org_Img->GetSrcImg()").c_str());
 
-		
+			F32ImageAccessor1C_Ref avgStandev_H_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			Cala_AvgStandevImage_H(cx.m_org_Img->GetMemAccessor(), cx.m_magSqr_Img->GetMemAccessor(),
+				//avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-2, 2), Range<int>::New(-2, 2));
+				avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-2, 2), Range<int>::New(-1, 1));
+
+			ShowImage(avgStandev_H_Img->GetSrcImg(), cx.MakeStrWithId("avgStandev_H_Img->GetSrcImg()").c_str());
+
 		}
 
 

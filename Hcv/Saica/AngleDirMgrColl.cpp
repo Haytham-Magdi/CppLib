@@ -48,8 +48,8 @@ namespace Hcv
 				ImgAngleDirMgr_Context_Ref dirContext_H = new ImgAngleDirMgr::Context(rotMgr,
 					org_Img_H, magSqr_Img_H, 'H');
 
-				F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly();
-				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly();
+				F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly(); org_Img_V->SwitchXY();
+				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly(); magSqr_Img_V->SwitchXY();
 
 				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(rotMgr,
 					org_Img_V, magSqr_Img_V, 'V');
