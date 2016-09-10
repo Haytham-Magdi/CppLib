@@ -37,10 +37,23 @@ namespace Hcv
 
 			Hcpl_ASSERT(a_hv == 'H' || a_hv == 'V');
 			m_hv = a_hv;
+
+			{
+				char idStr_0[70];
+				sprintf(idStr_0, "%.2f, %c: ", m_imgRotMgr->GetAngleByDigree(), m_hv);
+				m_idStr = idStr_0;
+			}
+
 		}
 
 		void ImgAngleDirMgr::Proceed_1()
 		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+
+			//ShowImage(cx.m_org_Img->GetSrcImg(), (char *)(std::string("org_Img->GetSrcImg()") + idStr).c_str());
+			ShowImage(cx.m_org_Img->GetSrcImg(), (char *)(cx.GetIdStr() + std::string("org_Img->GetSrcImg()")).c_str());
+
 		
 		}
 

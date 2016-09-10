@@ -35,7 +35,13 @@ namespace Hcv
 
 				Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv);
 
-			protected:
+				std::string & GetIdStr()
+				{
+					return m_idStr;
+				}
+
+			//protected:
+				std::string m_idStr;
 
 				F32ImageAccessor3C_Ref m_org_Img;
 				F32ImageAccessor1C_Ref m_magSqr_Img;
