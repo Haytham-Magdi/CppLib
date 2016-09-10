@@ -30,9 +30,10 @@ namespace Hcv
 			m_normalContext = a_normalContext;
 		}
 
-		ImgAngleDirMgr::Context::Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, 
+		ImgAngleDirMgr::Context::Context(int a_nIndex, ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img,
 			F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv)
 		{
+			m_nIndex = a_nIndex;
 			m_imgRotMgr = a_imgRotMgr;
 
 			m_org_Img = a_org_Img;

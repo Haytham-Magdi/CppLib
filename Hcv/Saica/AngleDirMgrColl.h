@@ -25,6 +25,18 @@ namespace Hcv
 		{
 		public:
 
+			class Context : FRM_Object
+			{
+			public:
+
+
+
+
+			};
+
+
+		public:
+
 			//AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2);
 			AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl);
 
@@ -49,6 +61,8 @@ namespace Hcv
 
 		protected:
 
+			Hcpl::ObjRef< AngleDirMgrColl::Context > m_context;
+
 			RotationMgrCollRef m_rotMgrColl;
 			//F32ImageRef m_srcImg;
 
@@ -60,6 +74,7 @@ namespace Hcv
 		};
 
 		typedef Hcpl::ObjRef< AngleDirMgrColl > AngleDirMgrCollRef;
+		typedef Hcpl::ObjRef< AngleDirMgrColl::Context > AngleDirMgrColl_Context_Ref;
 	};
 
 }
