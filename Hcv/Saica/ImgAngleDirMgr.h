@@ -8,6 +8,7 @@
 #include <vector>
 #include <Lib\Hcv\Channel.h>
 #include <Lib\Hcv\Image.h>
+#include <Lib\Hcv\ImageAccessor.h>
 
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
@@ -35,12 +36,15 @@ namespace Hcv
 
 				Context(ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv);
 
-				std::string & GetIdStr()
-				{
+				std::string & GetIdStr() {
 					return m_idStr;
 				}
 
-			//protected:
+				std::string MakeStrWithId(char * a_str) {
+						return (GetIdStr() + std::string(a_str));
+				}
+
+				//protected:
 				std::string m_idStr;
 
 				F32ImageAccessor3C_Ref m_org_Img;

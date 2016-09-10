@@ -52,7 +52,7 @@ namespace Hcv
 			Context & ncx = *m_normalContext;
 
 			//ShowImage(cx.m_org_Img->GetSrcImg(), (char *)(std::string("org_Img->GetSrcImg()") + idStr).c_str());
-			ShowImage(cx.m_org_Img->GetSrcImg(), (char *)(cx.GetIdStr() + std::string("org_Img->GetSrcImg()")).c_str());
+			ShowImage(cx.m_org_Img->GetSrcImg(), cx.MakeStrWithId("org_Img->GetSrcImg()").c_str());
 
 		
 		}
