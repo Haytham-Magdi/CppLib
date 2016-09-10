@@ -14,6 +14,7 @@
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 #include <Lib\Hcv\Saica\RotationMgrColl.h>
+#include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
 
 
 namespace Hcv
@@ -23,18 +24,6 @@ namespace Hcv
 
 		class AngleDirMgrColl : FRM_Object
 		{
-		public:
-
-			class Context : FRM_Object
-			{
-			public:
-
-
-
-
-			};
-
-
 		public:
 
 			//AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2);
@@ -61,7 +50,7 @@ namespace Hcv
 
 		protected:
 
-			Hcpl::ObjRef< AngleDirMgrColl::Context > m_context;
+			AngleDirMgrColl_Context_Ref m_context;
 
 			RotationMgrCollRef m_rotMgrColl;
 			//F32ImageRef m_srcImg;
@@ -74,7 +63,6 @@ namespace Hcv
 		};
 
 		typedef Hcpl::ObjRef< AngleDirMgrColl > AngleDirMgrCollRef;
-		typedef Hcpl::ObjRef< AngleDirMgrColl::Context > AngleDirMgrColl_Context_Ref;
 	};
 
 }

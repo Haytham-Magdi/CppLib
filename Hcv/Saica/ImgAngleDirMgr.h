@@ -15,6 +15,7 @@
 
 #include <Lib\Hcv\ImgRotationMgr.h>
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
 
 
 namespace Hcv
@@ -25,9 +26,6 @@ namespace Hcv
 		//class ImgAngleDirMgr;
 		//class ImgAngleDirMgr::Context;
 		//typedef Hcpl::ObjRef< ImgAngleDirMgr::Context > ImgAngleDirMgr_Context_Ref;
-
-		class AngleDirMgrColl;
-		class AngleDirMgrColl::Context;
 
 		class ImgAngleDirMgr : FRM_Object
 		{
@@ -62,7 +60,7 @@ namespace Hcv
 		public:
 
 			ImgAngleDirMgr(Hcpl::ObjRef< ImgAngleDirMgr::Context > a_context, Hcpl::ObjRef< ImgAngleDirMgr::Context > a_normalContext,
-				Hcpl::ObjRef< AngleDirMgrColl::Context > a_parentContext);
+				AngleDirMgrColl_Context_Ref a_parentContext);
 
 			Hcpl::ObjRef< ImgAngleDirMgr::Context > GetContext()
 			{
@@ -83,6 +81,7 @@ namespace Hcv
 
 			Hcpl::ObjRef< ImgAngleDirMgr::Context > m_context;
 			Hcpl::ObjRef< ImgAngleDirMgr::Context > m_normalContext;
+			AngleDirMgrColl_Context_Ref m_parentContext;
 		};
 
 		typedef Hcpl::ObjRef< ImgAngleDirMgr > ImgAngleDirMgrRef;

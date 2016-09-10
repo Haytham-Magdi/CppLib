@@ -25,10 +25,11 @@ namespace Hcv
 	{
 
 		ImgAngleDirMgr::ImgAngleDirMgr(ImgAngleDirMgr_Context_Ref a_context, ImgAngleDirMgr_Context_Ref a_normalContext,
-			Hcpl::ObjRef< AngleDirMgrColl::Context > a_parentContext)
+			AngleDirMgrColl_Context_Ref a_parentContext)
 		{
 			m_context = a_context;
 			m_normalContext = a_normalContext;
+			m_parentContext = a_parentContext;
 		}
 
 		ImgAngleDirMgr::Context::Context(int a_nIndex, ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img,

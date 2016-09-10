@@ -210,6 +210,7 @@
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 #include <Lib\Hcv\Saica\AngleDirMgrColl.h>
+#include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
 #include <Lib\Hcv\Saica\RotationMgrColl.h>
 #include <Lib\Hcv\Saica\SaicaProcess1.h>
 

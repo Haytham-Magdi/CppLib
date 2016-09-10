@@ -27,9 +27,9 @@ namespace Hcv
 		AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl)
 		{
 			m_rotMgrColl = a_rotMgrColl;
+			m_context = new AngleDirMgrColl_Context();
 
 			Prepare();
-
 		}
 
 		void AngleDirMgrColl::Prepare()
@@ -55,10 +55,10 @@ namespace Hcv
 				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(nDirIndex++, rotMgr,
 					org_Img_V, magSqr_Img_V, 'V');
 
-				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V);
+				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context);
 				m_angleDirMgrArr.PushBack(angleDirMgr_H);
 
-				ImgAngleDirMgrRef angleDirMgr_V = new ImgAngleDirMgr(dirContext_V, dirContext_H);
+				ImgAngleDirMgrRef angleDirMgr_V = new ImgAngleDirMgr(dirContext_V, dirContext_H, m_context);
 				m_angleDirMgrArr.PushBack(angleDirMgr_V);
 			}
 
