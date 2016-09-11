@@ -50,7 +50,8 @@ namespace Hcv
 
 		protected:
 
-			AngleDirMgrColl_Context_Ref m_context;
+			AngleDirMgrColl_Context_Ref m_context_H;
+			AngleDirMgrColl_Context_Ref m_context_V;
 
 			RotationMgrCollRef m_rotMgrColl;
 			//F32ImageRef m_srcImg;

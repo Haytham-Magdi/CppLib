@@ -192,7 +192,7 @@ namespace Hcv
 		template<class T>
 		void AvgImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Window<int> & a_window)
 		{
-			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc);
+			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc->GetOffsetCalc());
 
 			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
 			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X);
@@ -319,13 +319,13 @@ namespace Hcv
 
 
 
-			TempImageAccessor_REF(T) tmpAvgAcc_H = new TempImageAccessor<T>(a_inpAcc);
+			TempImageAccessor_REF(T) tmpAvgAcc_H = new TempImageAccessor<T>(a_inpAcc->GetOffsetCalc());
 			AvgImage_H(a_inpAcc, tmpAvgAcc_H->GetMemAccessor(), a_standevRange_X);
 
-			TempImageAccessor_REF(float) tmpAvg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc);
+			TempImageAccessor_REF(float) tmpAvg_MagSqr_H_Acc = new TempImageAccessor<float>(a_outAcc->GetOffsetCalc());
 			AvgImage_H(a_magSqrAcc, tmpAvg_MagSqr_H_Acc->GetMemAccessor(), a_standevRange_X);
 
-			TempImageAccessor_REF(float) tmpStandev_H_Acc = new TempImageAccessor<float>(a_outAcc);
+			TempImageAccessor_REF(float) tmpStandev_H_Acc = new TempImageAccessor<float>(a_outAcc->GetOffsetCalc());
 			CalcStandevImage(tmpAvgAcc_H->GetMemAccessor(), tmpAvg_MagSqr_H_Acc->GetMemAccessor(),
 				tmpStandev_H_Acc->GetMemAccessor());
 

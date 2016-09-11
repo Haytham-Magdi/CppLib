@@ -26,10 +26,13 @@ namespace Hcv
 	{
 	public:
 
-		TempImageAccessor(MemAccessor_2D_REF(T) a_memAccessor)
+		//TempImageAccessor(MemAccessor_2D_REF(T) a_memAccessor)
+		TempImageAccessor(OffsetCalc_2D_Ref a_offsetCalc)
 		{
-			int nSize_X = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_X()->GetIndexSize();
-			int nSize_Y = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_Y()->GetIndexSize();
+			//int nSize_X = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_X()->GetIndexSize();
+			//int nSize_Y = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_Y()->GetIndexSize();
+			int nSize_X = a_offsetCalc->GetOffsetCalc_X()->GetIndexSize();
+			int nSize_Y = a_offsetCalc->GetOffsetCalc_Y()->GetIndexSize();
 			int nSize_1D = nSize_X * nSize_Y;
 
 			m_allocVect.SetSize(nSize_1D);
