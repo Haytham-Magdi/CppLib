@@ -93,13 +93,20 @@ namespace Hcv
 			MemAccessor_2D_REF(float) localAcc = m_context->m_avgStandev_H_Img->GetMemAccessor();
 			PixelStandevInfo * commonImgBuf = m_parentContext->m_standevInfoImg->GetMemAccessor()->GetDataPtr();
 
-			float * localBuf = localAcc->GetDataPtr();
 			//MemAccessor_1D_REF(float) localAcc_Y = localAcc->GenAccessor_1D_Y();
 			//MemAccessor_1D_REF(float) localAcc_X = localAcc->GenAccessor_1D_X();
 			OffsetCalc_1D_Ref localOffsetCalc_Y = localAcc->GenAccessor_1D_Y()->GetOffsetCalc();
 			OffsetCalc_1D_Ref localOffsetCalc_X = localAcc->GenAccessor_1D_X()->GetOffsetCalc();
 
-			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetLimOffsetPart2())
+			float * localPtr = localAcc->GetDataPtr();
+			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetEndOffsetPart2();
+				nOffset_Y += localOffsetCalc_Y->GetActualStepSize())
+			{
+
+
+
+
+			}
 
 
 
