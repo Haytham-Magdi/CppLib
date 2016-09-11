@@ -97,15 +97,20 @@ namespace Hcv
 			//MemAccessor_1D_REF(float) localAcc_X = localAcc->GenAccessor_1D_X();
 			OffsetCalc_1D_Ref localOffsetCalc_Y = localAcc->GenAccessor_1D_Y()->GetOffsetCalc();
 			OffsetCalc_1D_Ref localOffsetCalc_X = localAcc->GenAccessor_1D_X()->GetOffsetCalc();
-
 			float * localPtr = localAcc->GetDataPtr();
-			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetEndOffsetPart2();
+			
+			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetLimOffsetPart2();
 				nOffset_Y += localOffsetCalc_Y->GetActualStepSize())
 			{
-
-
-
-
+				for (int nOffset = nOffset_Y + localOffsetCalc_X->GetOffsetPart1(); nOffset != localOffsetCalc_X->GetLimOffsetPart2();
+					nOffset += localOffsetCalc_X->GetActualStepSize())
+				{
+			
+				
+				
+				
+				
+				}
 			}
 
 
