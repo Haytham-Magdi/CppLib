@@ -57,6 +57,8 @@ namespace Hcv
 				ImgRotationMgrRef m_imgRotMgr;
 
 				F32ImageAccessor1C_Ref m_avgStandev_H_Img;
+
+				S32ImageAccessor1C_Ref m_rotToOrgMap_Img;
 			};
 
 		public:

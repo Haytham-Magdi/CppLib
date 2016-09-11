@@ -64,11 +64,16 @@ namespace Hcv
 				ImgAngleDirMgr_Context_Ref dirContext_H = new ImgAngleDirMgr::Context(i, rotMgr,
 					rot_Img_H, magSqr_Img_H, 'H');
 
+				dirContext_H->m_rotToOrgMap_Img = new S32ImageAccessor1C(rotMgr->Get_ResToSrcMapImage());
+
+
 				F32ImageAccessor3C_Ref rot_Img_V = rot_Img_H->CloneAccessorOnly(); rot_Img_V->SwitchXY();
 				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly(); magSqr_Img_V->SwitchXY();
 
 				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(i + m_rotMgrColl->GetNofRots(),
 					rotMgr, rot_Img_V, magSqr_Img_V, 'V');
+
+				dirContext_V->m_rotToOrgMap_Img = dirContext_H->m_rotToOrgMap_Img; dirContext_V->m_rotToOrgMap_Img->SwitchXY();
 
 				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context_H);
 				m_angleDirMgrArr[i] = angleDirMgr_H;

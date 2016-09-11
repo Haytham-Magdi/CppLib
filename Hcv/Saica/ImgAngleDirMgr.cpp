@@ -83,18 +83,25 @@ namespace Hcv
 		}
 
 		//void ImgAngleDirMgr::AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc)
-			void ImgAngleDirMgr::AffectCommonAvgStandev()
+		void ImgAngleDirMgr::AffectCommonAvgStandev()
 		{
 			//AngleDirMgrColl_Context & pcx = *m_parentContext;
-			
+			Context & cx = *m_context;
+
+			int * rotToOrgMap_Buf = cx.m_rotToOrgMap_Img->GetMemAccessor()->GetDataPtr();
+
 			MemAccessor_2D_REF(float) localAcc = m_context->m_avgStandev_H_Img->GetMemAccessor();
-			//MemAccessor_2D_REF(PixelStandevInfo) commonAcc = m_parentContext->m_standevInfoImg->GetMemAccessor();
-			PixelStandevInfo * commonImgData = m_parentContext->m_standevInfoImg->GetMemAccessor()->GetDataPtr();
+			PixelStandevInfo * commonImgBuf = m_parentContext->m_standevInfoImg->GetMemAccessor()->GetDataPtr();
 
-			
+			float * localBuf = localAcc->GetDataPtr();
+			//MemAccessor_1D_REF(float) localAcc_Y = localAcc->GenAccessor_1D_Y();
+			//MemAccessor_1D_REF(float) localAcc_X = localAcc->GenAccessor_1D_X();
+			OffsetCalc_1D_Ref localOffsetCalc_Y = localAcc->GenAccessor_1D_Y()->GetOffsetCalc();
+			OffsetCalc_1D_Ref localOffsetCalc_X = localAcc->GenAccessor_1D_X()->GetOffsetCalc();
 
-			//MemAccessor_1D_REF(PixelStandevInfo) acc_Y = a_localAcc->GenAccessor_1D_Y();
-			//MemAccessor_1D_REF(PixelStandevInfo) acc_X = a_localAcc->GenAccessor_1D_X();
+			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetLimOffsetPart2())
+
+
 
 			//PtrIterator<PixelStandevInfo> ptrItr_Y = acc_Y->GenPtrIterator();
 
