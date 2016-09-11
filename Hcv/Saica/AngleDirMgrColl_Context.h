@@ -27,7 +27,7 @@ namespace Hcv
 		{
 		public:
 
-			TempImageAccessor_REF(PixelStandevInfo) m_standevInfoImg_H;
+			TempImageAccessor_REF(PixelStandevInfo) m_standevInfoImg;
 			//TempImageAccessor_REF(int) m_standevInfoImg;
 			//PixelStandevInfo psi;
 

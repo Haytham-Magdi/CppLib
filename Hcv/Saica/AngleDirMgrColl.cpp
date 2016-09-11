@@ -27,7 +27,8 @@ namespace Hcv
 		AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl)
 		{
 			m_rotMgrColl = a_rotMgrColl;
-			m_context = new AngleDirMgrColl_Context();
+			m_context_H = new AngleDirMgrColl_Context();
+			m_context_V = new AngleDirMgrColl_Context();
 
 			Prepare();
 		}
@@ -37,17 +38,20 @@ namespace Hcv
 			F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(m_rotMgrColl->GetRotAt(0)->GetSrcImg());
 			//F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly(); org_Img_V->SwitchXY();
 
-			m_context_H->m_standevInfoImg_H = new TempImageAccessor<PixelStandevInfo>(
+			m_context_H->m_standevInfoImg = new TempImageAccessor<PixelStandevInfo>(
 				org_Img_H->GetMemAccessor()->GetOffsetCalc());
 
+			PixelStandevInfo initPsi;
+			initPsi.Dir = -1;
+			initPsi.Val = 10000000;
+			initPsi.NormVal = 0;
+			FillImage(m_context_H->m_standevInfoImg->GetMemAccessor(), initPsi);
 
+			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly();
+			m_context_V->m_standevInfoImg->SwitchXY();
 
-
-
-			//m_angleDirMgrArr.SetCapacity(m_rotMgrColl->GetNofRots() * 2);
 			m_angleDirMgrArr.SetSize(m_rotMgrColl->GetNofRots() * 2);
 
-			//int nDirIndex = 0;
 			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
 			{
 				ImgRotationMgrRef rotMgr = m_rotMgrColl->GetRotAt(i);
@@ -57,23 +61,19 @@ namespace Hcv
 				F32ImageAccessor1C_Ref magSqr_Img_H = new F32ImageAccessor1C(rot_Img_H->GetOffsetCalc());
 				CalcMagSqrImage(rot_Img_H->GetMemAccessor(), magSqr_Img_H->GetMemAccessor());
 
-				//ImgAngleDirMgr_Context_Ref dirContext_H = new ImgAngleDirMgr::Context(nDirIndex++, rotMgr,
-					ImgAngleDirMgr_Context_Ref dirContext_H = new ImgAngleDirMgr::Context(i, rotMgr,
+				ImgAngleDirMgr_Context_Ref dirContext_H = new ImgAngleDirMgr::Context(i, rotMgr,
 					rot_Img_H, magSqr_Img_H, 'H');
 
 				F32ImageAccessor3C_Ref rot_Img_V = rot_Img_H->CloneAccessorOnly(); rot_Img_V->SwitchXY();
 				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly(); magSqr_Img_V->SwitchXY();
 
-				//ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(nDirIndex++, rotMgr,
 				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(i + m_rotMgrColl->GetNofRots(),
-						rotMgr, rot_Img_V, magSqr_Img_V, 'V');
+					rotMgr, rot_Img_V, magSqr_Img_V, 'V');
 
-				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context);
-				//m_angleDirMgrArr.PushBack(angleDirMgr_H);
+				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context_H);
 				m_angleDirMgrArr[i] = angleDirMgr_H;
 
-				ImgAngleDirMgrRef angleDirMgr_V = new ImgAngleDirMgr(dirContext_V, dirContext_H, m_context);
-				//m_angleDirMgrArr.PushBack(angleDirMgr_V);
+				ImgAngleDirMgrRef angleDirMgr_V = new ImgAngleDirMgr(dirContext_V, dirContext_H, m_context_V);
 				m_angleDirMgrArr[i + m_rotMgrColl->GetNofRots()] = angleDirMgr_V;
 			}
 

@@ -48,6 +48,7 @@
 #include <Lib\Hcv\PixelStandevInfo.h>
 
 #include <Lib\Hcv\F32ColorVal_Operations.cpp>
+#include <Lib\Hcv\PixelStandevInfo_Operations.cpp>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.cpp>
