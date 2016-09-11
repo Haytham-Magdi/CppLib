@@ -57,7 +57,8 @@ namespace Hcv
 
 			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
 
-			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
+			//for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
+			for (; !ptrItr_Y.IsDone(); ptrItr_Y.Next())
 			{
 				T * ptr_Y = ptrItr_Y.GetCurrent();
 

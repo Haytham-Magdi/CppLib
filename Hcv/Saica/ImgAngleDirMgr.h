@@ -55,6 +55,8 @@ namespace Hcv
 
 				char m_hv;
 				ImgRotationMgrRef m_imgRotMgr;
+
+				F32ImageAccessor1C_Ref m_avgStandev_H_Img;
 			};
 
 		public:
@@ -73,6 +75,13 @@ namespace Hcv
 			}
 
 			void Proceed_1();
+			void Proceed_2();
+
+		protected:
+
+			//void AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc);
+			void AffectCommonAvgStandev();
+
 
 		protected:
 

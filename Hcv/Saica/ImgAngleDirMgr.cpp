@@ -56,16 +56,54 @@ namespace Hcv
 		{
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
 
 			//ShowImage(cx.m_org_Img->GetSrcImg(), cx.MakeStrWithId("org_Img->GetSrcImg()").c_str());
 
-			F32ImageAccessor1C_Ref avgStandev_H_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			m_avgStandev_H_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			Cala_AvgStandevImage_H(cx.m_org_Img->GetMemAccessor(), cx.m_magSqr_Img->GetMemAccessor(),
 				//avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-2, 2), Range<int>::New(-2, 2));
 				avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-2, 2), Range<int>::New(-1, 1));
 
 			ShowImage(avgStandev_H_Img->GetSrcImg(), cx.MakeStrWithId("avgStandev_H_Img->GetSrcImg()").c_str());
 
+
+		}
+
+		void ImgAngleDirMgr::Proceed_2()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
+			AffectCommonAvdStandev(avgStandev_H_Img->GetMemAccessor(), pcx.m_standevInfoImg->GetMemAccessor());
+
+		}
+
+		//void ImgAngleDirMgr::AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc)
+			void ImgAngleDirMgr::AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc)
+		{
+			//AngleDirMgrColl_Context & pcx = *m_parentContext;
+			
+			MemAccessor_2D_REF(PixelStandevInfo) localAcc = m_context->m_avgStandev_H_Img->GetMemAccessor();
+			//MemAccessor_2D_REF(PixelStandevInfo) commonAcc = m_parentContext->m_standevInfoImg->GetMemAccessor();
+			PixelStandevInfo * commonImgData = m_parentContext->m_standevInfoImg->GetMemAccessor()->GetDataPtr();
+
+			
+
+			MemAccessor_1D_REF(PixelStandevInfo) acc_Y = a_localAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(PixelStandevInfo) acc_X = a_localAcc->GenAccessor_1D_X();
+
+			PtrIterator<PixelStandevInfo> ptrItr_Y = acc_Y->GenPtrIterator();
+
+			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
+			{
+				T * ptr_Y = ptrItr_Y.GetCurrent();
+
+				acc_X->SetDataPtr(ptr_Y);
+				FillLine<T>(acc_X, a_val);
+			}
 		}
 
 
