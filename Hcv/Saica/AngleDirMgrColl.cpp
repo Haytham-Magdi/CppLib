@@ -82,10 +82,32 @@ namespace Hcv
 				m_angleDirMgrArr[i + m_rotMgrColl->GetNofRots()] = angleDirMgr_V;
 			}
 
-			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++)
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
+				m_angleDirMgrArr[i]->Proceed_1();
+			}
+
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
+				m_angleDirMgrArr[i]->Proceed_2();
+			}
+
 			{
-				ImgAngleDirMgrRef angleDirMgr = m_angleDirMgrArr[i];
-				angleDirMgr->Proceed_1();
+				MemAccessor_2D_REF(PixelStandevInfo) psiAcc = m_context_H->m_standevInfoImg->GetMemAccessor();
+				F32ImageRef dspImg = F32Image::Create(cvSize(psiAcc->GetIndexSize_X(), psiAcc->GetIndexSize_Y()), 3);
+
+				const int nSize_1D = psiAcc->GetIndexSize_X() * psiAcc->GetIndexSize_Y();
+
+				F32ColorVal * destPtr = (F32ColorVal *)dspImg->GetDataPtr();
+				PixelStandevInfo * srcPtr = psiAcc->GetDataPtr();
+
+				for (int i = 0; i < nSize_1D; i++) {
+					F32ColorVal & rDest = destPtr[i];
+
+					rDest.val0 = srcPtr[i].NormVal;
+					rDest.val1 = srcPtr[i].NormVal;
+					rDest.val2 = srcPtr[i].NormVal;
+				}
+
+				ShowImage(dspImg, "dspImg");
 			}
 
 		}

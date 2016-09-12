@@ -68,7 +68,7 @@ namespace Hcv
 
 			ShowImage(cx.m_avgStandev_H_Img->GetSrcImg(), cx.MakeStrWithId("m_avgStandev_H_Img->GetSrcImg()").c_str());
 
-			AffectCommonAvgStandev();
+			//AffectCommonAvgStandev();
 
 		}
 
@@ -78,61 +78,53 @@ namespace Hcv
 			Context & ncx = *m_normalContext;
 			AngleDirMgrColl_Context & pcx = *m_parentContext;
 
-			//AffectCommonAvdStandev(cx.m_avgStandev_H_Img->GetMemAccessor(), pcx.m_standevInfoImg->GetMemAccessor());
+			AffectCommonAvgStandev();
 
 		}
 
-		//void ImgAngleDirMgr::AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc)
 		void ImgAngleDirMgr::AffectCommonAvgStandev()
 		{
-			//AngleDirMgrColl_Context & pcx = *m_parentContext;
 			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
 
 			int * rotToOrgMap_Buf = cx.m_rotToOrgMap_Img->GetMemAccessor()->GetDataPtr();
 
-			MemAccessor_2D_REF(float) localAcc = m_context->m_avgStandev_H_Img->GetMemAccessor();
+			MemAccessor_2D_REF(float) localAcc = cx.m_avgStandev_H_Img->GetMemAccessor();
 			PixelStandevInfo * commonImgBuf = m_parentContext->m_standevInfoImg->GetMemAccessor()->GetDataPtr();
 
-			//MemAccessor_1D_REF(float) localAcc_Y = localAcc->GenAccessor_1D_Y();
-			//MemAccessor_1D_REF(float) localAcc_X = localAcc->GenAccessor_1D_X();
 			OffsetCalc_1D_Ref localOffsetCalc_Y = localAcc->GenAccessor_1D_Y()->GetOffsetCalc();
 			OffsetCalc_1D_Ref localOffsetCalc_X = localAcc->GenAccessor_1D_X()->GetOffsetCalc();
 			float * localPtr = localAcc->GetDataPtr();
 
-			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetLimOffsetPart2();
+			float * localPtr_Norm = ncx.m_avgStandev_H_Img->GetMemAccessor()->GetDataPtr();
+
+			int nOffset_Old = -100;
+			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetActualLimOffset();
 				nOffset_Y += localOffsetCalc_Y->GetActualStepSize())
 			{
-				for (int nOffset = nOffset_Y + localOffsetCalc_X->GetOffsetPart1(); nOffset != localOffsetCalc_X->GetLimOffsetPart2();
-					nOffset += localOffsetCalc_X->GetActualStepSize())
+				const int nLimOffset_YX = nOffset_Y + localOffsetCalc_X->GetActualLimOffset();
+
+				for (int nOffset_YX = nOffset_Y + localOffsetCalc_X->GetOffsetPart1(); nOffset_YX != nLimOffset_YX;
+					nOffset_Old = nOffset_YX, nOffset_YX += localOffsetCalc_X->GetActualStepSize())
 				{
-					int nOffset_Mapped = rotToOrgMap_Buf[nOffset];
+					int nOffset_Mapped = rotToOrgMap_Buf[nOffset_YX];
 					if (nOffset_Mapped < 0)
 						continue;
 					
-					float standev_Local = localPtr[nOffset];
+					float standev_Local = localPtr[nOffset_YX];
 
 					PixelStandevInfo & rCommonPsi = commonImgBuf[nOffset_Mapped];
 
 					if (rCommonPsi.Val > standev_Local)
 					{
 						rCommonPsi.Val = standev_Local;
+						rCommonPsi.NormVal = localPtr_Norm[nOffset_YX];
 						rCommonPsi.Dir = cx.m_nIndex;
 					}
 
 				}
 			}
 
-
-
-			//PtrIterator<PixelStandevInfo> ptrItr_Y = acc_Y->GenPtrIterator();
-
-			//for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
-			//{
-			//	T * ptr_Y = ptrItr_Y.GetCurrent();
-
-			//	acc_X->SetDataPtr(ptr_Y);
-			//	FillLine<T>(acc_X, a_val);
-			//}
 		}
 
 
