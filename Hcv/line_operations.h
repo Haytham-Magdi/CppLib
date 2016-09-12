@@ -99,11 +99,11 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_winRange)
+		void AvgLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_range)
 		{
 			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_outAcc->GetIndexSize());
-			Hcpl_ASSERT(a_winRange.GetBgn() <= 0);
-			Hcpl_ASSERT(0 <= a_winRange.GetEnd());
+			Hcpl_ASSERT(a_range.GetBgn() <= 0);
+			Hcpl_ASSERT(0 <= a_range.GetEnd());
 
 			T zeroVal;
 			SetToZero_ByPtr<T>(&zeroVal);
@@ -115,8 +115,8 @@ namespace Hcv
 
 			const int nSize_1D = a_inpAcc->GetIndexSize();
 
-			const int nBefDiff = -a_winRange.GetBgn();
-			const int nAftDiff = a_winRange.GetEnd();
+			const int nBefDiff = -a_range.GetBgn();
+			const int nAftDiff = a_range.GetEnd();
 
 			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
 			const int nRangeLen = nBefDiff + 1 + nAftDiff;
@@ -212,7 +212,7 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictLine(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_1D_REF(float) a_outAcc, Range<int> & a_winRange)
+			MemAccessor_1D_REF(float) a_outAcc, Range<int> & a_range)
 		{
 			float zero = 0;
 			FillLine<float>(a_outAcc, zero);
@@ -226,8 +226,8 @@ namespace Hcv
 
 			const int nSize_1D = a_outAcc->GetIndexSize();
 
-			const int nBefDiff = -a_winRange.GetBgn();
-			const int nAftDiff = a_winRange.GetEnd();
+			const int nBefDiff = -a_range.GetBgn();
+			const int nAftDiff = a_range.GetEnd();
 
 			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
 			const int nRangeLen = nBefDiff + 1 + nAftDiff;

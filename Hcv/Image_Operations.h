@@ -164,7 +164,7 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_winRange_X)
+		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_range_X)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
@@ -186,7 +186,7 @@ namespace Hcv
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				AvgLine(acc_Inp_X, acc_Out_X, a_winRange_X);
+				AvgLine(acc_Inp_X, acc_Out_X, a_range_X);
 			}
 		}
 
@@ -196,7 +196,7 @@ namespace Hcv
 			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc->GetOffsetCalc());
 
 			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
-			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_winRange_X);
+			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_range_X);
 
 			//return;
 
@@ -275,7 +275,7 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictImage_H(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_2D_REF(float) a_outAcc, Range<int> & a_winRange_X)
+			MemAccessor_2D_REF(float) a_outAcc, Range<int> & a_range_X)
 		{
 			MemAccessor_1D_REF(T) acc_Avg_Y = a_avg_Acc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Avg_X = a_avg_Acc->GenAccessor_1D_X();
@@ -304,7 +304,7 @@ namespace Hcv
 				acc_Avg_MagSqr_X->SetDataPtr(ptr_Avg_MagSqr_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				CalcConflictLine<T>(acc_Avg_X, acc_Avg_MagSqr_X, acc_Out_X, a_winRange_X);
+				CalcConflictLine<T>(acc_Avg_X, acc_Avg_MagSqr_X, acc_Out_X, a_range_X);
 			}
 		}
 
