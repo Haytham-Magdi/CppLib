@@ -41,16 +41,21 @@ namespace Hcv
 
 			m_context_H->m_standevInfoImg = new TempImageAccessor<PixelStandevInfo>(
 				org_Img_H->GetMemAccessor()->GetOffsetCalc());
-
-			m_context_H->m_conflictInfoImg = new TempImageAccessor<ConflictInfo>(
-				org_Img_H->GetMemAccessor()->GetOffsetCalc());
-
 			{
 				PixelStandevInfo initPsi;
 				initPsi.Dir = -1;
 				initPsi.Val = 10000000;
 				initPsi.NormVal = 0;
 				FillImage(m_context_H->m_standevInfoImg->GetMemAccessor(), initPsi);
+			}
+
+			m_context_H->m_conflictInfoImg = new TempImageAccessor<ConflictInfo>(
+				org_Img_H->GetMemAccessor()->GetOffsetCalc());
+			{
+				ConflictInfo ci_Init;
+				ci_Init.Dir = -1;
+				ci_Init.Val = false;
+				FillImage(m_context_H->m_conflictInfoImg->GetMemAccessor(), ci_Init);
 			}
 
 			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly(); m_context_V->m_standevInfoImg->SwitchXY();
@@ -74,6 +79,10 @@ namespace Hcv
 				dirContext_H->m_orgToRotMap_Img = new S32ImageAccessor1C(rotMgr->Get_SrcToResMapImage());
 				
 				dirContext_H->m_angle = rotMgr->GetAngleByRad();
+
+				TempImageAccessor_REF(bool) conflict_Img = new TempImageAccessor<bool>(
+					org_Img->GetMemAccessor()->GetOffsetCalc());
+				dxvxzdbfd
 
 
 				F32ImageAccessor3C_Ref rot_Img_V = rot_Img_H->CloneAccessorOnly(); rot_Img_V->SwitchXY();

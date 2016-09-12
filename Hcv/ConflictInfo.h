@@ -18,8 +18,8 @@ namespace Hcv
 	{
 	public:
 		int Dir;
-		float Val;
-		float NormVal;
+		bool Val;
+		//float NormVal;
 	};
 
 	//typedef Hcpl::ObjRef< ConflictInfo > ConflictInfoRef;

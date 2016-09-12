@@ -104,11 +104,11 @@ namespace Hcv
 
 			if (standev_12 > 20 && standev_12 > standev_MaxSide * 2)
 			{
-				return 255;
+				return true;
 			}
 			else
 			{
-				return 0;
+				return false;
 			}
 		}
 

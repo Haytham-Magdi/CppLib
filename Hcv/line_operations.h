@@ -212,17 +212,17 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictLine(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_1D_REF(float) a_outAcc, Range<int> & a_range)
+			MemAccessor_1D_REF(bool) a_outAcc, Range<int> & a_range)
 		{
-			float zero = 0;
-			FillLine<float>(a_outAcc, zero);
+			bool val_Init = false;
+			FillLine<bool>(a_outAcc, val_Init);
 
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_outAcc->GetIndexSize());
 
 			MemSimpleAccessor_1D<T> sac_Avg = a_avg_Acc->GenSimpleAccessor();
 			MemSimpleAccessor_1D<float> sac_Avg_MagSqr = a_avg_MagSqr_Acc->GenSimpleAccessor();
-			MemSimpleAccessor_1D<float> sac_Out = a_outAcc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<bool> sac_Out = a_outAcc->GenSimpleAccessor();
 
 			const int nSize_1D = a_outAcc->GetIndexSize();
 
@@ -234,7 +234,7 @@ namespace Hcv
 
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
-				float * pOut = &sac_Out[i];
+				bool * pOut = &sac_Out[i];
 
 				T * pAvg_1 = &sac_Avg[i - nBefDiff];
 				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
