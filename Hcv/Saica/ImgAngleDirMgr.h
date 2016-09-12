@@ -83,8 +83,7 @@ namespace Hcv
 
 		protected:
 
-			//void AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc);
-			void AffectCommonAvgStandev_0();
+			//void AffectCommonAvgStandev_0();
 			void AffectCommonAvgStandev();
 
 

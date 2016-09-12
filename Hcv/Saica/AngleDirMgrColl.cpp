@@ -21,7 +21,7 @@ namespace Hcv
 
 	using namespace Hcv;
 	using namespace Hcv::Image_Operations;
-	using namespace Hcv::ImageAccessorOperations;
+	//using namespace Hcv::ImageAccessorOperations;
 
 	namespace Ns_Saica
 	{
@@ -111,16 +111,7 @@ namespace Hcv
 					PixelStandevInfo & rSrc = srcPtr[i];
 					F32ColorVal & rDest = destPtr[i];
 
-					if (-1 == rSrc.Dir)
-					{
-						rDest.val0 = 255;
-						rDest.val1 = 255;
-						rDest.val2 = 255;
-						//rDest.val0 = 0;
-						//rDest.val1 = rSrc.NormVal;
-						//rDest.val2 = 0;
-						continue;
-					}
+					Hcpl_ASSERT(-1 != rSrc.Dir);
 
 					float angle = m_angleDirMgrArr[rSrc.Dir]->GetContext()->m_angle;
 
@@ -130,24 +121,25 @@ namespace Hcv
 					}
 					angle_Old = angle;
 
-					//rDest.val0 = rSrc.NormVal;
-					//rDest.val1 = (127 + 127 * cos(angle)) * rSrc.NormVal;
-					//rDest.val2 = (127 + 127 * sin(angle)) * rSrc.NormVal;
+					//rDest.val0 = 127 + rSrc.NormVal / 2;
+					rDest.val0 = 127;
+					rDest.val1 = (127 + 127 * cos(angle) * rSrc.NormVal * 2 / 3);
+					rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
 
-					//if (0 == rSrc.Dir)
+					////if (0 == rSrc.Dir)
 					//if (5 == rSrc.Dir)
-					if (false)
-					{
-						rDest.val0 = rSrc.NormVal;
-						rDest.val1 = rSrc.NormVal;
-						rDest.val2 = rSrc.NormVal;
-					}
-					else
-					{
-						rDest.val0 = 0;
-						rDest.val1 = 0;
-						rDest.val2 = 0;
-					}
+					////if (false)
+					//{
+					//	rDest.val0 = rSrc.NormVal;
+					//	rDest.val1 = rSrc.NormVal;
+					//	rDest.val2 = rSrc.NormVal;
+					//}
+					//else
+					//{
+					//	rDest.val0 = 0;
+					//	rDest.val1 = 0;
+					//	rDest.val2 = 0;
+					//}
 
 					//rDest.val0 = 127 + rSrc.NormVal;
 					//rDest.val1 = 127 + 127 * cos(angle);
