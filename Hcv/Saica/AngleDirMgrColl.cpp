@@ -121,10 +121,14 @@ namespace Hcv
 					}
 					angle_Old = angle;
 
-					//rDest.val0 = 127 + rSrc.NormVal / 2;
-					rDest.val0 = 127;
-					rDest.val1 = (127 + 127 * cos(angle) * rSrc.NormVal * 2 / 3);
-					rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
+					////rDest.val0 = 127 + rSrc.NormVal / 2;
+					//rDest.val0 = 127;
+					//rDest.val1 = (127 + 127 * cos(angle) * rSrc.NormVal * 2 / 3);
+					//rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
+
+					rDest.val0 = 0;
+					rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 2 / 3);
+					rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 2 / 3);
 
 					////if (0 == rSrc.Dir)
 					//if (5 == rSrc.Dir)
