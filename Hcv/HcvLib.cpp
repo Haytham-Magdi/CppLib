@@ -45,10 +45,11 @@
 #include <Lib\Hcv\ImageAccessor.cpp>
 #include <Lib\Hcv\ImageAccessorOperations.cpp>
 #include <Lib\Hcv\TempImageAccessor.cpp>
-#include <Lib\Hcv\PixelStandevInfo.h>
+#include <Lib\Hcv\PixelStandevInfo.cpp>
+#include <Lib\Hcv\ConflictInfo.cpp>
+
 
 #include <Lib\Hcv\F32ColorVal_Operations.cpp>
-#include <Lib\Hcv\PixelStandevInfo_Operations.cpp>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.cpp>

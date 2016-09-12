@@ -13,6 +13,7 @@
 #include <Lib\Hcv\ImageItrMgr.h>
 #include <Lib\Hcv\TempImageAccessor.h>
 #include <Lib\Hcv\PixelStandevInfo.h>
+#include <Lib\Hcv\ConflictInfo.h>
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 #include <Lib\Hcv\Saica\RotationMgrColl.h>
@@ -28,6 +29,8 @@ namespace Hcv
 		public:
 
 			TempImageAccessor_REF(PixelStandevInfo) m_standevInfoImg;
+			TempImageAccessor_REF(ConflictInfo) m_conflictInfoImg;
+			
 			//TempImageAccessor_REF(int) m_standevInfoImg;
 			//PixelStandevInfo psi;
 

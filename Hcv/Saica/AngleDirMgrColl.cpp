@@ -42,14 +42,19 @@ namespace Hcv
 			m_context_H->m_standevInfoImg = new TempImageAccessor<PixelStandevInfo>(
 				org_Img_H->GetMemAccessor()->GetOffsetCalc());
 
-			PixelStandevInfo initPsi;
-			initPsi.Dir = -1;
-			initPsi.Val = 10000000;
-			initPsi.NormVal = 0;
-			FillImage(m_context_H->m_standevInfoImg->GetMemAccessor(), initPsi);
+			m_context_H->m_conflictInfoImg = new TempImageAccessor<ConflictInfo>(
+				org_Img_H->GetMemAccessor()->GetOffsetCalc());
 
-			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly();
-			m_context_V->m_standevInfoImg->SwitchXY();
+			{
+				PixelStandevInfo initPsi;
+				initPsi.Dir = -1;
+				initPsi.Val = 10000000;
+				initPsi.NormVal = 0;
+				FillImage(m_context_H->m_standevInfoImg->GetMemAccessor(), initPsi);
+			}
+
+			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly(); m_context_V->m_standevInfoImg->SwitchXY();
+			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
 
 			m_angleDirMgrArr.SetSize(m_rotMgrColl->GetNofRots() * 2);
 
