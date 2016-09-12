@@ -12,6 +12,7 @@
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
 
+#define M_PI 3.14159265358979323846
 
 
 namespace Hcv
@@ -31,6 +32,11 @@ namespace Hcv
 		float GetAngleByDigree()
 		{
 			return m_angDig;
+		}
+
+		float GetAngleByRad()
+		{
+			return m_angRad;
 		}
 
 		CvSize GetResImgSiz()

@@ -59,6 +59,7 @@ namespace Hcv
 				F32ImageAccessor1C_Ref m_avgStandev_H_Img;
 
 				S32ImageAccessor1C_Ref m_rotToOrgMap_Img;
+				float m_angle;
 			};
 
 		public:

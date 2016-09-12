@@ -7,6 +7,7 @@
 #include <Lib\Hcv\Image.h>
 #include <Lib\Hcv\funcs1.h>
 
+#include <Lib\Hcv\Image_Operations.h>
 #include <Lib\Hcv\Saica\AngleDirMgrColl.h>
 
 
@@ -65,6 +66,7 @@ namespace Hcv
 					rot_Img_H, magSqr_Img_H, 'H');
 
 				dirContext_H->m_rotToOrgMap_Img = new S32ImageAccessor1C(rotMgr->Get_ResToSrcMapImage());
+				dirContext_H->m_angle = rotMgr->GetAngleByRad();
 
 
 				F32ImageAccessor3C_Ref rot_Img_V = rot_Img_H->CloneAccessorOnly(); rot_Img_V->SwitchXY();
@@ -74,6 +76,7 @@ namespace Hcv
 					rotMgr, rot_Img_V, magSqr_Img_V, 'V');
 
 				dirContext_V->m_rotToOrgMap_Img = dirContext_H->m_rotToOrgMap_Img; dirContext_V->m_rotToOrgMap_Img->SwitchXY();
+				dirContext_V->m_angle = rotMgr->GetAngleByRad() + M_PI / 2;
 
 				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context_H);
 				m_angleDirMgrArr[i] = angleDirMgr_H;
@@ -99,12 +102,53 @@ namespace Hcv
 				F32ColorVal * destPtr = (F32ColorVal *)dspImg->GetDataPtr();
 				PixelStandevInfo * srcPtr = psiAcc->GetDataPtr();
 
-				for (int i = 0; i < nSize_1D; i++) {
+				float angle_Old = -1;
+				for (int i = 0; i < nSize_1D; i++)
+				{
+					PixelStandevInfo & rSrc = srcPtr[i];
 					F32ColorVal & rDest = destPtr[i];
 
-					rDest.val0 = srcPtr[i].NormVal;
-					rDest.val1 = srcPtr[i].NormVal;
-					rDest.val2 = srcPtr[i].NormVal;
+					if (-1 == rSrc.Dir)
+					{
+						rDest.val0 = 255;
+						rDest.val1 = 255;
+						rDest.val2 = 255;
+						//rDest.val0 = 0;
+						//rDest.val1 = rSrc.NormVal;
+						//rDest.val2 = 0;
+						continue;
+					}
+
+					float angle = m_angleDirMgrArr[rSrc.Dir]->GetContext()->m_angle;
+
+					if (fabs(angle - angle_Old) > 0.01)
+					{
+						angle = angle;
+					}
+					angle_Old = angle;
+
+					//rDest.val0 = rSrc.NormVal;
+					//rDest.val1 = (127 + 127 * cos(angle)) * rSrc.NormVal;
+					//rDest.val2 = (127 + 127 * sin(angle)) * rSrc.NormVal;
+
+					//if (0 == rSrc.Dir)
+					//if (5 == rSrc.Dir)
+					if (false)
+					{
+						rDest.val0 = rSrc.NormVal;
+						rDest.val1 = rSrc.NormVal;
+						rDest.val2 = rSrc.NormVal;
+					}
+					else
+					{
+						rDest.val0 = 0;
+						rDest.val1 = 0;
+						rDest.val2 = 0;
+					}
+
+					//rDest.val0 = 127 + rSrc.NormVal;
+					//rDest.val1 = 127 + 127 * cos(angle);
+					//rDest.val2 = 127 + 127 * sin(angle);
 				}
 
 				ShowImage(dspImg, "dspImg");
