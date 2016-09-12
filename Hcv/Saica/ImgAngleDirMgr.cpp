@@ -67,7 +67,7 @@ namespace Hcv
 				//cx.m_avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-3, 3), Range<int>::New(-1, 1));
 			//cx.m_avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-5, 5), Range<int>::New(-5, 5));
 
-			ShowImage(cx.m_avgStandev_H_Img->GetSrcImg(), cx.MakeStrWithId("m_avgStandev_H_Img->GetSrcImg()").c_str());
+			//ShowImage(cx.m_avgStandev_H_Img->GetSrcImg(), cx.MakeStrWithId("m_avgStandev_H_Img->GetSrcImg()").c_str());
 
 			//AffectCommonAvgStandev();
 
