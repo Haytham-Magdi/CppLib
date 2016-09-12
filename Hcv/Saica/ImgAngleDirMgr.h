@@ -61,6 +61,7 @@ namespace Hcv
 				//S32ImageAccessor1C_Ref m_rotToOrgMap_Img;
 				S32ImageAccessor1C_Ref m_orgToRotMap_Img;
 				float m_angle;
+				TempImageAccessor_REF(bool) m_conflict_Img;
 			};
 
 		public:

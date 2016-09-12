@@ -80,9 +80,8 @@ namespace Hcv
 				
 				dirContext_H->m_angle = rotMgr->GetAngleByRad();
 
-				TempImageAccessor_REF(bool) conflict_Img = new TempImageAccessor<bool>(
-					org_Img->GetMemAccessor()->GetOffsetCalc());
-				dxvxzdbfd
+				dirContext_H->m_conflict_Img = new TempImageAccessor<bool>(
+					rot_Img_H->GetMemAccessor()->GetOffsetCalc());
 
 
 				F32ImageAccessor3C_Ref rot_Img_V = rot_Img_H->CloneAccessorOnly(); rot_Img_V->SwitchXY();
@@ -92,8 +91,9 @@ namespace Hcv
 					rotMgr, rot_Img_V, magSqr_Img_V, 'V');
 
 				//dirContext_V->m_rotToOrgMap_Img = dirContext_H->m_rotToOrgMap_Img; dirContext_V->m_rotToOrgMap_Img->SwitchXY();
-				dirContext_V->m_orgToRotMap_Img = dirContext_H->m_orgToRotMap_Img; dirContext_V->m_orgToRotMap_Img->SwitchXY();
+				dirContext_V->m_orgToRotMap_Img = dirContext_H->m_orgToRotMap_Img clone  ; dirContext_V->m_orgToRotMap_Img->SwitchXY();
 				dirContext_V->m_angle = rotMgr->GetAngleByRad() + M_PI / 2;
+				dirContext_V->m_conflict_Img = dirContext_H->m_conflict_Img; dirContext_V->m_conflict_Img->SwitchXY();
 
 				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context_H);
 				m_angleDirMgrArr[i] = angleDirMgr_H;
