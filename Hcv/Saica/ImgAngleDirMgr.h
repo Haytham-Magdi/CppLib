@@ -59,6 +59,7 @@ namespace Hcv
 				F32ImageAccessor1C_Ref m_avgStandev_H_Img;
 
 				S32ImageAccessor1C_Ref m_rotToOrgMap_Img;
+				S32ImageAccessor1C_Ref m_orgToRotMap_Img;
 				float m_angle;
 			};
 
@@ -83,6 +84,7 @@ namespace Hcv
 		protected:
 
 			//void AffectCommonAvgStandev(MemAccessor_2D_REF(PixelStandevInfo) a_localAcc);
+			void AffectCommonAvgStandev_0();
 			void AffectCommonAvgStandev();
 
 

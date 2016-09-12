@@ -262,7 +262,6 @@ namespace Hcv
 				//}
 
 
-
 				bool bInImg = true;
 
 				int nX_Src = AddRound(curPnt_X.x);

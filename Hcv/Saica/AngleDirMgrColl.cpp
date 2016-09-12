@@ -66,6 +66,8 @@ namespace Hcv
 					rot_Img_H, magSqr_Img_H, 'H');
 
 				dirContext_H->m_rotToOrgMap_Img = new S32ImageAccessor1C(rotMgr->Get_ResToSrcMapImage());
+				dirContext_H->m_orgToRotMap_Img = new S32ImageAccessor1C(rotMgr->Get_SrcToResMapImage());
+				
 				dirContext_H->m_angle = rotMgr->GetAngleByRad();
 
 
@@ -76,6 +78,7 @@ namespace Hcv
 					rotMgr, rot_Img_V, magSqr_Img_V, 'V');
 
 				dirContext_V->m_rotToOrgMap_Img = dirContext_H->m_rotToOrgMap_Img; dirContext_V->m_rotToOrgMap_Img->SwitchXY();
+				dirContext_V->m_orgToRotMap_Img = dirContext_H->m_orgToRotMap_Img; dirContext_V->m_orgToRotMap_Img->SwitchXY();
 				dirContext_V->m_angle = rotMgr->GetAngleByRad() + M_PI / 2;
 
 				ImgAngleDirMgrRef angleDirMgr_H = new ImgAngleDirMgr(dirContext_H, dirContext_V, m_context_H);

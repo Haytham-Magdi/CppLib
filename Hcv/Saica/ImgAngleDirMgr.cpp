@@ -82,7 +82,7 @@ namespace Hcv
 
 		}
 
-		void ImgAngleDirMgr::AffectCommonAvgStandev()
+		void ImgAngleDirMgr::AffectCommonAvgStandev_0()
 		{
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
@@ -111,6 +111,51 @@ namespace Hcv
 					if (nOffset_Mapped < 0)
 						continue;
 					
+					float standev_Local = localPtr[nOffset_YX];
+
+					PixelStandevInfo & rCommonPsi = commonImgBuf[nOffset_Mapped];
+
+					if (rCommonPsi.Val > standev_Local)
+					{
+						rCommonPsi.Val = standev_Local;
+						rCommonPsi.NormVal = localPtr_Norm[nOffset_YX];
+						rCommonPsi.Dir = cx.m_nIndex;
+					}
+
+				}
+			}
+
+		}
+
+		void ImgAngleDirMgr::AffectCommonAvgStandev()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+
+			int * orgToRotMap_Buf = cx.m_orgToRotMap_Img->GetMemAccessor()->GetDataPtr();
+
+			MemAccessor_2D_REF(float) localAcc = cx.m_avgStandev_H_Img->GetMemAccessor();
+			PixelStandevInfo * commonImgBuf = m_parentContext->m_standevInfoImg->GetMemAccessor()->GetDataPtr();
+
+			OffsetCalc_1D_Ref localOffsetCalc_Y = localAcc->GenAccessor_1D_Y()->GetOffsetCalc();
+			OffsetCalc_1D_Ref localOffsetCalc_X = localAcc->GenAccessor_1D_X()->GetOffsetCalc();
+			float * localPtr = localAcc->GetDataPtr();
+
+			float * localPtr_Norm = ncx.m_avgStandev_H_Img->GetMemAccessor()->GetDataPtr();
+
+			int nOffset_Old = -100;
+			for (int nOffset_Y = localOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != localOffsetCalc_Y->GetActualLimOffset();
+				nOffset_Y += localOffsetCalc_Y->GetActualStepSize())
+			{
+				const int nLimOffset_YX = nOffset_Y + localOffsetCalc_X->GetActualLimOffset();
+
+				for (int nOffset_YX = nOffset_Y + localOffsetCalc_X->GetOffsetPart1(); nOffset_YX != nLimOffset_YX;
+					nOffset_Old = nOffset_YX, nOffset_YX += localOffsetCalc_X->GetActualStepSize())
+				{
+					int nOffset_Mapped = orgToRotMap_Buf[nOffset_YX];
+					if (nOffset_Mapped < 0)
+						continue;
+
 					float standev_Local = localPtr[nOffset_YX];
 
 					PixelStandevInfo & rCommonPsi = commonImgBuf[nOffset_Mapped];
