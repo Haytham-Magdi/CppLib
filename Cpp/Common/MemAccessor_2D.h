@@ -35,17 +35,6 @@ namespace Hcpl
 			Init(a_data, a_offsetCalc);
 		}
 
-		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
-		{
-			if (m_isLocked)
-				throw "m_isLocked";
-
-			m_data = a_data;
-
-			m_offsetCalc = a_offsetCalc->Clone();
-			m_offsetCalc->Lock();
-		}
-
 		MemAccessor_2D_REF(T) Clone()
 		{
 			MemAccessor_2D_REF(T) pRet = new MemAccessor_2D<T>();
@@ -157,6 +146,19 @@ namespace Hcpl
 				throw "m_isLocked";
 
 			m_data = a_data;
+		}
+
+	protected:
+
+		void Init(T * a_data, OffsetCalc_2D_Ref a_offsetCalc)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			m_data = a_data;
+
+			m_offsetCalc = a_offsetCalc->Clone();
+			m_offsetCalc->Lock();
 		}
 
 	protected:

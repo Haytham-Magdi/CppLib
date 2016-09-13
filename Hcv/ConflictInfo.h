@@ -17,8 +17,15 @@ namespace Hcv
 	class ConflictInfo //: FRM_Object
 	{
 	public:
+		bool Exists;
+		int Offset_Side_1;
+		int Offset_Side_2;
+	};
+
+	class ConflictInfo_Ex : public ConflictInfo//: FRM_Object
+	{
+	public:
 		int Dir;
-		bool Val;
 		//float NormVal;
 	};
 

@@ -7,6 +7,8 @@
 #include <Lib\Hcv\funcs1.h>
 #include <vector>
 #include <Lib\Hcv\Image.h>
+#include <Lib\Hcv\ConflictInfo.h>
+
 //#include <Lib\Cpp\Common\commonLib.h>
 
 
@@ -212,17 +214,20 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictLine(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_1D_REF(bool) a_outAcc, Range<int> & a_range)
+			MemAccessor_1D_REF(ConflictInfo) a_outAcc, Range<int> & a_range)
 		{
-			bool val_Init = false;
-			FillLine<bool>(a_outAcc, val_Init);
+			{
+				ConflictInfo val_Init;
+				val_Init.Exists = false;
+				FillLine<ConflictInfo>(a_outAcc, val_Init);
+			}
 
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_outAcc->GetIndexSize());
 
 			MemSimpleAccessor_1D<T> sac_Avg = a_avg_Acc->GenSimpleAccessor();
 			MemSimpleAccessor_1D<float> sac_Avg_MagSqr = a_avg_MagSqr_Acc->GenSimpleAccessor();
-			MemSimpleAccessor_1D<bool> sac_Out = a_outAcc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<ConflictInfo> sac_Out = a_outAcc->GenSimpleAccessor();
 
 			const int nSize_1D = a_outAcc->GetIndexSize();
 
@@ -234,7 +239,7 @@ namespace Hcv
 
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
-				bool * pOut = &sac_Out[i];
+				ConflictInfo * pOut = &sac_Out[i];
 
 				T * pAvg_1 = &sac_Avg[i - nBefDiff];
 				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
@@ -242,7 +247,7 @@ namespace Hcv
 				T * pAvg_2 = &sac_Avg[i + nAftDiff];
 				float * pAvg_MagSqr_2 = &sac_Avg_MagSqr[i + nAftDiff];
 
-				*pOut = Element_Operations::CalcConflict_ByPtr(pAvg_1, *pAvg_MagSqr_1, pAvg_2, *pAvg_MagSqr_2);
+				pOut->Exists = Element_Operations::CalcConflict_ByPtr(pAvg_1, *pAvg_MagSqr_1, pAvg_2, *pAvg_MagSqr_2);
 			}
 		}
 

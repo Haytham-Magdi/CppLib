@@ -49,12 +49,12 @@ namespace Hcv
 				FillImage(m_context_H->m_standevInfoImg->GetMemAccessor(), initPsi);
 			}
 
-			m_context_H->m_conflictInfoImg = new TempImageAccessor<ConflictInfo>(
+			m_context_H->m_conflictInfoImg = new TempImageAccessor<ConflictInfo_Ex>(
 				org_Img_H->GetMemAccessor()->GetOffsetCalc());
 			{
-				ConflictInfo ci_Init;
+				ConflictInfo_Ex ci_Init;
 				ci_Init.Dir = -1;
-				ci_Init.Val = false;
+				ci_Init.Exists = false;
 				FillImage(m_context_H->m_conflictInfoImg->GetMemAccessor(), ci_Init);
 			}
 

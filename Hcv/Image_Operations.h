@@ -275,7 +275,7 @@ namespace Hcv
 
 		template<class T>
 		void CalcConflictImage_H(MemAccessor_2D_REF(T) a_avg_Acc, MemAccessor_2D_REF(float) a_avg_MagSqr_Acc,
-			MemAccessor_2D_REF(bool) a_outAcc, Range<int> & a_range_X)
+			MemAccessor_2D_REF(ConflictInfo) a_outAcc, Range<int> & a_range_X)
 		{
 			MemAccessor_1D_REF(T) acc_Avg_Y = a_avg_Acc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Avg_X = a_avg_Acc->GenAccessor_1D_X();
@@ -283,22 +283,22 @@ namespace Hcv
 			MemAccessor_1D_REF(float) acc_Avg_MagSqr_Y = a_avg_MagSqr_Acc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(float) acc_Avg_MagSqr_X = a_avg_MagSqr_Acc->GenAccessor_1D_X();
 
-			MemAccessor_1D_REF(bool) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
-			MemAccessor_1D_REF(bool) acc_Out_X = a_outAcc->GenAccessor_1D_X();
+			MemAccessor_1D_REF(ConflictInfo) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(ConflictInfo) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
 			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Avg_MagSqr_Y->GetIndexSize());
 			Hcpl_ASSERT(acc_Avg_Y->GetIndexSize() == acc_Out_Y->GetIndexSize());
 
 			PtrIterator<T> ptrItr_Avg_Y = acc_Avg_Y->GenPtrIterator();
 			PtrIterator<float> ptrItr_Avg_MagSqr_Y = acc_Avg_MagSqr_Y->GenPtrIterator();
-			PtrIterator<bool> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
+			PtrIterator<ConflictInfo> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
 			for (; !ptrItr_Avg_Y.IsDone();
 				ptrItr_Avg_Y.Next(), ptrItr_Avg_MagSqr_Y.Next(), ptrItr_Out_Y.Next())
 			{
 				T * ptr_Avg_Y = ptrItr_Avg_Y.GetCurrent();
 				float * ptr_Avg_MagSqr_Y = ptrItr_Avg_MagSqr_Y.GetCurrent();
-				bool * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
+				ConflictInfo * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
 
 				acc_Avg_X->SetDataPtr(ptr_Avg_Y);
 				acc_Avg_MagSqr_X->SetDataPtr(ptr_Avg_MagSqr_Y);
