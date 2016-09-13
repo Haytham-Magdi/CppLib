@@ -217,9 +217,9 @@ namespace Hcv
 			MemAccessor_1D_REF(ConflictInfo) a_outAcc, Range<int> & a_range)
 		{
 			{
-				//ConflictInfo val_Init;
-				//val_Init.Exists = false;
-				//FillLine<ConflictInfo>(a_outAcc, val_Init);
+				ConflictInfo val_Init;
+				val_Init.Exists = false;
+				FillLine<ConflictInfo>(a_outAcc, val_Init);
 			}
 
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
@@ -240,6 +240,12 @@ namespace Hcv
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
 				ConflictInfo * pOut = &sac_Out[i];
+				
+				//if ((ConflictInfo *)0x07470040 == pOut)
+				if ((ConflictInfo *)0x07470040 == pOut)
+				{
+					pOut = pOut;
+				}
 
 				T * pAvg_1 = &sac_Avg[i - nBefDiff];
 				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
@@ -251,8 +257,16 @@ namespace Hcv
 				if (pOut->Exists)
 				{
 					pOut->Offset_Side_1 = pAvg_1 - a_avg_Acc->GetDataPtr_Org();
+					Hcpl_ASSERT(pOut->Offset_Side_1 >= 0);
+
 					pOut->Offset_Side_2 = pAvg_2 - a_avg_Acc->GetDataPtr_Org();
+					Hcpl_ASSERT(pOut->Offset_Side_2 >= 0);
 				}
+				//else
+				//{
+				//	pOut->Offset_Side_1 = -7;
+				//	pOut->Offset_Side_2 = -7;
+				//}
 			}
 		}
 

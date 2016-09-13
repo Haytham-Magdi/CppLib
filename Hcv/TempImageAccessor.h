@@ -31,14 +31,18 @@ namespace Hcv
 		{
 			//int nSize_X = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_X()->GetIndexSize();
 			//int nSize_Y = a_memAccessor->GetOffsetCalc()->GetOffsetCalc_Y()->GetIndexSize();
-			int nSize_X = a_offsetCalc->GetOffsetCalc_X()->GetIndexSize();
-			int nSize_Y = a_offsetCalc->GetOffsetCalc_Y()->GetIndexSize();
+			int nSize_X = a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize();
+			int nSize_Y = a_offsetCalc->GetOffsetCalc_Y_Org()->GetIndexSize();
 			int nSize_1D = nSize_X * nSize_Y;
 
 			m_allocVect = new FixedVector<T>();
 			m_allocVect->SetSize(nSize_1D);
 
 			OffsetCalc_2D_Ref offsetCalc = new OffsetCalc_2D(1, nSize_X, nSize_Y);
+			if (a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize() != a_offsetCalc->GetOffsetCalc_X()->GetIndexSize())
+			{
+				offsetCalc->SwitchXY();
+			}
 
 			m_memAccessor = new MemAccessor_2D<T>(m_allocVect->GetHeadPtr(), offsetCalc);
 			m_memAccessor->Lock();
