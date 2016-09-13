@@ -77,7 +77,7 @@ namespace Hcv
 
 				//dirContext_H->m_rotToOrgMap_Img = new S32ImageAccessor1C(rotMgr->Get_ResToSrcMapImage());
 				dirContext_H->m_orgToRotMap_Img = new S32ImageAccessor1C(rotMgr->Get_SrcToResMapImage());
-				
+
 				dirContext_H->m_angle = rotMgr->GetAngleByRad();
 
 				dirContext_H->m_conflict_Img = new TempImageAccessor<bool>(
@@ -110,64 +110,120 @@ namespace Hcv
 				m_angleDirMgrArr[i]->Proceed_2();
 			}
 
+			DisplayStandiv_Dir_Img();
+
+			DisplayConflictImg();
+		}
+
+
+		void AngleDirMgrColl::DisplayStandiv_Dir_Img()
+		{
+			MemAccessor_2D_REF(PixelStandevInfo) psiAcc = m_context_H->m_standevInfoImg->GetMemAccessor();
+			F32ImageRef dspImg = F32Image::Create(cvSize(psiAcc->GetIndexSize_X(), psiAcc->GetIndexSize_Y()), 3);
+
+			const int nSize_1D = psiAcc->GetIndexSize_X() * psiAcc->GetIndexSize_Y();
+
+			F32ColorVal * destPtr = (F32ColorVal *)dspImg->GetDataPtr();
+			PixelStandevInfo * srcPtr = psiAcc->GetDataPtr();
+
+			float angle_Old = -1;
+			for (int i = 0; i < nSize_1D; i++)
 			{
-				MemAccessor_2D_REF(PixelStandevInfo) psiAcc = m_context_H->m_standevInfoImg->GetMemAccessor();
-				F32ImageRef dspImg = F32Image::Create(cvSize(psiAcc->GetIndexSize_X(), psiAcc->GetIndexSize_Y()), 3);
+				PixelStandevInfo & rSrc = srcPtr[i];
+				F32ColorVal & rDest = destPtr[i];
 
-				const int nSize_1D = psiAcc->GetIndexSize_X() * psiAcc->GetIndexSize_Y();
+				Hcpl_ASSERT(-1 != rSrc.Dir);
 
-				F32ColorVal * destPtr = (F32ColorVal *)dspImg->GetDataPtr();
-				PixelStandevInfo * srcPtr = psiAcc->GetDataPtr();
+				float angle = m_angleDirMgrArr[rSrc.Dir]->GetContext()->m_angle;
 
-				float angle_Old = -1;
-				for (int i = 0; i < nSize_1D; i++)
+				if (fabs(angle - angle_Old) > 0.01)
 				{
-					PixelStandevInfo & rSrc = srcPtr[i];
-					F32ColorVal & rDest = destPtr[i];
-
-					Hcpl_ASSERT(-1 != rSrc.Dir);
-
-					float angle = m_angleDirMgrArr[rSrc.Dir]->GetContext()->m_angle;
-
-					if (fabs(angle - angle_Old) > 0.01)
-					{
-						angle = angle;
-					}
-					angle_Old = angle;
-
-					////rDest.val0 = 127 + rSrc.NormVal / 2;
-					//rDest.val0 = 127;
-					//rDest.val1 = (127 + 127 * cos(angle) * rSrc.NormVal * 2 / 3);
-					//rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
-
-					rDest.val0 = 0;
-					rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 2 / 3);
-					rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 2 / 3);
-
-					////if (0 == rSrc.Dir)
-					//if (5 == rSrc.Dir)
-					////if (false)
-					//{
-					//	rDest.val0 = rSrc.NormVal;
-					//	rDest.val1 = rSrc.NormVal;
-					//	rDest.val2 = rSrc.NormVal;
-					//}
-					//else
-					//{
-					//	rDest.val0 = 0;
-					//	rDest.val1 = 0;
-					//	rDest.val2 = 0;
-					//}
-
-					//rDest.val0 = 127 + rSrc.NormVal;
-					//rDest.val1 = 127 + 127 * cos(angle);
-					//rDest.val2 = 127 + 127 * sin(angle);
+					angle = angle;
 				}
+				angle_Old = angle;
 
-				ShowImage(dspImg, "dspImg");
+				////rDest.val0 = 127 + rSrc.NormVal / 2;
+				//rDest.val0 = 127;
+				//rDest.val1 = (127 + 127 * cos(angle) * rSrc.NormVal * 2 / 3);
+				//rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
+
+				rDest.val0 = 0;
+				rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 2 / 3);
+				rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 2 / 3);
+
+				////if (0 == rSrc.Dir)
+				//if (5 == rSrc.Dir)
+				////if (false)
+				//{
+				//	rDest.val0 = rSrc.NormVal;
+				//	rDest.val1 = rSrc.NormVal;
+				//	rDest.val2 = rSrc.NormVal;
+				//}
+				//else
+				//{
+				//	rDest.val0 = 0;
+				//	rDest.val1 = 0;
+				//	rDest.val2 = 0;
+				//}
+
+				//rDest.val0 = 127 + rSrc.NormVal;
+				//rDest.val1 = 127 + 127 * cos(angle);
+				//rDest.val2 = 127 + 127 * sin(angle);
 			}
 
+			ShowImage(dspImg, "dspImg");
 		}
+
+		void AngleDirMgrColl::DisplayConflictImg()
+		{
+			MemAccessor_2D_REF(ConflictInfo_Ex) confAcc = m_context_H->m_conflictInfoImg->GetMemAccessor();
+			F32ImageRef confDsp_Img = F32Image::Create(cvSize(confAcc->GetIndexSize_X_Org(), confAcc->GetIndexSize_Y_Org()), 3);
+
+			confDsp_Img->SetAll(0);
+
+			const int nSize_1D = confAcc->GetIndexSize_X() * confAcc->GetIndexSize_Y();
+
+			F32ColorVal * destPtr = (F32ColorVal *)confDsp_Img->GetDataPtr();
+			ConflictInfo_Ex * srcPtr = confAcc->GetDataPtr();
+
+			float angle_Old = -1;
+			for (int i = 0; i < nSize_1D; i++)
+			{
+				ConflictInfo_Ex & rSrc = srcPtr[i];
+				F32ColorVal & rDest = destPtr[i];
+
+				//Hcpl_ASSERT(-1 != rSrc.Dir);
+
+				if (rSrc.Exists)
+				{
+					F32ColorVal & rDest_Side_1 = destPtr[rSrc.Offset_Side_1];
+					F32ColorVal & rDest_Side_2 = destPtr[rSrc.Offset_Side_2];
+
+					rDest.val0 = 0;
+					rDest.val1 = 0;
+					rDest.val2 = 255;
+
+					rDest_Side_1.val0 = 0;
+					rDest_Side_1.val1 = 255;
+					rDest_Side_1.val2 = 0;
+
+					rDest_Side_2.val0 = 0;
+					rDest_Side_2.val1 = 255;
+					rDest_Side_2.val2 = 0;
+				}
+				//else
+				//{
+				//	rDest.val0 = 0;
+				//	rDest.val1 = 0;
+				//	rDest.val2 = 0;
+				//}
+			}
+
+			ShowImage(confDsp_Img, "confDsp_Img->GetSrcImg()");
+		}
+
+
+
 
 
 

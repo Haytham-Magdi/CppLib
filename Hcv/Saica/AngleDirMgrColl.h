@@ -47,6 +47,8 @@ namespace Hcv
 		protected:
 
 			void Prepare();
+			void DisplayStandiv_Dir_Img();
+			void DisplayConflictImg();
 
 		protected:
 
