@@ -20,11 +20,6 @@ namespace Hcpl
 	{
 	public:
 
-		MemAccessor_1D()
-		{
-			m_isLocked = false;
-		}
-
 		MemAccessor_1D(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
 		{
 			m_isLocked = false;
@@ -36,6 +31,7 @@ namespace Hcpl
 			MemAccessor_1D_REF(T) pRet = new MemAccessor_1D<T>();
 
 			pRet->m_data = m_data;
+			pRet->m_data_Org = m_data_Org;
 
 			pRet->m_offsetCalc = m_offsetCalc->Clone();
 			pRet->m_offsetCalc->Lock();
@@ -91,17 +87,6 @@ namespace Hcpl
 			m_isLocked = false;
 		}
 
-		void Init(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
-		{
-			if (m_isLocked)
-				throw "m_isLocked";
-
-			m_data = a_data;
-
-			m_offsetCalc = a_offsetCalc->Clone();
-			m_offsetCalc->Lock();
-		}
-
 		OffsetCalc_1D_Ref GetOffsetCalc()
 		{
 			return m_offsetCalc;
@@ -110,6 +95,11 @@ namespace Hcpl
 		T * GetDataPtr()
 		{
 			return m_data;
+		}
+
+		T * GetDataPtr_Org()
+		{
+			return m_data_Org;
 		}
 
 		void SetDataPtr(T * a_data)
@@ -122,7 +112,29 @@ namespace Hcpl
 
 	protected:
 
+		MemAccessor_1D()
+		{
+			m_isLocked = false;
+		}
+
+		void Init(T * a_data, OffsetCalc_1D_Ref a_offsetCalc)
+		{
+			if (m_isLocked)
+				throw "m_isLocked";
+
+			Hcpl_ASSERT(NULL != a_data);
+
+			m_data = a_data;
+			m_data_Org = a_data;
+
+			m_offsetCalc = a_offsetCalc->Clone();
+			m_offsetCalc->Lock();
+		}
+
+	protected:
+
 		T * m_data;
+		T * m_data_Org;
 		OffsetCalc_1D_Ref m_offsetCalc;
 		bool m_isLocked;
 	};

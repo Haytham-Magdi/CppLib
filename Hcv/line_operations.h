@@ -217,9 +217,9 @@ namespace Hcv
 			MemAccessor_1D_REF(ConflictInfo) a_outAcc, Range<int> & a_range)
 		{
 			{
-				ConflictInfo val_Init;
-				val_Init.Exists = false;
-				FillLine<ConflictInfo>(a_outAcc, val_Init);
+				//ConflictInfo val_Init;
+				//val_Init.Exists = false;
+				//FillLine<ConflictInfo>(a_outAcc, val_Init);
 			}
 
 			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
@@ -248,6 +248,11 @@ namespace Hcv
 				float * pAvg_MagSqr_2 = &sac_Avg_MagSqr[i + nAftDiff];
 
 				pOut->Exists = Element_Operations::CalcConflict_ByPtr(pAvg_1, *pAvg_MagSqr_1, pAvg_2, *pAvg_MagSqr_2);
+				if (pOut->Exists)
+				{
+					pOut->Offset_Side_1 = pAvg_1 - a_avg_Acc->GetDataPtr_Org();
+					pOut->Offset_Side_2 = pAvg_2 - a_avg_Acc->GetDataPtr_Org();
+				}
 			}
 		}
 
