@@ -232,11 +232,14 @@ namespace Hcv
 				Copy_ByPtr(&inp2, &sac_Inp[idx]);
 				MultiplyByNum_ByPtr(&inp2, sac_Weight[idx], &inp2);
 
-				Add_ByPtr(&sum, &sac_Inp[idx], &sum);
+				Add_ByPtr(&sum, &inp2, &sum);
 				sum_Wt += sac_Weight[idx];
 
 				Copy_ByPtr(pDest, &sum);
 				DivideByNum_ByPtr(pDest, sum_Wt, pDest);
+
+				//float mag1 = CalcMag_ByPtr(pDest);
+				//Hcpl_ASSERT(mag1 < 600);
 			}
 
 			///////////////////////////////

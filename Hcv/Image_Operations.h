@@ -208,7 +208,6 @@ namespace Hcv
 			AvgImage_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_window.GetRange_Y());
 		}
 
-
 		template<class T>
 		void AvgImage_Weighted_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_weightAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_range_X)
 		{
@@ -243,11 +242,11 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgImage_Weighted(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_weightAcc, MemAccessor_2D_REF(T) a_outAcc, Window<int> & a_window)
+		void AvgImage_Weighted(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_weightAcc, MemAccessor_2D_REF(T) a_outAcc, Window<int> & a_window)
 		{
 			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc->GetOffsetCalc());
 
-			AvgImage_Weighted_H<T>(a_inpAcc, a_weightAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
+			AvgImage_Weighted_H(a_inpAcc, a_weightAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
 
 			MemAccessor_2D_REF(T) outAcc2 = a_outAcc->Clone();
 			outAcc2->SwitchXY();
