@@ -54,7 +54,7 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_1()
 		{
-			return;
+			//return;
 
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
@@ -78,7 +78,7 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_2()
 		{
-			return;
+			//return;
 
 			//Context & cx = *m_context;
 			//Context & ncx = *m_normalContext;
@@ -96,6 +96,7 @@ namespace Hcv
 
 			//Window<int> avgWin = Window<int>::New(-1, 1, -5, 5);
 			Window<int> avgWin = Window<int>::New(-1, 1, -2, 2);
+			//Window<int> avgWin = Window<int>::New(-1, 0, -2, 2);
 			//Window<int> avgWin = Window<int>::New(0, 0, -2, 2);
 
 			cx.m_conflict_Img = new TempImageAccessor<ConflictInfo>(cx.m_org_Img->GetOffsetCalc());

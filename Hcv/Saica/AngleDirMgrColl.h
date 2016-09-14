@@ -49,6 +49,7 @@ namespace Hcv
 			void Prepare();
 			void DisplayStandiv_Dir_Img();
 			void DisplayConflictImg();
+			void ManageThresholding();
 
 		protected:
 

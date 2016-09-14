@@ -117,9 +117,12 @@ namespace Hcv
 				m_angleDirMgrArr[i]->Proceed_4();
 			}
 
-			//DisplayStandiv_Dir_Img();
+			DisplayStandiv_Dir_Img();
 
 			DisplayConflictImg();
+
+
+
 		}
 
 
@@ -155,8 +158,12 @@ namespace Hcv
 				//rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
 
 				rDest.val0 = 0;
-				rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 2 / 3);
-				rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 2 / 3);
+				//rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 2 / 3);
+				//rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 2 / 3);
+				rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 5 / 3);
+				rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 5 / 3);
+				//rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal);
+				//rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal);
 
 				////if (0 == rSrc.Dir)
 				//if (5 == rSrc.Dir)
@@ -230,7 +237,12 @@ namespace Hcv
 		}
 
 
+		void AngleDirMgrColl::ManageThresholding()
+		{
 
+
+
+		}
 
 
 
