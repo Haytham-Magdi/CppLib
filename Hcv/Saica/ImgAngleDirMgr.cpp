@@ -212,9 +212,17 @@ namespace Hcv
 					{
 						//*((ConflictInfo *)&rCommonConf) = conf_Local;
 
+						int nOffset_Side_1_Mapped = rotToOrgMap_Buf[conf_Local.Offset_Side_1];
+						if (nOffset_Side_1_Mapped < 0)
+							continue;
+
+						int nOffset_Side_2_Mapped = rotToOrgMap_Buf[conf_Local.Offset_Side_2];
+						if (nOffset_Side_2_Mapped < 0)
+							continue;
+
 						rCommonConf.Exists = true;
-						rCommonConf.Offset_Side_1 = rotToOrgMap_Buf[conf_Local.Offset_Side_1];
-						rCommonConf.Offset_Side_2 = rotToOrgMap_Buf[conf_Local.Offset_Side_2];
+						rCommonConf.Offset_Side_1 = nOffset_Side_1_Mapped;
+						rCommonConf.Offset_Side_2 = nOffset_Side_2_Mapped;
 
 						rCommonConf.Dir = cx.m_nIndex;
 					}
