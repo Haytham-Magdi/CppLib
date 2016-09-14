@@ -26,7 +26,7 @@ namespace Hcv
 		template<class T>
 		float CalcMagSqr_ByPtr(T * a_pArg)
 		{
-			Sqr<T>(*a_pArg);
+			return Sqr<T>(*a_pArg);
 		}
 
 		template<class T>
