@@ -58,7 +58,7 @@ namespace Hcv
 
 				F32ImageAccessor1C_Ref m_avgStandev_H_Img;
 
-				//S32ImageAccessor1C_Ref m_rotToOrgMap_Img;
+				S32ImageAccessor1C_Ref m_rotToOrgMap_Img;
 				S32ImageAccessor1C_Ref m_orgToRotMap_Img;
 				float m_angle;
 				TempImageAccessor_REF(ConflictInfo) m_conflict_Img;

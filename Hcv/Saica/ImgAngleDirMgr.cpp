@@ -80,9 +80,9 @@ namespace Hcv
 		{
 			return;
 
-			Context & cx = *m_context;
-			Context & ncx = *m_normalContext;
-			AngleDirMgrColl_Context & pcx = *m_parentContext;
+			//Context & cx = *m_context;
+			//Context & ncx = *m_normalContext;
+			//AngleDirMgrColl_Context & pcx = *m_parentContext;
 
 			AffectCommonAvgStandev();
 
@@ -119,11 +119,11 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_4()
 		{
-			Context & cx = *m_context;
-			Context & ncx = *m_normalContext;
-			AngleDirMgrColl_Context & pcx = *m_parentContext;
+			//Context & cx = *m_context;
+			//Context & ncx = *m_normalContext;
+			//AngleDirMgrColl_Context & pcx = *m_parentContext;
 
-			AffectCommonAvgStandev();
+			AffectCommonConflict();
 		}
 
 		void ImgAngleDirMgr::AffectCommonAvgStandev()
@@ -133,7 +133,7 @@ namespace Hcv
 
 			int * orgToRotMap_Buf = cx.m_orgToRotMap_Img->GetMemAccessor()->GetDataPtr();
 
-			m_parentContext->m_standevInfoImg->GetMemAccessor();
+			//m_parentContext->m_standevInfoImg->GetMemAccessor();
 
 			MemAccessor_2D_REF(int) orgToRotMap_Acc = cx.m_orgToRotMap_Img->GetMemAccessor();
 
@@ -179,18 +179,19 @@ namespace Hcv
 			AngleDirMgrColl_Context & pcx = *m_parentContext;
 
 			int * orgToRotMap_Buf = cx.m_orgToRotMap_Img->GetMemAccessor()->GetDataPtr();
+			int * rotToOrgMap_Buf = cx.m_rotToOrgMap_Img->GetMemAccessor()->GetDataPtr();
 
-			pcx.m_standevInfoImg->GetMemAccessor();
+			//pcx.m_conflictInfoImg->GetMemAccessor();
 
 			MemAccessor_2D_REF(int) orgToRotMap_Acc = cx.m_orgToRotMap_Img->GetMemAccessor();
 
 			OffsetCalc_1D_Ref commonOffsetCalc_Y = orgToRotMap_Acc->GenAccessor_1D_Y()->GetOffsetCalc();
 			OffsetCalc_1D_Ref commonOffsetCalc_X = orgToRotMap_Acc->GenAccessor_1D_X()->GetOffsetCalc();
 
-			PixelStandevInfo * commonImgBuf = pcx.m_standevInfoImg->GetMemAccessor()->GetDataPtr();
+			ConflictInfo_Ex * commonImgBuf = pcx.m_conflictInfoImg->GetMemAccessor()->GetDataPtr();
 
-			float * localPtr = cx.m_avgStandev_H_Img->GetMemAccessor()->GetDataPtr();
-			float * localPtr_Norm = ncx.m_avgStandev_H_Img->GetMemAccessor()->GetDataPtr();
+			ConflictInfo * localPtr = cx.m_conflict_Img->GetMemAccessor()->GetDataPtr();
+			//ConflictInfo * localPtr_Norm = ncx.m_conflict_Img->GetMemAccessor()->GetDataPtr();
 
 			for (int nOffset_Y = commonOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != commonOffsetCalc_Y->GetActualLimOffset();
 				nOffset_Y += commonOffsetCalc_Y->GetActualStepSize())
@@ -200,18 +201,22 @@ namespace Hcv
 				for (int nOffset_YX = nOffset_Y + commonOffsetCalc_X->GetOffsetPart1(); nOffset_YX != nLimOffset_YX;
 					nOffset_YX += commonOffsetCalc_X->GetActualStepSize())
 				{
-					PixelStandevInfo & rCommonPsi = commonImgBuf[nOffset_YX];
+					ConflictInfo_Ex & rCommonConf = commonImgBuf[nOffset_YX];
 
 					int nOffset_Mapped = orgToRotMap_Buf[nOffset_YX];
 					Hcpl_ASSERT(nOffset_Mapped >= 0);
 
-					float standev_Local = localPtr[nOffset_Mapped];
+					ConflictInfo & conf_Local = localPtr[nOffset_Mapped];
 
-					if (standev_Local < rCommonPsi.Val)
+					if (conf_Local.Exists)
 					{
-						rCommonPsi.Val = standev_Local;
-						rCommonPsi.NormVal = localPtr_Norm[nOffset_Mapped];
-						rCommonPsi.Dir = cx.m_nIndex;
+						//*((ConflictInfo *)&rCommonConf) = conf_Local;
+
+						rCommonConf.Exists = true;
+						rCommonConf.Offset_Side_1 = rotToOrgMap_Buf[conf_Local.Offset_Side_1];
+						rCommonConf.Offset_Side_2 = rotToOrgMap_Buf[conf_Local.Offset_Side_2];
+
+						rCommonConf.Dir = cx.m_nIndex;
 					}
 
 				}
