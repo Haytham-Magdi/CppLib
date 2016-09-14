@@ -63,6 +63,16 @@ namespace Hcv
 			m_memAccessor->Lock();
 		}
 
+		int GetSize_1D()
+		{
+			return m_memAccessor->GetIndexSize_X() * m_memAccessor->GetIndexSize_Y();
+		}
+
+		T_AccElm * GetDataPtr()
+		{
+			return m_memAccessor->GetDataPtr();
+		}
+
 		TempImageAccessor_REF(T) CloneAccAndData()
 		{
 			return Clone(true);

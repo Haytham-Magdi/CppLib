@@ -30,7 +30,9 @@ namespace Hcv
 
 			TempImageAccessor_REF(PixelStandevInfo) m_standevInfoImg;
 			TempImageAccessor_REF(ConflictInfo_Ex) m_conflictInfoImg;
-			
+		
+			F32ImageAccessor3C_Ref m_org_Img;
+
 			//TempImageAccessor_REF(int) m_standevInfoImg;
 			//PixelStandevInfo psi;
 

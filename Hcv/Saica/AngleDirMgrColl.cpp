@@ -39,6 +39,7 @@ namespace Hcv
 			F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(m_rotMgrColl->GetRotAt(0)->GetSrcImg());
 			//F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly(); org_Img_V->SwitchXY();
 
+			m_context_H->m_org_Img = org_Img_H;
 			m_context_H->m_standevInfoImg = new TempImageAccessor<PixelStandevInfo>(
 				org_Img_H->GetMemAccessor()->GetOffsetCalc());
 			{
@@ -58,6 +59,7 @@ namespace Hcv
 				FillImage(m_context_H->m_conflictInfoImg->GetMemAccessor(), ci_Init);
 			}
 
+			m_context_V->m_org_Img = m_context_H->m_org_Img->CloneAccessorOnly(); m_context_V->m_org_Img->SwitchXY();
 			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly(); m_context_V->m_standevInfoImg->SwitchXY();
 			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
 
@@ -117,11 +119,11 @@ namespace Hcv
 				m_angleDirMgrArr[i]->Proceed_4();
 			}
 
-			DisplayStandiv_Dir_Img();
+			//DisplayStandiv_Dir_Img();
 
 			DisplayConflictImg();
 
-
+			ManageThresholding();
 
 		}
 
@@ -239,6 +241,83 @@ namespace Hcv
 
 		void AngleDirMgrColl::ManageThresholding()
 		{
+			AngleDirMgrColl_Context & cx = *m_context_H;
+			
+			F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
+			ConflictInfo_Ex * conf_Ptr = cx.m_conflictInfoImg->GetDataPtr();
+
+			const int nSize_1D = cx.m_conflictInfoImg->GetSize_1D();
+
+			F32ImageAccessor1C_Ref magImg = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			CalcMagImage(cx.m_org_Img->GetMemAccessor(), magImg->GetMemAccessor());
+
+			F32ImageAccessor1C_Ref threshold_Mag_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			float * threshold_Mag_Ptr = threshold_Mag_Img->GetDataPtr();
+
+
+			F32ImageAccessor1C_Ref weight_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			float * weight_Ptr = weight_Img->GetDataPtr();
+			{
+				float zeroVal = 0.0f;
+				FillImage(weight_Img->GetMemAccessor(), zeroVal);
+
+				for (int i = 0; i < nSize_1D; i++)
+				{
+					ConflictInfo_Ex & rConf = conf_Ptr[i];
+					float & rWeight = weight_Ptr[i];
+					float & rThreshold_Mag = threshold_Mag_Ptr[i];
+
+					if (!rConf.Exists)
+					{
+						rWeight = 0;
+						rThreshold_Mag = 0;
+						continue;
+					}
+
+
+
+					avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
+				}
+			}
+
+
+
+
+			//F32ImageAccessor1C_Ref standev_Thin_Img;
+			//{
+			//	F32ImageAccessor1C_Ref avg_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
+			//	standev_Thin_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
+
+			//	Calc_Avg_And_Standev_Image(magImg->GetMemAccessor(), avg_Img->GetMemAccessor(), standev_Thin_Img->GetMemAccessor(),
+			//		Window<int>::New(-1, 1, -1, 1));
+			//	//Window<int>::New(-1, 0, -1, 0));
+			//}
+
+
+
+
+
+
+
+
+			//F32ImageAccessor1C_Ref avg_Wide_Mag_Diff_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
+			//{
+			//	const int nSize_1D = magImg->GetSize_1D();
+
+			//	float * mag_Ptr = magImg->GetDataPtr();
+			//	float * avg_Wide_Ptr = avg_Wide_Img->GetDataPtr();
+			//	float * avg_Wide_Mag_Diff_Ptr = avg_Wide_Mag_Diff_Img->GetDataPtr();
+
+			//	for (int i = 0; i < nSize_1D; i++)
+			//	{
+			//		avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
+			//	}
+			//}
+			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(avg_Wide_Mag_Diff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
+			//ShowImage(standev_Thin_Img->GetSrcImg(), "avg_Wide_Mag_Diff_Img->GetSrcImg()");
+
+
+
 
 
 

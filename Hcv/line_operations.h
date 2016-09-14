@@ -198,7 +198,7 @@ namespace Hcv
 			const int nRangeLen = nBefDiff + 1 + nAftDiff;
 
 			T * pDest;
-			
+
 			T sum;
 			SetToZero_ByPtr<T>(&sum);
 			int sum_Wt = 0;
@@ -213,9 +213,12 @@ namespace Hcv
 				sum_Wt += sac_Weight[i];
 				Add_ByPtr(&sum, &inp2, &sum);
 			}
-			pDest = &sac_Out[nBefDiff];
-			Copy_ByPtr(pDest, &sum);
-			DivideByNum_ByPtr(pDest, sum_Wt, pDest);
+			if (sum_Wt > 0.2f)
+			{
+				pDest = &sac_Out[nBefDiff];
+				Copy_ByPtr(pDest, &sum);
+				DivideByNum_ByPtr(pDest, sum_Wt, pDest);
+			}
 
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
@@ -235,8 +238,11 @@ namespace Hcv
 				Add_ByPtr(&sum, &inp2, &sum);
 				sum_Wt += sac_Weight[idx];
 
-				Copy_ByPtr(pDest, &sum);
-				DivideByNum_ByPtr(pDest, sum_Wt, pDest);
+				if (sum_Wt > 0.2f)
+				{
+					Copy_ByPtr(pDest, &sum);
+					DivideByNum_ByPtr(pDest, sum_Wt, pDest);
+				}
 
 				//float mag1 = CalcMag_ByPtr(pDest);
 				//Hcpl_ASSERT(mag1 < 600);
