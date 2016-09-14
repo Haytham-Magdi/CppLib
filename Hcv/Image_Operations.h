@@ -288,24 +288,22 @@ namespace Hcv
 		}
 
 		template<class T>
-		void CalcStandevImage(MemAccessor_2D_REF(T) a_inp_Acc, MemAccessor_2D_REF(float) a_outAcc, Window<int> & a_Win)
+		void Calc_Avg_And_Standev_Image(MemAccessor_2D_REF(T) a_inp_Acc, MemAccessor_2D_REF(float) a_out_Avg_Acc,
+			MemAccessor_2D_REF(float) a_out_Standev_Acc, Window<int> & a_Win)
 		{
-			F32ImageAccessor1C_Ref avg_Img = magImg->CloneAccAndImage();
-			AvgImage(magImg->GetMemAccessor(), avg_Img->GetMemAccessor(), a_Win);
+			//TempImageAccessor_REF(T) avg_Img = new TempImageAccessor_REF<T>(a_inp_Acc->GetOffsetCalc());
+			AvgImage(a_inp_Acc, a_out_Avg_Acc, a_Win);
 
 			//ShowImage(avg_Img->GetSrcImg(), "avg_Img->GetSrcImg()");
+			
+			TempImageAccessor_REF(float) magSqr_Img = new TempImageAccessor<float>(a_inp_Acc->GetOffsetCalc());
+			CalcMagSqrImage(a_inp_Acc, magSqr_Img->GetMemAccessor());
 
-			F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
-			CalcMagSqrImage(magImg->GetMemAccessor(), magSqr_Img->GetMemAccessor());
-
-			F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
+			//TempImageAccessor_REF(float) avg_MagSqr_Img = new TempImageAccessor<float>(a_inp_Acc->GetOffsetCalc());
 			AvgImage(magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), a_Win);
 
-			standev_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
-			CalcStandevImage(avg_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(),
-				standev_Img->GetMemAccessor());
-
-
+			//standev_Img = new F32ImageAccessor1C(a_inp_Acc->GetOffsetCalc());
+			CalcStandevImage(a_out_Avg_Acc, avg_MagSqr_Img->GetMemAccessor(), a_out_Standev_Acc);
 		}
 
 		template<class T>
