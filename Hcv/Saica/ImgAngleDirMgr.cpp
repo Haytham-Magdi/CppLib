@@ -54,6 +54,8 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_1()
 		{
+			return;
+
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
 			AngleDirMgrColl_Context & pcx = *m_parentContext;
@@ -65,7 +67,7 @@ namespace Hcv
 			Cala_AvgStandevImage_H(cx.m_org_Img->GetMemAccessor(), cx.m_magSqr_Img->GetMemAccessor(),
 				cx.m_avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-2, 2), Range<int>::New(-2, 2));
 
-				//cx.m_avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-3, 3), Range<int>::New(-1, 1));
+			//cx.m_avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-3, 3), Range<int>::New(-1, 1));
 			//cx.m_avgStandev_H_Img->GetMemAccessor(), Range<int>::New(-5, 5), Range<int>::New(-5, 5));
 
 			//ShowImage(cx.m_avgStandev_H_Img->GetSrcImg(), cx.MakeStrWithId("m_avgStandev_H_Img->GetSrcImg()").c_str());
@@ -76,11 +78,51 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_2()
 		{
+			return;
+
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
 			AngleDirMgrColl_Context & pcx = *m_parentContext;
 
 			AffectCommonAvgStandev();
+
+		}
+
+		void ImgAngleDirMgr::Proceed_3()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
+			Window<int> avgWin = Window<int>::New(-1, 1, -5, 5);
+
+			cx.m_conflict_Img = new TempImageAccessor<ConflictInfo>(cx.m_org_Img->GetOffsetCalc());
+
+			F32ImageAccessor3C_Ref avg_Img = cx.m_org_Img->CloneAccAndImage();
+			AvgImage(cx.m_org_Img->GetMemAccessor(), avg_Img->GetMemAccessor(), avgWin);
+
+			F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			AvgImage(cx.m_magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), avgWin);
+
+			Range<int> confRange = Range<int>::New(
+				-1 - avgWin.Get_X2(), 1 - avgWin.Get_X1());
+
+			CalcConflictImage_H(avg_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(),
+				cx.m_conflict_Img->GetMemAccessor(), confRange);
+
+			//if (0 == cx.m_nIndex)
+			{
+				DisplayConflictImg();
+			}
+
+		}
+
+		void ImgAngleDirMgr::Proceed_4()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
 
 		}
 
@@ -130,6 +172,61 @@ namespace Hcv
 
 		}
 
+		void ImgAngleDirMgr::DisplayConflictImg()
+		{
+			Context & cx = *m_context;
+
+			MemAccessor_2D_REF(ConflictInfo) confAcc = cx.m_conflict_Img->GetMemAccessor();
+			F32ImageRef confDsp_Img = F32Image::Create(cvSize(confAcc->GetIndexSize_X_Org(), confAcc->GetIndexSize_Y_Org()), 3);
+
+			confDsp_Img->SetAll(0);
+
+			const int nSize_1D = confAcc->GetIndexSize_X() * confAcc->GetIndexSize_Y();
+
+			F32ColorVal * destPtr = (F32ColorVal *)confDsp_Img->GetDataPtr();
+			ConflictInfo * srcPtr = confAcc->GetDataPtr();
+
+			float angle_Old = -1;
+			for (int i = 0; i < nSize_1D; i++)
+			{
+				ConflictInfo & rSrc = srcPtr[i];
+				F32ColorVal & rDest = destPtr[i];
+
+				//rDest.val0 = 0;
+				//rDest.val1 = 255;
+				//rDest.val2 = 255;
+
+				//continue;
+
+				//Hcpl_ASSERT(-1 != rSrc.Dir);
+
+				if (rSrc.Exists)
+				{
+					F32ColorVal & rDest_Side_1 = destPtr[rSrc.Offset_Side_1];
+					F32ColorVal & rDest_Side_2 = destPtr[rSrc.Offset_Side_2];
+
+					rDest.val0 = 0;
+					rDest.val1 = 0;
+					rDest.val2 = 255;
+
+					rDest_Side_1.val0 = 0;
+					rDest_Side_1.val1 = 255;
+					rDest_Side_1.val2 = 0;
+
+					rDest_Side_2.val0 = 0;
+					rDest_Side_2.val1 = 255;
+					rDest_Side_2.val2 = 0;
+				}
+				//else
+				//{
+				//	rDest.val0 = 0;
+				//	rDest.val1 = 0;
+				//	rDest.val2 = 0;
+				//}
+			}
+
+			ShowImage(confDsp_Img, cx.MakeStrWithId("confDsp_Img").c_str());
+		}
 
 	}
 }

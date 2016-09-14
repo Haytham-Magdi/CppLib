@@ -241,12 +241,6 @@ namespace Hcv
 			{
 				ConflictInfo * pOut = &sac_Out[i];
 				
-				//if ((ConflictInfo *)0x07470040 == pOut)
-				if ((ConflictInfo *)0x07470040 == pOut)
-				{
-					pOut = pOut;
-				}
-
 				T * pAvg_1 = &sac_Avg[i - nBefDiff];
 				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
 
