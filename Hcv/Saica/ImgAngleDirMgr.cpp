@@ -112,7 +112,7 @@ namespace Hcv
 
 			//if (0 == cx.m_nIndex)
 			{
-				DisplayConflictImg();
+				//DisplayConflictImg();
 			}
 
 		}
@@ -123,7 +123,7 @@ namespace Hcv
 			Context & ncx = *m_normalContext;
 			AngleDirMgrColl_Context & pcx = *m_parentContext;
 
-
+			AffectCommonAvgStandev();
 		}
 
 		void ImgAngleDirMgr::AffectCommonAvgStandev()
@@ -171,6 +171,54 @@ namespace Hcv
 			}
 
 		}
+
+		void ImgAngleDirMgr::AffectCommonConflict()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
+			int * orgToRotMap_Buf = cx.m_orgToRotMap_Img->GetMemAccessor()->GetDataPtr();
+
+			pcx.m_standevInfoImg->GetMemAccessor();
+
+			MemAccessor_2D_REF(int) orgToRotMap_Acc = cx.m_orgToRotMap_Img->GetMemAccessor();
+
+			OffsetCalc_1D_Ref commonOffsetCalc_Y = orgToRotMap_Acc->GenAccessor_1D_Y()->GetOffsetCalc();
+			OffsetCalc_1D_Ref commonOffsetCalc_X = orgToRotMap_Acc->GenAccessor_1D_X()->GetOffsetCalc();
+
+			PixelStandevInfo * commonImgBuf = pcx.m_standevInfoImg->GetMemAccessor()->GetDataPtr();
+
+			float * localPtr = cx.m_avgStandev_H_Img->GetMemAccessor()->GetDataPtr();
+			float * localPtr_Norm = ncx.m_avgStandev_H_Img->GetMemAccessor()->GetDataPtr();
+
+			for (int nOffset_Y = commonOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != commonOffsetCalc_Y->GetActualLimOffset();
+				nOffset_Y += commonOffsetCalc_Y->GetActualStepSize())
+			{
+				const int nLimOffset_YX = nOffset_Y + commonOffsetCalc_X->GetActualLimOffset();
+
+				for (int nOffset_YX = nOffset_Y + commonOffsetCalc_X->GetOffsetPart1(); nOffset_YX != nLimOffset_YX;
+					nOffset_YX += commonOffsetCalc_X->GetActualStepSize())
+				{
+					PixelStandevInfo & rCommonPsi = commonImgBuf[nOffset_YX];
+
+					int nOffset_Mapped = orgToRotMap_Buf[nOffset_YX];
+					Hcpl_ASSERT(nOffset_Mapped >= 0);
+
+					float standev_Local = localPtr[nOffset_Mapped];
+
+					if (standev_Local < rCommonPsi.Val)
+					{
+						rCommonPsi.Val = standev_Local;
+						rCommonPsi.NormVal = localPtr_Norm[nOffset_Mapped];
+						rCommonPsi.Dir = cx.m_nIndex;
+					}
+
+				}
+			}
+
+		}
+
 
 		void ImgAngleDirMgr::DisplayConflictImg()
 		{

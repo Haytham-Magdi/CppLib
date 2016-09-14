@@ -39,7 +39,10 @@ namespace Hcv
 			m_allocVect->SetSize(nSize_1D);
 
 			OffsetCalc_2D_Ref offsetCalc = new OffsetCalc_2D(1, nSize_X, nSize_Y);
-			if (a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize() != a_offsetCalc->GetOffsetCalc_X()->GetIndexSize())
+			//if (a_offsetCalc->GetOffsetCalc_X_Org()->GetIndexSize() != a_offsetCalc->GetOffsetCalc_X()->GetIndexSize())
+			//if (a_offsetCalc->GetOffsetCalc_X_Org() != a_offsetCalc->GetOffsetCalc_X())
+			//if ((int)a_offsetCalc->GetOffsetCalc_X_Org() != (int)a_offsetCalc->GetOffsetCalc_X())
+			if (a_offsetCalc->GetOffsetCalc_X_Org()->GetActualStepSize() != a_offsetCalc->GetOffsetCalc_X()->GetActualStepSize())
 			{
 				offsetCalc->SwitchXY();
 			}

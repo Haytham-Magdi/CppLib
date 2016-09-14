@@ -88,6 +88,8 @@ namespace Hcv
 
 			//void AffectCommonAvgStandev_0();
 			void AffectCommonAvgStandev();
+			void AffectCommonConflict();
+
 			void DisplayConflictImg();
 
 		protected:
