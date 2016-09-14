@@ -186,7 +186,7 @@ namespace Hcv
 			FillLine<T>(a_outAcc, zeroVal);
 
 			MemSimpleAccessor_1D<T> sac_Inp = a_inpAcc->GenSimpleAccessor();
-			MemSimpleAccessor_1D<T> sac_Weight = a_weightAcc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<float> sac_Weight = a_weightAcc->GenSimpleAccessor();
 			MemSimpleAccessor_1D<T> sac_Out = a_outAcc->GenSimpleAccessor();
 
 			const int nSize_1D = a_inpAcc->GetIndexSize();
@@ -197,27 +197,46 @@ namespace Hcv
 			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
 			const int nRangeLen = nBefDiff + 1 + nAftDiff;
 
-			T sum;
 			T * pDest;
+			
+			T sum;
 			SetToZero_ByPtr<T>(&sum);
+			int sum_Wt = 0;
+
+			T inp2;
 
 			for (int i = 0; i < nRangeLen; i++)
 			{
-				Add_ByPtr(&sum, &sac_Inp[i], &sum);
+				Copy_ByPtr(&inp2, &sac_Inp[i]);
+				MultiplyByNum_ByPtr(&inp2, sac_Weight[i], &inp2);
+
+				sum_Wt += sac_Weight[i];
+				Add_ByPtr(&sum, &inp2, &sum);
 			}
 			pDest = &sac_Out[nBefDiff];
 			Copy_ByPtr(pDest, &sum);
-			DivideByNum_ByPtr(pDest, nRangeLen, pDest);
+			DivideByNum_ByPtr(pDest, sum_Wt, pDest);
 
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
 				pDest = &sac_Out[i];
 
-				Subtract_ByPtr(&sum, &sac_Inp[(i - 1) - nBefDiff], &sum);
-				Add_ByPtr(&sum, &sac_Inp[i + nAftDiff], &sum);
+				int idx = (i - 1) - nBefDiff;
+				Copy_ByPtr(&inp2, &sac_Inp[idx]);
+				MultiplyByNum_ByPtr(&inp2, sac_Weight[idx], &inp2);
+
+				Subtract_ByPtr(&sum, &inp2, &sum);
+				sum_Wt -= sac_Weight[idx];
+
+				idx = i + nAftDiff;
+				Copy_ByPtr(&inp2, &sac_Inp[idx]);
+				MultiplyByNum_ByPtr(&inp2, sac_Weight[idx], &inp2);
+
+				Add_ByPtr(&sum, &sac_Inp[idx], &sum);
+				sum_Wt += sac_Weight[idx];
 
 				Copy_ByPtr(pDest, &sum);
-				DivideByNum_ByPtr(pDest, nRangeLen, pDest);
+				DivideByNum_ByPtr(pDest, sum_Wt, pDest);
 			}
 
 			///////////////////////////////
