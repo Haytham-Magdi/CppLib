@@ -173,9 +173,10 @@ namespace Hcv
 		}
 
 		template<class T>
-		void AvgLine_Weighted(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_range)
+		void AvgLine_Weighted(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(float) a_weightAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_range)
 		{
 			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_outAcc->GetIndexSize());
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_weightAcc->GetIndexSize());
 			Hcpl_ASSERT(a_range.GetBgn() <= 0);
 			Hcpl_ASSERT(0 <= a_range.GetEnd());
 
@@ -185,6 +186,7 @@ namespace Hcv
 			FillLine<T>(a_outAcc, zeroVal);
 
 			MemSimpleAccessor_1D<T> sac_Inp = a_inpAcc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<T> sac_Weight = a_weightAcc->GenSimpleAccessor();
 			MemSimpleAccessor_1D<T> sac_Out = a_outAcc->GenSimpleAccessor();
 
 			const int nSize_1D = a_inpAcc->GetIndexSize();
@@ -234,7 +236,7 @@ namespace Hcv
 			{
 				const int nSrcIdx = (nSize_1D - 1) - nAftDiff;
 				T * pSrc = &sac_Out[nSrcIdx];
-				
+
 				for (int i = nSrcIdx + 1; i < nSize_1D; i++)
 				{
 					pDest = &sac_Out[i];
@@ -312,7 +314,7 @@ namespace Hcv
 			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
 			{
 				ConflictInfo * pOut = &sac_Out[i];
-				
+
 				T * pAvg_1 = &sac_Avg[i - nBefDiff];
 				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
 

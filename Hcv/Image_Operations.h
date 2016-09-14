@@ -210,48 +210,51 @@ namespace Hcv
 
 
 		template<class T>
-		void AvgImage_Weighted_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_range_X)
+		void AvgImage_Weighted_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(float) a_weightAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_range_X)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
 
+			MemAccessor_1D_REF(float) acc_Weight_Y = a_weightAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(float) acc_Weight_X = a_weightAcc->GenAccessor_1D_X();
+
 			MemAccessor_1D_REF(T) acc_Out_Y = a_outAcc->GenAccessor_1D_Y();
 			MemAccessor_1D_REF(T) acc_Out_X = a_outAcc->GenAccessor_1D_X();
 
-			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() ==
-				acc_Out_Y->GetIndexSize());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() == acc_Weight_Y->GetIndexSize());
+			Hcpl_ASSERT(acc_Inp_Y->GetIndexSize() == acc_Out_Y->GetIndexSize());
 
 			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
+			PtrIterator<float> ptrItr_Weight_Y = acc_Weight_Y->GenPtrIterator();
 			PtrIterator<T> ptrItr_Out_Y = acc_Out_Y->GenPtrIterator();
 
-			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next(), ptrItr_Out_Y.Next())
+			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next(), ptrItr_Weight_Y.Next(), ptrItr_Out_Y.Next())
 			{
 				T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+				float * ptr_Weight_Y = ptrItr_Weight_Y.GetCurrent();
 				T * ptr_Out_Y = ptrItr_Out_Y.GetCurrent();
 
 				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
+				acc_Weight_X->SetDataPtr(ptr_Weight_Y);
 				acc_Out_X->SetDataPtr(ptr_Out_Y);
 
-				AvgLine_Weighted(acc_Inp_X, acc_Out_X, a_range_X);
+				AvgLine_Weighted(acc_Inp_X, acc_Weight_X, acc_Out_X, a_range_X);
 			}
 		}
 
 		template<class T>
-		void AvgImage_Weighted(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Window<int> & a_window)
+		void AvgImage_Weighted(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_weightAcc, MemAccessor_2D_REF(T) a_outAcc, Window<int> & a_window)
 		{
 			TempImageAccessor_REF(T) tmpImgAcc = new TempImageAccessor<T>(a_outAcc->GetOffsetCalc());
 
-			AvgImage_H<T>(a_inpAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
-			//AvgImage_H<T>(a_inpAcc, a_outAcc, a_range_X);
-
-			//return;
+			AvgImage_Weighted_H<T>(a_inpAcc, a_weightAcc, tmpImgAcc->GetMemAccessor(), a_window.GetRange_X());
 
 			MemAccessor_2D_REF(T) outAcc2 = a_outAcc->Clone();
 			outAcc2->SwitchXY();
 
 			tmpImgAcc->SwitchXY();
 
-			AvgImage_Weighted_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_window.GetRange_Y());
+			AvgImage_H<T>(tmpImgAcc->GetMemAccessor(), outAcc2, a_window.GetRange_Y());
 		}
 
 
