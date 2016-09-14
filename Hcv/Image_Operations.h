@@ -299,7 +299,7 @@ namespace Hcv
 			TempImageAccessor_REF(float) magSqr_Img = new TempImageAccessor<float>(a_inp_Acc->GetOffsetCalc());
 			CalcMagSqrImage(a_inp_Acc, magSqr_Img->GetMemAccessor());
 
-			//TempImageAccessor_REF(float) avg_MagSqr_Img = new TempImageAccessor<float>(a_inp_Acc->GetOffsetCalc());
+			TempImageAccessor_REF(float) avg_MagSqr_Img = new TempImageAccessor<float>(a_inp_Acc->GetOffsetCalc());
 			AvgImage(magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), a_Win);
 
 			//standev_Img = new F32ImageAccessor1C(a_inp_Acc->GetOffsetCalc());
