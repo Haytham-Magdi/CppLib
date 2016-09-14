@@ -162,6 +162,78 @@ namespace Hcv
 			{
 				const int nSrcIdx = (nSize_1D - 1) - nAftDiff;
 				T * pSrc = &sac_Out[nSrcIdx];
+
+				for (int i = nSrcIdx + 1; i < nSize_1D; i++)
+				{
+					pDest = &sac_Out[i];
+					Copy_ByPtr(pDest, pSrc);
+				}
+			}
+
+		}
+
+		template<class T>
+		void AvgLine_Weighted(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_range)
+		{
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_outAcc->GetIndexSize());
+			Hcpl_ASSERT(a_range.GetBgn() <= 0);
+			Hcpl_ASSERT(0 <= a_range.GetEnd());
+
+			T zeroVal;
+			SetToZero_ByPtr<T>(&zeroVal);
+
+			FillLine<T>(a_outAcc, zeroVal);
+
+			MemSimpleAccessor_1D<T> sac_Inp = a_inpAcc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<T> sac_Out = a_outAcc->GenSimpleAccessor();
+
+			const int nSize_1D = a_inpAcc->GetIndexSize();
+
+			const int nBefDiff = -a_range.GetBgn();
+			const int nAftDiff = a_range.GetEnd();
+
+			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
+			const int nRangeLen = nBefDiff + 1 + nAftDiff;
+
+			T sum;
+			T * pDest;
+			SetToZero_ByPtr<T>(&sum);
+
+			for (int i = 0; i < nRangeLen; i++)
+			{
+				Add_ByPtr(&sum, &sac_Inp[i], &sum);
+			}
+			pDest = &sac_Out[nBefDiff];
+			Copy_ByPtr(pDest, &sum);
+			DivideByNum_ByPtr(pDest, nRangeLen, pDest);
+
+			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
+			{
+				pDest = &sac_Out[i];
+
+				Subtract_ByPtr(&sum, &sac_Inp[(i - 1) - nBefDiff], &sum);
+				Add_ByPtr(&sum, &sac_Inp[i + nAftDiff], &sum);
+
+				Copy_ByPtr(pDest, &sum);
+				DivideByNum_ByPtr(pDest, nRangeLen, pDest);
+			}
+
+			///////////////////////////////
+
+			//	Fill bgn gap in output
+			{
+				T * pSrc = &sac_Out[nBefDiff];
+				for (int i = 0; i < nBefDiff; i++)
+				{
+					pDest = &sac_Out[i];
+					Copy_ByPtr(pDest, pSrc);
+				}
+			}
+
+			//	Fill end gap in output
+			{
+				const int nSrcIdx = (nSize_1D - 1) - nAftDiff;
+				T * pSrc = &sac_Out[nSrcIdx];
 				
 				for (int i = nSrcIdx + 1; i < nSize_1D; i++)
 				{
