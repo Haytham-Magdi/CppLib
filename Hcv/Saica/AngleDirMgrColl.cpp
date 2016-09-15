@@ -288,7 +288,9 @@ namespace Hcv
 
 			F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			{
-				const int nWinRadius = 5;
+				//const int nWinRadius = 5;
+				//const int nWinRadius = 8;
+				const int nWinRadius = 15;
 				AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
 					Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
 			}
