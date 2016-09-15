@@ -248,8 +248,8 @@ namespace Hcv
 
 			const int nSize_1D = cx.m_conflictInfoImg->GetSize_1D();
 
-			F32ImageAccessor1C_Ref threshold_Mag_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			float * threshold_Mag_Ptr = threshold_Mag_Img->GetDataPtr();
+			F32ImageAccessor3C_Ref threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
+			F32ColorVal * threshold_Ptr = (F32ColorVal *)threshold_Img->GetDataPtr();
 
 			F32ImageAccessor1C_Ref weight_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			float * weight_Ptr = weight_Img->GetDataPtr();
@@ -263,12 +263,12 @@ namespace Hcv
 				{
 					ConflictInfo_Ex & rConf = conf_Ptr[i];
 					float & rWeight = weight_Ptr[i];
-					float & rThreshold_Mag = threshold_Mag_Ptr[i];
+					F32ColorVal & rThreshold = threshold_Ptr[i];
 
 					if (!rConf.Exists)
 					{
 						rWeight = 0;
-						rThreshold_Mag = 0;
+						rThreshold.AssignVal(0, 0, 0);
 						continue;
 					}
 
@@ -277,30 +277,32 @@ namespace Hcv
 					F32ColorVal & rVal_Side_1 = orgImg_Ptr[rConf.Offset_Side_1];
 					F32ColorVal & rVal_Side_2 = orgImg_Ptr[rConf.Offset_Side_2];
 
-					rThreshold_Mag = F32ColorVal::Add(rVal_Side_1, rVal_Side_2).DividBy(2).CalcMag();
+					rThreshold = F32ColorVal::Add(rVal_Side_1, rVal_Side_2).DividBy(2);
 
 					//avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
 				}
 			}
 
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(threshold_Mag_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-			ShowImage(threshold_Mag_Img->GetSrcImg(), "threshold_Mag_Img->GetSrcImg()");
+			//ShowImage(threshold_Img->GetSrcImg(), "threshold_Img->GetSrcImg()");
 
-			F32ImageAccessor1C_Ref avg_Threshold_Mag_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-
+			F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			{
 				const int nWinRadius = 5;
-				AvgImage_Weighted(threshold_Mag_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Mag_Img->GetMemAccessor(),
+				AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
 					Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
 			}
-			ShowImage(avg_Threshold_Mag_Img->GetSrcImg(), "avg_Threshold_Mag_Img->GetSrcImg()");
+			ShowImage(avg_Threshold_Img->GetSrcImg(), "avg_Threshold_Img->GetSrcImg()");
 
-			float * avg_Threshold_Mag_Ptr = avg_Threshold_Mag_Img->GetDataPtr();
+			F32ImageAccessor1C_Ref mag_Avg_Threshold_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			CalcMagImage(avg_Threshold_Img->GetMemAccessor(), mag_Avg_Threshold_Img->GetMemAccessor());
+			float * mag_Avg_Threshold_Ptr = mag_Avg_Threshold_Img->GetDataPtr();
+
+			ShowImage(mag_Avg_Threshold_Img->GetSrcImg(), "mag_Avg_Threshold_Img->GetSrcImg()");
 
 			F32ImageAccessor1C_Ref magImg = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			CalcMagImage(cx.m_org_Img->GetMemAccessor(), magImg->GetMemAccessor());
 			float * mag_Ptr = magImg->GetDataPtr();
-
 
 			F32ImageAccessor1C_Ref bin_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			{
@@ -312,17 +314,17 @@ namespace Hcv
 
 				for (int i = 0; i < nSize_1D; i++)
 				{
-					float & rAvg_Threshold_Mag = avg_Threshold_Mag_Ptr[i];
+					float & rMag_Avg_Threshold = mag_Avg_Threshold_Ptr[i];
 					float & rMag = mag_Ptr[i];
 					float & rBin = bin_Ptr[i];
 
-					if (rAvg_Threshold_Mag > 1.0)
+					if (rMag_Avg_Threshold < 5.0)
 					{
 						rBin = 128;
 						continue;
 					}
 
-					if (rMag > rAvg_Threshold_Mag)
+					if (rMag > rMag_Avg_Threshold)
 					{
 						rBin = 255;
 					}
@@ -335,36 +337,7 @@ namespace Hcv
 			ShowImage(bin_Img->GetSrcImg(), "bin_Img->GetSrcImg()");
 
 
-			//F32ImageAccessor1C_Ref standev_Thin_Img;
-			//{
-			//	F32ImageAccessor1C_Ref avg_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
-			//	standev_Thin_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
 
-			//	Calc_Avg_And_Standev_Image(magImg->GetMemAccessor(), avg_Img->GetMemAccessor(), standev_Thin_Img->GetMemAccessor(),
-			//		Window<int>::New(-1, 1, -1, 1));
-			//	//Window<int>::New(-1, 0, -1, 0));
-			//}
-
-
-
-
-
-
-
-
-			//F32ImageAccessor1C_Ref avg_Wide_Mag_Diff_Img = new F32ImageAccessor1C(magImg->GetOffsetCalc());
-			//{
-			//	const int nSize_1D = magImg->GetSize_1D();
-
-			//	float * mag_Ptr = magImg->GetDataPtr();
-			//	float * avg_Wide_Ptr = avg_Wide_Img->GetDataPtr();
-			//	float * avg_Wide_Mag_Diff_Ptr = avg_Wide_Mag_Diff_Img->GetDataPtr();
-
-			//	for (int i = 0; i < nSize_1D; i++)
-			//	{
-			//		avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
-			//	}
-			//}
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(avg_Wide_Mag_Diff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
 			//ShowImage(standev_Thin_Img->GetSrcImg(), "avg_Wide_Mag_Diff_Img->GetSrcImg()");
 
