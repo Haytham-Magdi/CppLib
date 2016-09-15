@@ -181,7 +181,7 @@ namespace Hcv
 				//a_offsetCalc->GetOffsetCalc_X()->GetIndexSize()),
 				V_NofChannels);
 
-			m_memAccessor = new MemAccessor_2D<T_AccElm>(m_srcImg->GetDataPtr(), a_offsetCalc);
+			m_memAccessor = new MemAccessor_2D<T_AccElm>((T_AccElm *)m_srcImg->GetDataPtr(), a_offsetCalc);
 			//ImageAccessor::CreateAccessorFromImage(m_srcImg, m_memAccessor);
 		}
 

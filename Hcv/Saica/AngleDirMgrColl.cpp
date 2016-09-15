@@ -249,7 +249,7 @@ namespace Hcv
 			const int nSize_1D = cx.m_conflictInfoImg->GetSize_1D();
 
 			F32ImageAccessor3C_Ref threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
-			F32ColorVal * threshold_Ptr = (F32ColorVal *)threshold_Img->GetDataPtr();
+			//F32ColorVal * threshold_Ptr = (F32ColorVal *)threshold_Img->GetDataPtr();
 
 			//F32ImageAccessor1C_Ref weight_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			//float * weight_Ptr = weight_Img->GetDataPtr();
