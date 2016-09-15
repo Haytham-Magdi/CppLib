@@ -251,90 +251,90 @@ namespace Hcv
 			F32ImageAccessor3C_Ref threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			F32ColorVal * threshold_Ptr = (F32ColorVal *)threshold_Img->GetDataPtr();
 
-			F32ImageAccessor1C_Ref weight_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			float * weight_Ptr = weight_Img->GetDataPtr();
-			{
-				{
-					float init_Val = 0.0f;
-					FillImage(weight_Img->GetMemAccessor(), init_Val);
-				}
-
-				for (int i = 0; i < nSize_1D; i++)
-				{
-					ConflictInfo_Ex & rConf = conf_Ptr[i];
-					float & rWeight = weight_Ptr[i];
-					F32ColorVal & rThreshold = threshold_Ptr[i];
-
-					if (!rConf.Exists)
-					{
-						rWeight = 0;
-						rThreshold.AssignVal(0, 0, 0);
-						continue;
-					}
-
-					rWeight = 1;
-
-					F32ColorVal & rVal_Side_1 = orgImg_Ptr[rConf.Offset_Side_1];
-					F32ColorVal & rVal_Side_2 = orgImg_Ptr[rConf.Offset_Side_2];
-
-					rThreshold = F32ColorVal::Add(rVal_Side_1, rVal_Side_2).DividBy(2);
-
-					//avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
-				}
-			}
-
-			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(threshold_Mag_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-			//ShowImage(threshold_Img->GetSrcImg(), "threshold_Img->GetSrcImg()");
-
-			F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
-			{
-				const int nWinRadius = 5;
-				AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
-					Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
-			}
-			ShowImage(avg_Threshold_Img->GetSrcImg(), "avg_Threshold_Img->GetSrcImg()");
-
-			F32ImageAccessor1C_Ref mag_Avg_Threshold_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			CalcMagImage(avg_Threshold_Img->GetMemAccessor(), mag_Avg_Threshold_Img->GetMemAccessor());
-			float * mag_Avg_Threshold_Ptr = mag_Avg_Threshold_Img->GetDataPtr();
-
-			ShowImage(mag_Avg_Threshold_Img->GetSrcImg(), "mag_Avg_Threshold_Img->GetSrcImg()");
-
-			F32ImageAccessor1C_Ref magImg = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			CalcMagImage(cx.m_org_Img->GetMemAccessor(), magImg->GetMemAccessor());
-			float * mag_Ptr = magImg->GetDataPtr();
-
-			F32ImageAccessor1C_Ref bin_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//F32ImageAccessor1C_Ref weight_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//float * weight_Ptr = weight_Img->GetDataPtr();
 			{
 				//{
 				//	float init_Val = 0.0f;
-				//	FillImage(bin_Img->GetMemAccessor(), init_Val);
+				//	FillImage(weight_Img->GetMemAccessor(), init_Val);
 				//}
-				float * bin_Ptr = bin_Img->GetDataPtr();
 
-				for (int i = 0; i < nSize_1D; i++)
-				{
-					float & rMag_Avg_Threshold = mag_Avg_Threshold_Ptr[i];
-					float & rMag = mag_Ptr[i];
-					float & rBin = bin_Ptr[i];
+				//for (int i = 0; i < nSize_1D; i++)
+				//{
+				//	ConflictInfo_Ex & rConf = conf_Ptr[i];
+				//	float & rWeight = weight_Ptr[i];
+				//	F32ColorVal & rThreshold = threshold_Ptr[i];
 
-					if (rMag_Avg_Threshold < 5.0)
-					{
-						rBin = 128;
-						continue;
-					}
+				//	if (!rConf.Exists)
+				//	{
+				//		rWeight = 0;
+				//		rThreshold.AssignVal(0, 0, 0);
+				//		continue;
+				//	}
 
-					if (rMag > rMag_Avg_Threshold)
-					{
-						rBin = 255;
-					}
-					else
-					{
-						rBin = 0;
-					}
-				}
+				//	rWeight = 1;
+
+				//	F32ColorVal & rVal_Side_1 = orgImg_Ptr[rConf.Offset_Side_1];
+				//	F32ColorVal & rVal_Side_2 = orgImg_Ptr[rConf.Offset_Side_2];
+
+				//	rThreshold = F32ColorVal::Add(rVal_Side_1, rVal_Side_2).DividBy(2);
+
+				//	//avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
+				//}
 			}
-			ShowImage(bin_Img->GetSrcImg(), "bin_Img->GetSrcImg()");
+
+			////GlobalStuff::SetLinePathImg(GenTriChGrayImg(threshold_Mag_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
+			////ShowImage(threshold_Img->GetSrcImg(), "threshold_Img->GetSrcImg()");
+
+			//F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
+			//{
+			//	const int nWinRadius = 5;
+			//	AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
+			//		Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
+			//}
+			//ShowImage(avg_Threshold_Img->GetSrcImg(), "avg_Threshold_Img->GetSrcImg()");
+
+			//F32ImageAccessor1C_Ref mag_Avg_Threshold_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//CalcMagImage(avg_Threshold_Img->GetMemAccessor(), mag_Avg_Threshold_Img->GetMemAccessor());
+			//float * mag_Avg_Threshold_Ptr = mag_Avg_Threshold_Img->GetDataPtr();
+
+			//ShowImage(mag_Avg_Threshold_Img->GetSrcImg(), "mag_Avg_Threshold_Img->GetSrcImg()");
+
+			//F32ImageAccessor1C_Ref magImg = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//CalcMagImage(cx.m_org_Img->GetMemAccessor(), magImg->GetMemAccessor());
+			//float * mag_Ptr = magImg->GetDataPtr();
+
+			//F32ImageAccessor1C_Ref bin_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//{
+			//	//{
+			//	//	float init_Val = 0.0f;
+			//	//	FillImage(bin_Img->GetMemAccessor(), init_Val);
+			//	//}
+			//	float * bin_Ptr = bin_Img->GetDataPtr();
+
+			//	for (int i = 0; i < nSize_1D; i++)
+			//	{
+			//		float & rMag_Avg_Threshold = mag_Avg_Threshold_Ptr[i];
+			//		float & rMag = mag_Ptr[i];
+			//		float & rBin = bin_Ptr[i];
+
+			//		if (rMag_Avg_Threshold < 5.0)
+			//		{
+			//			rBin = 128;
+			//			continue;
+			//		}
+
+			//		if (rMag > rMag_Avg_Threshold)
+			//		{
+			//			rBin = 255;
+			//		}
+			//		else
+			//		{
+			//			rBin = 0;
+			//		}
+			//	}
+			//}
+			//ShowImage(bin_Img->GetSrcImg(), "bin_Img->GetSrcImg()");
 
 
 
