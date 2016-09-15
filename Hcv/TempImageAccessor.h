@@ -68,7 +68,7 @@ namespace Hcv
 			return m_memAccessor->GetIndexSize_X() * m_memAccessor->GetIndexSize_Y();
 		}
 
-		T_AccElm * GetDataPtr()
+		T * GetDataPtr()
 		{
 			return m_memAccessor->GetDataPtr();
 		}
