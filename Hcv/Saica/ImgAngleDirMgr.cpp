@@ -54,7 +54,7 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_1()
 		{
-			return;
+			//return;
 
 			Context & cx = *m_context;
 			Context & ncx = *m_normalContext;
@@ -78,11 +78,7 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_2()
 		{
-			return;
-
-			//Context & cx = *m_context;
-			//Context & ncx = *m_normalContext;
-			//AngleDirMgrColl_Context & pcx = *m_parentContext;
+			//return;
 
 			AffectCommonAvgStandev();
 

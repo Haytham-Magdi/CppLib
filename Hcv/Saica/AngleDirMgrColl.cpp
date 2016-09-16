@@ -119,7 +119,7 @@ namespace Hcv
 				m_angleDirMgrArr[i]->Proceed_4();
 			}
 
-			//DisplayStandiv_Dir_Img();
+			DisplayStandiv_Dir_Img();
 
 			DisplayConflictImg();
 
@@ -131,18 +131,21 @@ namespace Hcv
 		void AngleDirMgrColl::DisplayStandiv_Dir_Img()
 		{
 			MemAccessor_2D_REF(PixelStandevInfo) psiAcc = m_context_H->m_standevInfoImg->GetMemAccessor();
-			F32ImageRef dspImg = F32Image::Create(cvSize(psiAcc->GetIndexSize_X(), psiAcc->GetIndexSize_Y()), 3);
+			//F32ImageRef dspImg_Values = F32Image::Create(cvSize(psiAcc->GetIndexSize_X(), psiAcc->GetIndexSize_Y()), 1);
+			F32ImageRef dspImg_Colored = F32Image::Create(cvSize(psiAcc->GetIndexSize_X(), psiAcc->GetIndexSize_Y()), 3);
 
 			const int nSize_1D = psiAcc->GetIndexSize_X() * psiAcc->GetIndexSize_Y();
 
-			F32ColorVal * destPtr = (F32ColorVal *)dspImg->GetDataPtr();
 			PixelStandevInfo * srcPtr = psiAcc->GetDataPtr();
+			//float * destPtr_Values = dspImg_Values->GetDataPtr();
+			F32ColorVal * destPtr_Colored = (F32ColorVal *)dspImg_Colored->GetDataPtr();
 
 			float angle_Old = -1;
 			for (int i = 0; i < nSize_1D; i++)
 			{
 				PixelStandevInfo & rSrc = srcPtr[i];
-				F32ColorVal & rDest = destPtr[i];
+				//float & rDest_Values = destPtr_Values[i];
+				F32ColorVal & rDest_Colored = destPtr_Colored[i];
 
 				Hcpl_ASSERT(-1 != rSrc.Dir);
 
@@ -159,11 +162,13 @@ namespace Hcv
 				//rDest.val1 = (127 + 127 * cos(angle) * rSrc.NormVal * 2 / 3);
 				//rDest.val2 = (127 + 127 * sin(angle) * rSrc.NormVal * 2 / 3);
 
-				rDest.val0 = 0;
+				//rDest_Values = rSrc.NormVal;
+
+				rDest_Colored.val0 = 0;
 				//rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 2 / 3);
 				//rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 2 / 3);
-				rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal * 5 / 3);
-				rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal * 5 / 3);
+				rDest_Colored.val1 = (fabs(cos(angle)) * rSrc.NormVal * 5 / 3);
+				rDest_Colored.val2 = (fabs(sin(angle)) * rSrc.NormVal * 5 / 3);
 				//rDest.val1 = (fabs(cos(angle)) * rSrc.NormVal);
 				//rDest.val2 = (fabs(sin(angle)) * rSrc.NormVal);
 
@@ -187,7 +192,10 @@ namespace Hcv
 				//rDest.val2 = 127 + 127 * sin(angle);
 			}
 
-			ShowImage(dspImg, "dspImg");
+			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(dspImg_Values));
+			//GlobalStuff::ShowLinePathImg();
+
+			ShowImage(dspImg_Values, "dspImg_Colored");
 		}
 
 		void AngleDirMgrColl::DisplayConflictImg()
@@ -338,6 +346,9 @@ namespace Hcv
 			}
 			ShowImage(bin_Img->GetSrcImg(), "bin_Img->GetSrcImg()");
 
+
+			//SaveImage(GenTriChGrayImg(bin_Img->GetSrcImg()), "E:\\bin_Img.jpg");
+			SaveImage(GenTriChGrayImg(bin_Img->GetSrcImg()), "bin_Img.jpg");
 
 
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(avg_Wide_Mag_Diff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();

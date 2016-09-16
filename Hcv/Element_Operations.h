@@ -102,8 +102,9 @@ namespace Hcv
 
 			float standev_MaxSide = (standev_1 > standev_2) ? standev_1 : standev_2;
 
-			if (standev_12 > 20 && standev_12 > standev_MaxSide * 2)
+			//if (standev_12 > 20 && standev_12 > standev_MaxSide * 2)
 			//if (standev_12 > 15 && standev_12 > standev_MaxSide * 2)
+			if (standev_12 > 15 && standev_12 > standev_MaxSide * 3)
 			{
 				return true;
 			}
