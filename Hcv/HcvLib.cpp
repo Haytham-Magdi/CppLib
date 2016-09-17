@@ -49,7 +49,7 @@
 #include <Lib\Hcv\ConflictInfo.cpp>
 
 
-#include <Lib\Hcv\F32ColorVal_Operations.cpp>
+#include <Lib\Hcv\Element_Operations_F32ColorVal.cpp>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.cpp>

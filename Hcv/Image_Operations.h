@@ -288,7 +288,7 @@ namespace Hcv
 		}
 
 		template<class T>
-		void Calc_Avg_And_Standev_Image(MemAccessor_2D_REF(T) a_inp_Acc, MemAccessor_2D_REF(float) a_out_Avg_Acc,
+		void Calc_Avg_And_Standev_Image(MemAccessor_2D_REF(T) a_inp_Acc, MemAccessor_2D_REF(T) a_out_Avg_Acc,
 			MemAccessor_2D_REF(float) a_out_Standev_Acc, Window<int> & a_Win)
 		{
 			//TempImageAccessor_REF(T) avg_Img = new TempImageAccessor_REF<T>(a_inp_Acc->GetOffsetCalc());
