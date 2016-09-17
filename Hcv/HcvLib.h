@@ -2,6 +2,7 @@
 
 #include <Lib\Cpp\Common\commonLib.h>
 #include <Lib\Hcv\CvIncludes.h>
+#include <Lib\Hcv\VectorVal.h>
 #include <Lib\Hcv\Types.h>
 #include <Lib\Hcv\killers.h>
 #include <Lib\Hcv\error.h>

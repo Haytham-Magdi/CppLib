@@ -195,7 +195,7 @@ namespace Hcv
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(dspImg_Values));
 			//GlobalStuff::ShowLinePathImg();
 
-			ShowImage(dspImg_Values, "dspImg_Colored");
+			//ShowImage(dspImg_Values, "dspImg_Colored");
 		}
 
 		void AngleDirMgrColl::DisplayConflictImg()
