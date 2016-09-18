@@ -36,17 +36,6 @@ namespace Hcv
 	typedef ImageAccessor< Int32, int, 1 > S32ImageAccessor1C;
 	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
 
-#define VectorValImageAcc(T, N) ImageAccessor_REF(T, VectorVal<T, N>, N) ;  S32ImageAccessor1C;
-
-
-//#define VectorValImageAcc_REF(T, N) ImageAccessor_REF(T, VectorVal<T, N>, N) ;  S32ImageAccessor1C;
-	
-	
-	
-	
-	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
-
-	
 
 
 
@@ -227,5 +216,44 @@ namespace Hcv
 
 		bool m_isLocked;
 	};
+
+	//template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	template<class T, int const V_NofChannels>
+	class VectorValImageAcc : public ImageAccessor<T, VectorVal<T, N>, N>
+	{
+	};
+
+	//template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	template<class T, int const V_NofChannels>
+	class VectorValImageAcc_Ref : public ObjRef< VectorValImageAcc<T, V_NofChannels> >
+	{
+	};
+
+//	typedef VectorValImageAcc< Float, 4 > F32VectorValImageAcc_4C;
+//	typedef ObjRef< F32VectorValImageAcc_4C > F32VectorValImageAcc_4C_Ref;
+//
+//	typedef VectorValImageAcc< Float, 3 > F32VectorValImageAcc_3C;
+//	typedef ObjRef< F32VectorValImageAcc_3C > F32VectorValImageAcc_3C_Ref;
+//
+//	typedef VectorValImageAcc< Float, 1 > F32VectorValImageAcc_1C;
+//	typedef ObjRef< F32VectorValImageAcc_1C > F32VectorValImageAcc_1C_Ref;
+//
+//	typedef VectorValImageAcc< Int32, 1 > S32VectorValImageAcc_1C;
+//	typedef ObjRef< S32VectorValImageAcc_1C > S32VectorValImageAcc_1C_Ref;
+//
+//#define VectorValImageAcc(T, N) ImageAccessor_REF(T, VectorVal<T, N>, N) ;  S32ImageAccessor1C;
+
+
+	//#define VectorValImageAcc_REF(T, N) ImageAccessor_REF(T, VectorVal<T, N>, N) ;  S32ImageAccessor1C;
+
+
+
+
+	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
+
+
+
+
+
 
 }
