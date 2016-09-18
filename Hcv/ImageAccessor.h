@@ -230,7 +230,9 @@ namespace Hcv
 	using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
 
 	template<class T, int const V_NofChannels>
-	typedef VectorValImageAcc_Ref = ObjRef< VectorValImageAcc<T, V_NofChannels> >;
+	using VectorValImageAcc_Ref = ObjRef< VectorValImageAcc<T, V_NofChannels> >;
+
+	//typedef VectorValImageAcc_Ref = ObjRef< VectorValImageAcc<T, V_NofChannels> >;
 
 
 	//template<class T, int const V_NofChannels>
@@ -284,7 +286,7 @@ namespace Hcv
 
 
 
-	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
+	//typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
 
 
 

@@ -191,6 +191,7 @@
 #include <Lib\Hcv\TempImageAccessor.h>
 #include <Lib\Hcv\Line_Operations.h>
 #include <Lib\Hcv\ImageAccessorOperations.h>
+#include <Lib\Hcv\Element_Operations_VectorVal.h>
 #include <Lib\Hcv\Element_Operations_F32ColorVal.h>
 #include <Lib\Hcv\Element_Operations.h>
 #include <Lib\Hcv\PixelStandevInfo.h>

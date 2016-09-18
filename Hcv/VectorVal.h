@@ -15,7 +15,7 @@ namespace Hcv
 	class VectorVal
 	{
 	public:
-		int GetNofDims()
+		const int GetNofDims()
 		{
 			return N;
 		}

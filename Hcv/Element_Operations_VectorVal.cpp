@@ -19,18 +19,26 @@ namespace Hcv
 	namespace Element_Operations
 	{
 
-		void Copy_ByPtr(VectorVal * a_pDest, VectorVal * a_pSrc)
-		{
-			memcpy(a_pDest, a_pSrc, sizeof(VectorVal));
-		}
+		//void Copy_ByPtr(VectorVal * a_pDest, VectorVal * a_pSrc)
+		//{
+		//	memcpy(a_pDest, a_pSrc, sizeof(VectorVal));
+		//}
 
+		template<class T, const int >
 		float CalcMagSqr_ByPtr(VectorVal * a_pArg)
 		{
-			return a_pArg->CalcMagSqr();
+			float sum = 0;
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				sum += Sqr(a_pArg->Vals[i]);
+			}
+
+			return sum;
 		}
 
 		void Add_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut)
 		{
+
 			a_pOut->val0 = a_pInp1->val0 + a_pInp2->val0;
 			a_pOut->val1 = a_pInp1->val1 + a_pInp2->val1;
 			a_pOut->val2 = a_pInp1->val2 + a_pInp2->val2;

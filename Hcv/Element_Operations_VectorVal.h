@@ -19,17 +19,37 @@ namespace Hcv
 	namespace Element_Operations
 	{
 
-		template<> void Copy_ByPtr<VectorVal>(VectorVal * a_pDest, VectorVal * a_pSrc);
+		//template<> void Copy_ByPtr<VectorVal>(VectorVal * a_pDest, VectorVal * a_pSrc);
 
-		template<> float CalcMagSqr_ByPtr(VectorVal * a_pArg);
+		template<class T, const int N>
+		//template<>
+		float CalcMagSqr_ByPtr(VectorVal<T, N> * a_pArg)
+			//float CalcMagSqr_ByPtr(VectorVal<float, 3> * a_pArg)
+		{
+			float sum = 0;
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				sum += (float)Sqr(a_pArg->Vals[i]);
+			}
 
-		template<> void Add_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut);
+			return sum;
+		}
 
-		template<> void Subtract_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut);
-
-		template<> void DivideByNum_ByPtr(VectorVal * a_pInp, float a_num, VectorVal * a_pOut);
 		
-		template<> void MultiplyByNum_ByPtr(VectorVal * a_pInp, float a_num, VectorVal * a_pOut);
+		template<class T, const int N>
+		void Add_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut);
+
+		
+		template<class T, const int N>
+		void Subtract_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut);
+
+		
+		template<class T, const int N>
+		void DivideByNum_ByPtr(VectorVal * a_pInp, float a_num, VectorVal * a_pOut);
+		
+		
+		template<class T, const int N>
+		void MultiplyByNum_ByPtr(VectorVal * a_pInp, float a_num, VectorVal * a_pOut);
 
 		template<> void SetToZero_ByPtr(VectorVal * a_pArg);
 
