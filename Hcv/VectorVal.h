@@ -15,7 +15,14 @@ namespace Hcv
 	class VectorVal
 	{
 	public:
+		int GetNofDims()
+		{
+			return N;
+		}
+
+	public:
 		T Vals[N];
+
 	};
 
 

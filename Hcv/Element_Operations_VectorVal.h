@@ -8,6 +8,7 @@
 //#include <vector>
 //#include <Lib\Hcv\Image.h>
 
+#include <Lib\Hcv\VectorVal.h>
 #include <Lib\Hcv\Element_Operations.h>
 
 

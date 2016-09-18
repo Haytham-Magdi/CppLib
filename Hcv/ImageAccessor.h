@@ -36,6 +36,18 @@ namespace Hcv
 	typedef ImageAccessor< Int32, int, 1 > S32ImageAccessor1C;
 	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
 
+#define VectorValImageAcc(T, N) ImageAccessor_REF(T, VectorVal<T, N>, N) ;  S32ImageAccessor1C;
+
+
+//#define VectorValImageAcc_REF(T, N) ImageAccessor_REF(T, VectorVal<T, N>, N) ;  S32ImageAccessor1C;
+	
+	
+	
+	
+	typedef ObjRef< S32ImageAccessor1C > S32ImageAccessor1C_Ref;
+
+	
+
 
 
 	template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
