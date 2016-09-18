@@ -22,9 +22,7 @@ namespace Hcv
 		//template<> void Copy_ByPtr<VectorVal>(VectorVal * a_pDest, VectorVal * a_pSrc);
 
 		template<class T, const int N>
-		//template<>
 		float CalcMagSqr_ByPtr(VectorVal<T, N> * a_pArg)
-			//float CalcMagSqr_ByPtr(VectorVal<float, 3> * a_pArg)
 		{
 			float sum = 0;
 			for (int i = 0; i < a_pArg->GetNofDims(); i++)
@@ -37,21 +35,57 @@ namespace Hcv
 
 		
 		template<class T, const int N>
-		void Add_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut);
+		void Add_ByPtr(VectorVal<T, N> * a_pInp1, VectorVal<T, N> * a_pInp2, VectorVal<T, N> * a_pOut)
+		{
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
+			}
+		}
+
+
+		template<class T, const int N>
+		void Subtract_ByPtr(VectorVal<T, N> * a_pInp1, VectorVal<T, N> * a_pInp2, VectorVal<T, N> * a_pOut)
+		{
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				a_pOut->Vals[i] = a_pInp1->Vals[i] - a_pInp2->Vals[i];
+			}
+		}
+
 
 		
 		template<class T, const int N>
-		void Subtract_ByPtr(VectorVal * a_pInp1, VectorVal * a_pInp2, VectorVal * a_pOut);
+		void DivideByNum_ByPtr(VectorVal<T, N> * a_pInp, float a_num, VectorVal<T, N> * a_pOut)
+		{
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
+			}
+		}
+
+		
+		
+		template<class T, const int N>
+		void MultiplyByNum_ByPtr(VectorVal<T, N> * a_pInp, float a_num, VectorVal<T, N> * a_pOut)
+		{
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
+			}
+		}
+
 
 		
 		template<class T, const int N>
-		void DivideByNum_ByPtr(VectorVal * a_pInp, float a_num, VectorVal * a_pOut);
-		
-		
-		template<class T, const int N>
-		void MultiplyByNum_ByPtr(VectorVal * a_pInp, float a_num, VectorVal * a_pOut);
+		void SetToZero_ByPtr(VectorVal<T, N> * a_pArg)
+		{
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
+			}
+		}
 
-		template<> void SetToZero_ByPtr(VectorVal * a_pArg);
 
 	};
 }
