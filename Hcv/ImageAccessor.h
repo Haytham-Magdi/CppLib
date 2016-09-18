@@ -217,30 +217,52 @@ namespace Hcv
 		bool m_isLocked;
 	};
 
-	//template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
-	template<class T, int const V_NofChannels>
-	class VectorValImageAcc : public ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>
-	{
-	public:
-		VectorValImageAcc(IMAGE_REF(T) a_srcImg) : base(a_srcImg)
-		{
-			//m_isLocked = false;
-			//Init(a_srcImg);
-		}
+	//typedef VectorValImageAcc< Float, 4 > F32VectorValImageAcc_4C;
+	
 
-		VectorValImageAcc(OffsetCalc_2D_Ref a_offsetCalc) : base(a_offsetCalc)
-		{
-			//m_isLocked = false;
-			//Init(a_offsetCalc);
-		}
-	};
+	//template <size_t N>
+	//using Vector = Matrix<N, 1>;
 
-	//template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	//template <size_t N>
+	//using Vector = Matrix<N, 1>;
+
 	template<class T, int const V_NofChannels>
-	class VectorValImageAcc_Ref : public ObjRef< VectorValImageAcc<T, V_NofChannels> >
-	{
-	public:
-	};
+	using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
+
+	template<class T, int const V_NofChannels>
+	typedef VectorValImageAcc_Ref = ObjRef< VectorValImageAcc<T, V_NofChannels> >;
+
+
+	//template<class T, int const V_NofChannels>
+	//typedef ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels> VectorValImageAcc<T, V_NofChannels>;
+
+
+
+	////template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	//template<class T, int const V_NofChannels>
+	//class VectorValImageAcc : public ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>
+	//{
+	//public:
+	//	//VectorValImageAcc(IMAGE_REF(T) a_srcImg) : base(a_srcImg)
+	//		VectorValImageAcc(IMAGE_REF(T) a_srcImg) : (a_srcImg)
+	//	{
+	//		//m_isLocked = false;
+	//		//Init(a_srcImg);
+	//	}
+
+	//	VectorValImageAcc(OffsetCalc_2D_Ref a_offsetCalc) : (a_offsetCalc)
+	//	{
+	//		//m_isLocked = false;
+	//		//Init(a_offsetCalc);
+	//	}
+	//};
+
+	////template<class T_ImgElm, class T_AccElm, int const V_NofChannels>
+	//template<class T, int const V_NofChannels>
+	//class VectorValImageAcc_Ref : public ObjRef< VectorValImageAcc<T, V_NofChannels> >
+	//{
+	//public:
+	//};
 
 	typedef VectorValImageAcc< Float, 4 > F32VectorValImageAcc_4C;
 	typedef ObjRef< F32VectorValImageAcc_4C > F32VectorValImageAcc_4C_Ref;
