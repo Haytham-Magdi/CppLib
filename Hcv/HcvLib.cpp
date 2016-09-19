@@ -50,6 +50,7 @@
 
 
 #include <Lib\Hcv\Element_Operations_F32ColorVal.cpp>
+#include <Lib\Hcv\Element_Operations_VectorVal.cpp>
 
 
 #include <Lib\Hcv\LocHist\ImgDataGradMgr_LocHist.cpp>

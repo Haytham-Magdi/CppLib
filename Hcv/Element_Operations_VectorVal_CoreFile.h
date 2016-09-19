@@ -35,56 +35,15 @@ namespace Hcv
 
 		template<> float CalcMagSqr_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg);
 
+		template<> void Add_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut);
 
-		template<>
-		void Add_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
-		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
-			}
-		}
+		template<> void Subtract_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut);
 
+		template<> void DivideByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut);
 
-		template<>
-		void Subtract_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
-		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				a_pOut->Vals[i] = a_pInp1->Vals[i] - a_pInp2->Vals[i];
-			}
-		}
+		template<> void MultiplyByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut);
 
-
-		template<>
-		void DivideByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut)
-		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				a_pOut->Vals[i] = a_pInp->Vals[i] / a_num;
-			}
-		}
-
-
-		template<>
-		void MultiplyByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut)
-		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				a_pOut->Vals[i] = a_pInp->Vals[i] * a_num;
-			}
-		}
-
-
-
-		template<>
-		void SetToZero_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg)
-		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				a_pArg->Vals[i] = 0;
-			}
-		}
+		template<> void SetToZero_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg);
 
 
 	};
