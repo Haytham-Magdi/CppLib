@@ -1,11 +1,4 @@
 
-namespace Hcv
-{
-	using namespace Hcpl;
-
-	namespace Element_Operations
-	{
-
 		//void Copy_ByPtr(VectorVal<T_Elm, N_Dims> * a_pDest, VectorVal<T_Elm, N_Dims> * a_pSrc)
 		//{
 		//	memcpy(a_pDest, a_pSrc, sizeof(VectorVal));
@@ -24,15 +17,15 @@ namespace Hcv
 
 		void Add_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
 		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			for (int i = 0; i < a_pOut->GetNofDims(); i++)
 			{
-				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
+				a_pOut->Vals[i] = a_pOut->Vals[i] + a_pInp2->Vals[i];
 			}
 		}
 
 		void Subtract_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
 		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			for (int i = 0; i < a_pOut->GetNofDims(); i++)
 			{
 				a_pOut->Vals[i] = a_pInp1->Vals[i] - a_pInp2->Vals[i];
 			}
@@ -40,7 +33,7 @@ namespace Hcv
 
 		void DivideByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut)
 		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			for (int i = 0; i < a_pOut->GetNofDims(); i++)
 			{
 				a_pOut->Vals[i] = a_pInp->Vals[i] / a_num;
 			}
@@ -48,7 +41,7 @@ namespace Hcv
 
 		void MultiplyByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut)
 		{
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			for (int i = 0; i < a_pOut->GetNofDims(); i++)
 			{
 				a_pOut->Vals[i] = a_pInp->Vals[i] * a_num;
 			}
@@ -65,6 +58,3 @@ namespace Hcv
 //#undef T_Elm float
 //#undef N_Dims 3
 
-
-	};
-}

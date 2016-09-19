@@ -1,23 +1,3 @@
-#pragma once
-
-#include <Lib\Cpp\Common\commonLib.h>
-//#include <Lib\Hcv\CvIncludes.h>
-#include <Lib\Hcv\Types.h>
-#include <Lib\Hcv\error.h>
-#include <Lib\Hcv\funcs1.h>
-//#include <vector>
-//#include <Lib\Hcv\Image.h>
-
-#include <Lib\Hcv\VectorVal.h>
-#include <Lib\Hcv\Element_Operations.h>
-
-
-namespace Hcv
-{
-	using namespace Hcpl;
-
-	namespace Element_Operations
-	{
 
 		//template<> void Copy_ByPtr<VectorVal>(VectorVal<T_Elm, N_Dims> * a_pDest, VectorVal<T_Elm, N_Dims> * a_pSrc);
 
@@ -45,6 +25,3 @@ namespace Hcv
 
 		template<> void SetToZero_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg);
 
-
-	};
-}
