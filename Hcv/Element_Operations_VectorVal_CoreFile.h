@@ -19,14 +19,10 @@ namespace Hcv
 	namespace Element_Operations
 	{
 
-#include <Lib\Hcv\Element_Operations_VectorVal_CoreFile.h>
-
-
-
-		//template<> void Copy_ByPtr<VectorVal>(VectorVal * a_pDest, VectorVal * a_pSrc);
+		//template<> void Copy_ByPtr<VectorVal>(VectorVal<T_Elm, N_Dims> * a_pDest, VectorVal<T_Elm, N_Dims> * a_pSrc);
 
 		//template<>
-		//float CalcMagSqr_ByPtr(VectorVal<T, N> * a_pArg)
+		//float CalcMagSqr_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg)
 
 
 		//template<class T, int const V_NofChannels>
@@ -37,24 +33,11 @@ namespace Hcv
 
 
 
-		template<class T2, const int N>
+		template<> float CalcMagSqr_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg);
+
+
 		//template<>
-		template
-		//template<class T2, const int N>
-		float CalcMagSqr_ByPtr<VectorVal<T2, N>>(VectorVal<T2, N> * a_pArg)
-		{
-			float sum = 0;
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				sum += (float)Sqr(a_pArg->Vals[i]);
-			}
-
-			return sum;
-		}
-
-
-		//template<class T, const int N>
-		//void Add_ByPtr(VectorVal<T, N> * a_pInp1, VectorVal<T, N> * a_pInp2, VectorVal<T, N> * a_pOut)
+		//void Add_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
 		//{
 		//	for (int i = 0; i < a_pArg->GetNofDims(); i++)
 		//	{
@@ -63,8 +46,8 @@ namespace Hcv
 		//}
 
 
-		//template<class T, const int N>
-		//void Subtract_ByPtr(VectorVal<T, N> * a_pInp1, VectorVal<T, N> * a_pInp2, VectorVal<T, N> * a_pOut)
+		//template<>
+		//void Subtract_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
 		//{
 		//	for (int i = 0; i < a_pArg->GetNofDims(); i++)
 		//	{
@@ -73,8 +56,8 @@ namespace Hcv
 		//}
 
 
-		//template<class T, const int N>
-		//void DivideByNum_ByPtr(VectorVal<T, N> * a_pInp, float a_num, VectorVal<T, N> * a_pOut)
+		//template<>
+		//void DivideByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut)
 		//{
 		//	for (int i = 0; i < a_pArg->GetNofDims(); i++)
 		//	{
@@ -83,8 +66,8 @@ namespace Hcv
 		//}
 
 
-		//template<class T, const int N>
-		//void MultiplyByNum_ByPtr(VectorVal<T, N> * a_pInp, float a_num, VectorVal<T, N> * a_pOut)
+		//template<>
+		//void MultiplyByNum_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp, float a_num, VectorVal<T_Elm, N_Dims> * a_pOut)
 		//{
 		//	for (int i = 0; i < a_pArg->GetNofDims(); i++)
 		//	{
@@ -94,8 +77,8 @@ namespace Hcv
 
 
 
-		//template<class T, const int N>
-		//void SetToZero_ByPtr(VectorVal<T, N> * a_pArg)
+		//template<>
+		//void SetToZero_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg)
 		//{
 		//	for (int i = 0; i < a_pArg->GetNofDims(); i++)
 		//	{
