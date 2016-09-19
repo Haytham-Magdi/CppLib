@@ -19,8 +19,13 @@ namespace Hcv
 	namespace Element_Operations
 	{
 
+#define T_Elm float
+#define N_Dims 3
+
 #include <Lib\Hcv\Element_Operations_VectorVal_CoreFile.h>
 
+#undef T_Elm
+#undef N_Dims
 
 
 		//template<> void Copy_ByPtr<VectorVal>(VectorVal * a_pDest, VectorVal * a_pSrc);
@@ -32,25 +37,25 @@ namespace Hcv
 		//template<class T, int const V_NofChannels>
 		//using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
 
-		template<class T, int const V_NofChannels>
-		using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
+		//template<class T, int const V_NofChannels>
+		//using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
 
 
 
-		template<class T2, const int N>
-		//template<>
-		template
 		//template<class T2, const int N>
-		float CalcMagSqr_ByPtr<VectorVal<T2, N>>(VectorVal<T2, N> * a_pArg)
-		{
-			float sum = 0;
-			for (int i = 0; i < a_pArg->GetNofDims(); i++)
-			{
-				sum += (float)Sqr(a_pArg->Vals[i]);
-			}
+		////template<>
+		//template
+		////template<class T2, const int N>
+		//float CalcMagSqr_ByPtr<VectorVal<T2, N>>(VectorVal<T2, N> * a_pArg)
+		//{
+		//	float sum = 0;
+		//	for (int i = 0; i < a_pArg->GetNofDims(); i++)
+		//	{
+		//		sum += (float)Sqr(a_pArg->Vals[i]);
+		//	}
 
-			return sum;
-		}
+		//	return sum;
+		//}
 
 
 		//template<class T, const int N>

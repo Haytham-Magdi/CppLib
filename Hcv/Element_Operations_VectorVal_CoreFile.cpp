@@ -11,9 +11,6 @@ namespace Hcv
 		//	memcpy(a_pDest, a_pSrc, sizeof(VectorVal));
 		//}
 
-#define T_Elm float
-#define N_Dims 3
-		
 		float CalcMagSqr_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg)
 		{
 			float sum = 0;
@@ -60,6 +57,10 @@ namespace Hcv
 			a_pArg->val1 = 0;
 			a_pArg->val2 = 0;
 		}
+
+//#undef T_Elm float
+//#undef N_Dims 3
+
 
 	};
 }
