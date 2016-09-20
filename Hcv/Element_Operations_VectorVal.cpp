@@ -22,9 +22,25 @@ namespace Hcv
 	namespace Element_Operations
 	{
 
+#define T_Elm float
+#define N_Dims 2
+
+#include <Lib\Hcv\Element_Operations_VectorVal_CoreFile.cpp>
+
+#undef T_Elm
+#undef N_Dims
 
 #define T_Elm float
 #define N_Dims 3
+
+#include <Lib\Hcv\Element_Operations_VectorVal_CoreFile.cpp>
+
+#undef T_Elm
+#undef N_Dims
+
+
+#define T_Elm float
+#define N_Dims 4
 
 #include <Lib\Hcv\Element_Operations_VectorVal_CoreFile.cpp>
 
