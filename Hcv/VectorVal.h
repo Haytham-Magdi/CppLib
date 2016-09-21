@@ -26,6 +26,6 @@ namespace Hcv
 	};
 
 	template<int const N>
-	using F32VectorValImageAcc = VectorValImageAcc<float, N>;
+	using F32VectorVal = VectorVal<float, N>;
 
 }
