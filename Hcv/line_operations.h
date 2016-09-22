@@ -372,7 +372,7 @@ namespace Hcv
 		{
 			{
 				float val_Init;
-				val_Init.Exists = false;
+				val_Init = 0;
 				FillLine<float>(a_outAcc, val_Init);
 			}
 
