@@ -366,5 +366,44 @@ namespace Hcv
 			}
 		}
 
+		template<class T>
+		void Calc_ConflictDiff_Line(MemAccessor_1D_REF(T) a_avg_Acc, MemAccessor_1D_REF(float) a_avg_MagSqr_Acc,
+			MemAccessor_1D_REF(float) a_outAcc, Range<int> & a_range)
+		{
+			{
+				float val_Init;
+				val_Init.Exists = false;
+				FillLine<float>(a_outAcc, val_Init);
+			}
+
+			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_avg_MagSqr_Acc->GetIndexSize());
+			Hcpl_ASSERT(a_avg_Acc->GetIndexSize() == a_outAcc->GetIndexSize());
+
+			MemSimpleAccessor_1D<T> sac_Avg = a_avg_Acc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<float> sac_Avg_MagSqr = a_avg_MagSqr_Acc->GenSimpleAccessor();
+			MemSimpleAccessor_1D<float> sac_Out = a_outAcc->GenSimpleAccessor();
+
+			const int nSize_1D = a_outAcc->GetIndexSize();
+
+			const int nBefDiff = -a_range.GetBgn();
+			const int nAftDiff = a_range.GetEnd();
+
+			const int nCenterEnd = nSize_1D - 1 - nAftDiff;
+			const int nRangeLen = nBefDiff + 1 + nAftDiff;
+
+			for (int i = nBefDiff + 1; i <= nCenterEnd; i++)
+			{
+				float * pOut = &sac_Out[i];
+
+				T * pAvg_1 = &sac_Avg[i - nBefDiff];
+				float * pAvg_MagSqr_1 = &sac_Avg_MagSqr[i - nBefDiff];
+
+				T * pAvg_2 = &sac_Avg[i + nAftDiff];
+				float * pAvg_MagSqr_2 = &sac_Avg_MagSqr[i + nAftDiff];
+
+				*pOut = Element_Operations::Calc_ConflictDiff_ByPtr(pAvg_1, *pAvg_MagSqr_1, pAvg_2, *pAvg_MagSqr_2);
+			}
+		}
+
 	};
 }

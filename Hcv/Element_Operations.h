@@ -115,8 +115,28 @@ namespace Hcv
 			}
 		}
 
+		template<class T>
+		float Calc_ConflictDiff_ByPtr(T * a_pAvg_1, float a_avg_MagSqr_1,
+			T * a_pAvg_2, float a_avg_MagSqr_2)
+		{
+			T avg_12;
+			Add_ByPtr(a_pAvg_1, a_pAvg_2, &avg_12);
+			DivideByNum_ByPtr(&avg_12, 2, &avg_12);
 
+			float avg_MagSqr_12 = (a_avg_MagSqr_1 + a_avg_MagSqr_2) / 2;
 
+			float magSqr_Avg_1 = CalcMagSqr_ByPtr(a_pAvg_1);
+			float magSqr_Avg_2 = CalcMagSqr_ByPtr(a_pAvg_2);
+			float magSqr_Avg_12 = CalcMagSqr_ByPtr(&avg_12);
+
+			float standev_1 = CalcStandev_ByPtr(a_pAvg_1, a_avg_MagSqr_1);
+			float standev_2 = CalcStandev_ByPtr(a_pAvg_2, a_avg_MagSqr_2);
+			float standev_12 = CalcStandev_ByPtr(&avg_12, avg_MagSqr_12);
+
+			float standev_MaxSide = (standev_1 > standev_2) ? standev_1 : standev_2;
+
+			return (standev_12 > standev_MaxSide) ? (standev_12 - standev_MaxSide) : 0;
+		}
 
 
 	};
