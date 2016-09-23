@@ -126,6 +126,7 @@ namespace Hcv
 			T * a_pAvg_2, float a_avg_MagSqr_2)
 		{
 			T avg_12;
+			
 			Add_ByPtr(a_pAvg_1, a_pAvg_2, &avg_12);
 			DivideByNum_ByPtr(&avg_12, 2, &avg_12);
 
@@ -140,25 +141,7 @@ namespace Hcv
 			float standev_12 = CalcStandev_ByPtr(&avg_12, avg_MagSqr_12);
 
 			float standev_MaxSide = (standev_1 > standev_2) ? standev_1 : standev_2;
-			if (standev_MaxSide > 0.3 || standev_12 > 0.3)
-			{
-				standev_MaxSide = standev_MaxSide;
-			}
-
 			float ret = (standev_12 > standev_MaxSide) ? (standev_12 - standev_MaxSide) : 0;
-
-			if (ret > 3)
-			{
-				ret = ret;
-			}
-			else if (ret > 0.5)
-			{
-				ret = ret;
-			}
-			else
-			{
-				ret = ret;
-			}
 
 			return ret;
 		}

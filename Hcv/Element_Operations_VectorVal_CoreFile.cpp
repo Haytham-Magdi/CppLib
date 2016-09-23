@@ -28,7 +28,10 @@
 		{
 			for (int i = 0; i < a_pOut->GetNofDims(); i++)
 			{
-				a_pOut->Vals[i] = a_pOut->Vals[i] + a_pInp2->Vals[i];
+				a_pOut->Vals[i] = a_pInp1->Vals[i] + a_pInp2->Vals[i];
+
+				T_Elm & rElm = a_pOut->Vals[i];
+				Hcpl_ASSERT(rElm > -3000000.0f && rElm < 3000000.0f);
 			}
 		}
 
