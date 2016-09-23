@@ -101,6 +101,19 @@ namespace Hcv
 		}
 
 		template<class T>
+		void AssertValues_Line(MemAccessor_1D_REF(T) a_inpAcc)
+		{
+			PtrIterator<T> ptrItr_Inp = a_inpAcc->GenPtrIterator();
+
+			for (; !ptrItr_Inp.IsDone(); ptrItr_Inp.Next())
+			{
+				T * ptr_Inp = ptrItr_Inp.GetCurrent();
+
+				Element_Operations::AssertValue_ByPtr<T>(ptr_Inp);
+			}
+		}
+
+		template<class T>
 		void AvgLine(MemAccessor_1D_REF(T) a_inpAcc, MemAccessor_1D_REF(T) a_outAcc, Range<int> & a_range)
 		{
 			Hcpl_ASSERT(a_inpAcc->GetIndexSize() == a_outAcc->GetIndexSize());

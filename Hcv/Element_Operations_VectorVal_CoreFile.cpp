@@ -15,6 +15,15 @@
 			return sum;
 		}
 
+		void AssertValue_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg)
+		{
+			for (int i = 0; i < a_pArg->GetNofDims(); i++)
+			{
+				T_Elm & rElm = a_pArg->Vals[i];
+				Hcpl_ASSERT(rElm > -3000000.0f && rElm < 3000000.0f);
+			}
+		}
+
 		void Add_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut)
 		{
 			for (int i = 0; i < a_pOut->GetNofDims(); i++)

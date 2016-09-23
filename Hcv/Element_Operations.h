@@ -31,6 +31,12 @@ namespace Hcv
 		}
 
 		template<class T>
+		void AssertValue_ByPtr(T * a_pArg)
+		{
+			Hcpl_ASSERT(*a_pArg > -3000000.0f && *a_pArg < 3000000.0f);
+		}
+
+		template<class T>
 		float CalcMag_ByPtr(T * a_pArg)
 		{
 			return sqrt((float)CalcMagSqr_ByPtr(a_pArg));
@@ -134,8 +140,27 @@ namespace Hcv
 			float standev_12 = CalcStandev_ByPtr(&avg_12, avg_MagSqr_12);
 
 			float standev_MaxSide = (standev_1 > standev_2) ? standev_1 : standev_2;
+			if (standev_MaxSide > 0.3 || standev_12 > 0.3)
+			{
+				standev_MaxSide = standev_MaxSide;
+			}
 
-			return (standev_12 > standev_MaxSide) ? (standev_12 - standev_MaxSide) : 0;
+			float ret = (standev_12 > standev_MaxSide) ? (standev_12 - standev_MaxSide) : 0;
+
+			if (ret > 3)
+			{
+				ret = ret;
+			}
+			else if (ret > 0.5)
+			{
+				ret = ret;
+			}
+			else
+			{
+				ret = ret;
+			}
+
+			return ret;
 		}
 
 

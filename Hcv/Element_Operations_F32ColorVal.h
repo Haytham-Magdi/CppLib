@@ -22,6 +22,8 @@ namespace Hcv
 
 		template<> float CalcMagSqr_ByPtr(F32ColorVal * a_pArg);
 
+		template<> void AssertValue_ByPtr(F32ColorVal * a_pArg);
+
 		template<> void Add_ByPtr(F32ColorVal * a_pInp1, F32ColorVal * a_pInp2, F32ColorVal * a_pOut);
 
 		template<> void Subtract_ByPtr(F32ColorVal * a_pInp1, F32ColorVal * a_pInp2, F32ColorVal * a_pOut);

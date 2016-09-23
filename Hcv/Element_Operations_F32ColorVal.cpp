@@ -29,6 +29,13 @@ namespace Hcv
 			return a_pArg->CalcMagSqr();
 		}
 
+		void AssertValue_ByPtr(F32ColorVal * a_pArg)
+		{
+			Hcpl_ASSERT(a_pArg->val0 > -3000000.0f && a_pArg->val0 < 3000000.0f);
+			Hcpl_ASSERT(a_pArg->val1 > -3000000.0f && a_pArg->val1 < 3000000.0f);
+			Hcpl_ASSERT(a_pArg->val2 > -3000000.0f && a_pArg->val2 < 3000000.0f);
+		}
+
 		void Add_ByPtr(F32ColorVal * a_pInp1, F32ColorVal * a_pInp2, F32ColorVal * a_pOut)
 		{
 			a_pOut->val0 = a_pInp1->val0 + a_pInp2->val0;

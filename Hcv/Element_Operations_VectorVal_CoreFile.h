@@ -1,19 +1,8 @@
 
-		//template<> void Copy_ByPtr<VectorVal>(VectorVal<T_Elm, N_Dims> * a_pDest, VectorVal<T_Elm, N_Dims> * a_pSrc);
-
-		//template<>
-		//float CalcMagSqr_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg)
-
-
-		//template<class T, int const V_NofChannels>
-		//using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
-
-		//template<class T, int const V_NofChannels>
-		//using VectorValImageAcc = ImageAccessor<T, VectorVal<T, V_NofChannels>, V_NofChannels>;
-
-
 
 		template<> float CalcMagSqr_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg);
+
+		template<> void AssertValue_ByPtr(VectorVal<T_Elm, N_Dims> * a_pArg);
 
 		template<> void Add_ByPtr(VectorVal<T_Elm, N_Dims> * a_pInp1, VectorVal<T_Elm, N_Dims> * a_pInp2, VectorVal<T_Elm, N_Dims> * a_pOut);
 

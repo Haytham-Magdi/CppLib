@@ -164,6 +164,23 @@ namespace Hcv
 		}
 
 		template<class T>
+		void AssertValues_Image(MemAccessor_2D_REF(T) a_inpAcc)
+		{
+			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_Inp_X = a_inpAcc->GenAccessor_1D_X();
+
+			PtrIterator<T> ptrItr_Inp_Y = acc_Inp_Y->GenPtrIterator();
+
+			for (; !ptrItr_Inp_Y.IsDone(); ptrItr_Inp_Y.Next())
+			{
+				T * ptr_Inp_Y = ptrItr_Inp_Y.GetCurrent();
+
+				acc_Inp_X->SetDataPtr(ptr_Inp_Y);
+				AssertValues_Line<T>(acc_Inp_X);
+			}
+		}
+
+		template<class T>
 		void AvgImage_H(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc, Range<int> & a_range_X)
 		{
 			MemAccessor_1D_REF(T) acc_Inp_Y = a_inpAcc->GenAccessor_1D_Y();
