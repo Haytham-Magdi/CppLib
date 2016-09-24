@@ -136,8 +136,8 @@ namespace Hcv
 
 			//const int nInrRad = 5;
 			const int nInrRad = 8;
-			//F32ImageAccessor3C_Ref avg_InrWide_Img = new F32ImageAccessor3C(org_Img->GetOffsetCalc());
-			F32VectorValImageAcc_3C_Ref avg_InrWide_Img = new F32VectorValImageAcc_3C(cx.m_org_Img->GetOffsetCalc());
+			F32ImageAccessor3C_Ref avg_InrWide_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
+			//F32VectorValImageAcc_3C_Ref avg_InrWide_Img = new F32VectorValImageAcc_3C(cx.m_org_Img->GetOffsetCalc());
 			{
 				Calc_Avg_And_Standev_Image(cx.m_org_Img->GetMemAccessor(), avg_InrWide_Img->GetMemAccessor(), standev_InrWide_Img->GetMemAccessor(),
 					Window<int>::New(-nInrRad, nInrRad, -nInrRad, nInrRad));
@@ -206,7 +206,7 @@ namespace Hcv
 					cx.m_wideConflictDiff_Img->GetMemAccessor(), confRange);
 
 				//GlobalStuff::SetLinePathImg(GenTriChGrayImg(cx.m_wideConflictDiff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-				ShowImage(cx.m_wideConflictDiff_Img->GetSrcImg(), "cx.m_wideConflictDiff_Img->GetSrcImg()");
+				ShowImage(cx.m_wideConflictDiff_Img->GetSrcImg(), cx.MakeStrWithId("cx.m_wideConflictDiff_Img->GetSrcImg()").c_str());
 			}
 
 

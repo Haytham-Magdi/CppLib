@@ -119,6 +119,10 @@ namespace Hcv
 				m_angleDirMgrArr[i]->Proceed_4();
 			}
 
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
+				m_angleDirMgrArr[i]->Proceed_5();
+			}
+
 			DisplayStandiv_Dir_Img();
 
 			DisplayConflictImg();
