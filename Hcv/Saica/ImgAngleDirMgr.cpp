@@ -164,14 +164,17 @@ namespace Hcv
 			}
 
 
-			const int nOutRad = 5;
-			//const int nOutRad = 8;
+			//const int nOutRad = 5;
+			const int nOutRad = 8;
 			{
 				F32ImageAccessor1C_Ref standev_OutWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 				F32VectorValImageAcc_4C_Ref avg_OutWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
 
 				Calc_Avg_And_Standev_Image(avgPStandev_InrWide_Img->GetMemAccessor(), avg_OutWide_Img->GetMemAccessor(), standev_OutWide_Img->GetMemAccessor(),
-					Window<int>::New(-nOutRad, nOutRad, -nOutRad, nOutRad));
+					//Window<int>::New(-nOutRad, nOutRad, -nOutRad, nOutRad));
+					Window<int>::New(-nOutRad, nOutRad, 0, 0));
+
+				cx.m_wideConflictDiff_Img = standev_OutWide_Img;
 
 				//GlobalStuff::SetLinePathImg(GenTriChGrayImg(standev_OutWide_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
 				//ShowImage(standev_OutWide_Img->GetSrcImg(), "standev_OutWide_Img->GetSrcImg()");
@@ -180,34 +183,34 @@ namespace Hcv
 
 			////------------
 
-			cx.m_wideConflictDiff_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			{
-				////Window<int> avgWin = Window<int>::New(-1, 1, -5, 5);
-				////Window<int> avgWin = Window<int>::New(-1, 1, -2, 2);
-				//Window<int> avgWin = Window<int>::New(-10, 10, -10, 10);
-				////Window<int> avgWin = Window<int>::New(0, 0, -2, 2);
-				Window<int> avgWin = Window<int>::New(-nOutRad, nOutRad, -nOutRad, nOutRad);
+			//cx.m_wideConflictDiff_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//{
+			//	////Window<int> avgWin = Window<int>::New(-1, 1, -5, 5);
+			//	////Window<int> avgWin = Window<int>::New(-1, 1, -2, 2);
+			//	//Window<int> avgWin = Window<int>::New(-10, 10, -10, 10);
+			//	////Window<int> avgWin = Window<int>::New(0, 0, -2, 2);
+			//	Window<int> avgWin = Window<int>::New(-nOutRad, nOutRad, -nOutRad, nOutRad);
 
-				F32VectorValImageAcc_4C_Ref avg_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
-				AvgImage(avgPStandev_InrWide_Img->GetMemAccessor(), avg_Img->GetMemAccessor(), avgWin);
+			//	F32VectorValImageAcc_4C_Ref avg_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
+			//	AvgImage(avgPStandev_InrWide_Img->GetMemAccessor(), avg_Img->GetMemAccessor(), avgWin);
 
-				F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-				CalcMagSqrImage(avgPStandev_InrWide_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
+			//	F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//	CalcMagSqrImage(avgPStandev_InrWide_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
 
-				F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-				AvgImage(magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), avgWin);
+			//	F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			//	AvgImage(magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), avgWin);
 
-				Range<int> confRange = Range<int>::New(
-					//-10 - avgWin.Get_X2(), 10 - avgWin.Get_X1());
-					//-1 - avgWin.Get_X2(), 1 - avgWin.Get_X1());
-					-1 - nOutRad - nInrRad, 1 + nOutRad + nInrRad);
+			//	Range<int> confRange = Range<int>::New(
+			//		//-10 - avgWin.Get_X2(), 10 - avgWin.Get_X1());
+			//		//-1 - avgWin.Get_X2(), 1 - avgWin.Get_X1());
+			//		-1 - nOutRad - nInrRad, 1 + nOutRad + nInrRad);
 
-				Calc_ConflictDiff_Image_H(avg_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(),
-					cx.m_wideConflictDiff_Img->GetMemAccessor(), confRange);
+			//	Calc_ConflictDiff_Image_H(avg_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(),
+			//		cx.m_wideConflictDiff_Img->GetMemAccessor(), confRange);
 
-				//GlobalStuff::SetLinePathImg(GenTriChGrayImg(cx.m_wideConflictDiff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-				//ShowImage(cx.m_wideConflictDiff_Img->GetSrcImg(), cx.MakeStrWithId("cx.m_wideConflictDiff_Img->GetSrcImg()").c_str());
-			}
+			//	//GlobalStuff::SetLinePathImg(GenTriChGrayImg(cx.m_wideConflictDiff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
+			//	//ShowImage(cx.m_wideConflictDiff_Img->GetSrcImg(), cx.MakeStrWithId("cx.m_wideConflictDiff_Img->GetSrcImg()").c_str());
+			//}
 
 
 
