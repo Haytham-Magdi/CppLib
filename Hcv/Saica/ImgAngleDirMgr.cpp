@@ -134,8 +134,8 @@ namespace Hcv
 
 			F32ImageAccessor1C_Ref standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 
-			//const int nInrRad = 5;
-			const int nInrRad = 8;
+			const int nInrRad = 5;
+			//const int nInrRad = 8;
 			F32ImageAccessor3C_Ref avg_InrWide_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			//F32VectorValImageAcc_3C_Ref avg_InrWide_Img = new F32VectorValImageAcc_3C(cx.m_org_Img->GetOffsetCalc());
 			{
@@ -164,8 +164,8 @@ namespace Hcv
 			}
 
 
-			//const int nOutRad = 5;
-			const int nOutRad = 8;
+			const int nOutRad = 5;
+			//const int nOutRad = 8;
 			{
 				F32ImageAccessor1C_Ref standev_OutWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 				F32VectorValImageAcc_4C_Ref avg_OutWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
@@ -206,7 +206,7 @@ namespace Hcv
 					cx.m_wideConflictDiff_Img->GetMemAccessor(), confRange);
 
 				//GlobalStuff::SetLinePathImg(GenTriChGrayImg(cx.m_wideConflictDiff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-				ShowImage(cx.m_wideConflictDiff_Img->GetSrcImg(), cx.MakeStrWithId("cx.m_wideConflictDiff_Img->GetSrcImg()").c_str());
+				//ShowImage(cx.m_wideConflictDiff_Img->GetSrcImg(), cx.MakeStrWithId("cx.m_wideConflictDiff_Img->GetSrcImg()").c_str());
 			}
 
 
@@ -216,6 +216,7 @@ namespace Hcv
 
 		void ImgAngleDirMgr::Proceed_6()
 		{
+			AffectCommonWideConflictDiff();
 		}
 
 		void ImgAngleDirMgr::AffectCommonAvgStandev()
@@ -324,6 +325,52 @@ namespace Hcv
 
 		}
 
+		void ImgAngleDirMgr::AffectCommonWideConflictDiff()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
+			int * orgToRotMap_Buf = cx.m_orgToRotMap_Img->GetMemAccessor()->GetDataPtr();
+			int * rotToOrgMap_Buf = cx.m_rotToOrgMap_Img->GetMemAccessor()->GetDataPtr();
+
+			//pcx.m_wideConflictDiff_Img->GetMemAccessor();
+
+			MemAccessor_2D_REF(int) orgToRotMap_Acc = cx.m_orgToRotMap_Img->GetMemAccessor();
+
+			OffsetCalc_1D_Ref commonOffsetCalc_Y = orgToRotMap_Acc->GenAccessor_1D_Y()->GetOffsetCalc();
+			OffsetCalc_1D_Ref commonOffsetCalc_X = orgToRotMap_Acc->GenAccessor_1D_X()->GetOffsetCalc();
+
+			float * commonImgBuf = pcx.m_wideConflictDiff_Img->GetMemAccessor()->GetDataPtr();
+
+			float * localPtr = cx.m_wideConflictDiff_Img->GetMemAccessor()->GetDataPtr();
+			//float * localPtr_Norm = ncx.m_wideConflictDiff_Img->GetMemAccessor()->GetDataPtr();
+
+			for (int nOffset_Y = commonOffsetCalc_Y->GetOffsetPart1(); nOffset_Y != commonOffsetCalc_Y->GetActualLimOffset();
+				nOffset_Y += commonOffsetCalc_Y->GetActualStepSize())
+			{
+				const int nLimOffset_YX = nOffset_Y + commonOffsetCalc_X->GetActualLimOffset();
+
+				for (int nOffset_YX = nOffset_Y + commonOffsetCalc_X->GetOffsetPart1(); nOffset_YX != nLimOffset_YX;
+					nOffset_YX += commonOffsetCalc_X->GetActualStepSize())
+				{
+					float & rCommonConf = commonImgBuf[nOffset_YX];
+
+					int nOffset_Mapped = orgToRotMap_Buf[nOffset_YX];
+					Hcpl_ASSERT(nOffset_Mapped >= 0);
+
+					float & conf_Local = localPtr[nOffset_Mapped];
+
+					if (conf_Local > rCommonConf)
+					{
+						rCommonConf = conf_Local;
+					}
+
+				}
+			}
+
+
+		}
 
 		void ImgAngleDirMgr::DisplayConflictImg()
 		{

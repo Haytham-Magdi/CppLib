@@ -39,6 +39,8 @@ namespace Hcv
 			F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(m_rotMgrColl->GetRotAt(0)->GetSrcImg());
 			//F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly(); org_Img_V->SwitchXY();
 
+			ShowImage(org_Img_H->GetSrcImg(), "org_Img_H->GetSrcImg()");
+
 			m_context_H->m_org_Img = org_Img_H;
 			m_context_H->m_standevInfoImg = new TempImageAccessor<PixelStandevInfo>(
 				org_Img_H->GetMemAccessor()->GetOffsetCalc());
@@ -59,10 +61,18 @@ namespace Hcv
 				FillImage(m_context_H->m_conflictInfoImg->GetMemAccessor(), ci_Init);
 			}
 
+			m_context_H->m_wideConflictDiff_Img = new F32ImageAccessor1C(
+				org_Img_H->GetMemAccessor()->GetOffsetCalc());
+			{
+				float initVal = -10000000;
+				FillImage(m_context_H->m_wideConflictDiff_Img->GetMemAccessor(), initVal);
+			}
+
 			m_context_V->m_org_Img = m_context_H->m_org_Img->CloneAccessorOnly(); m_context_V->m_org_Img->SwitchXY();
 			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly(); m_context_V->m_standevInfoImg->SwitchXY();
 			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
-
+			m_context_V->m_wideConflictDiff_Img = m_context_H->m_wideConflictDiff_Img->CloneAccessorOnly(); m_context_V->m_wideConflictDiff_Img->SwitchXY();
+			
 			m_angleDirMgrArr.SetSize(m_rotMgrColl->GetNofRots() * 2);
 
 			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
@@ -123,9 +133,20 @@ namespace Hcv
 				m_angleDirMgrArr[i]->Proceed_5();
 			}
 
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
+				m_angleDirMgrArr[i]->Proceed_6();
+			}
+
 			DisplayStandiv_Dir_Img();
 
 			DisplayConflictImg();
+
+			//ShowImage(standev_InrWide_Img->GetSrcImg(), "standev_InrWide_Img->GetSrcImg()");
+
+			GlobalStuff::SetLinePathImg(GenTriChGrayImg(m_context_H->m_wideConflictDiff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
+			ShowImage(m_context_H->m_wideConflictDiff_Img->GetSrcImg(), "m_wideConflictDiff_Img->GetSrcImg()");
+
+						
 
 			ManageThresholding();
 
