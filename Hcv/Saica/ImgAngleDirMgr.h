@@ -62,6 +62,8 @@ namespace Hcv
 				S32ImageAccessor1C_Ref m_orgToRotMap_Img;
 				float m_angle;
 				TempImageAccessor_REF(ConflictInfo) m_conflict_Img;
+
+				F32ImageAccessor1C_Ref m_wideConflictDiff_Img;
 			};
 
 		public:
@@ -83,6 +85,8 @@ namespace Hcv
 			void Proceed_2();
 			void Proceed_3();
 			void Proceed_4();
+			void Proceed_5();
+			void Proceed_6();
 
 		protected:
 

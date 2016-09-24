@@ -44,6 +44,18 @@ namespace Hcv
 		}
 
 		template<class T>
+		void MultiplyLineByNum(MemAccessor_1D_REF(T) a_memAcc, float a_num)
+		{
+			PtrIterator<T> ptrItr = a_memAcc->GenPtrIterator();
+
+			for (; !ptrItr.IsDone(); ptrItr.Next())
+			{
+				T * ptr = ptrItr.GetCurrent();
+				Element_Operations::MultiplyByNum_ByPtr<T>(ptr, a_num, ptr);
+			}
+		}
+
+		template<class T>
 		void CopyLine(MemAccessor_1D_REF(T) a_destAcc, MemAccessor_1D_REF(T) a_srcAcc)
 		{
 			Hcpl_ASSERT(a_srcAcc->GetIndexSize() ==

@@ -85,6 +85,23 @@ namespace Hcv
 		}
 
 		template<class T>
+		void MultiplyImageByNum(MemAccessor_2D_REF(T) a_memAcc, float a_num)
+		{
+			MemAccessor_1D_REF(T) acc_Y = a_memAcc->GenAccessor_1D_Y();
+			MemAccessor_1D_REF(T) acc_X = a_memAcc->GenAccessor_1D_X();
+
+			PtrIterator<T> ptrItr_Y = acc_Y->GenPtrIterator();
+
+			for (int i = 0; !ptrItr_Y.IsDone(); ptrItr_Y.Next(), i++)
+			{
+				T * ptr_Y = ptrItr_Y.GetCurrent();
+
+				acc_X->SetDataPtr(ptr_Y);
+				MultiplyLineByNum<T>(acc_X, a_num);
+			}
+		}
+
+		template<class T>
 		void CopyImage(MemAccessor_2D_REF(T) a_destAcc, MemAccessor_2D_REF(T) a_srcAcc)
 		{
 			MemAccessor_1D_REF(T) acc_Src_Y = a_srcAcc->GenAccessor_1D_Y();
