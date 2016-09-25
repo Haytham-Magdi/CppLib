@@ -34,6 +34,8 @@ namespace Hcv
 
 			ConflictInfo_Ex * pConflictInfo;
 
+			float Val_WideOutStandev;
+
 			bool IsProcessed;
 
 		};

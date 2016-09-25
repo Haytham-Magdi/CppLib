@@ -418,7 +418,15 @@ namespace Hcv
 					rPixInfo.X = x;
 					rPixInfo.Y = y;
 
+					rPixInfo.IsProcessed = false;
+
 					rPixInfo.pConflictInfo = &sac_Conflicts.GetAt(x, y);
+
+					rPixInfo.Val_WideOutStandev = sac_WideOutStandev.GetAt(x, y);
+					if (rPixInfo.pConflictInfo->Exists)
+					{
+						rgnGrowQues.PushPtr(rPixInfo.Val_WideOutStandev * nQueScale, &rPixInfo);
+					}
 				}
 			}
 

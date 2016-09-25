@@ -21,7 +21,7 @@ namespace Hcpl
 
 		void Init(T * a_data, int a_nIndexSize_X, int a_nIndexSize_Y, int a_nStepSize_X, int a_nStepSize_Y)
 		{
-			T * m_data = a_data;
+			m_data = a_data;
 			
 			m_nIndexSize_X = a_nIndexSize_X;
 			m_nIndexSize_Y = a_nIndexSize_Y;
