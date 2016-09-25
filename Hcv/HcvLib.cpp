@@ -72,6 +72,7 @@
 #include <Lib\Hcv\Saica\AngleDirMgrColl_Context.cpp>
 #include <Lib\Hcv\Saica\RotationMgrColl.cpp>
 #include <Lib\Hcv\Saica\SaicaProcess1.cpp>
+#include <Lib\Hcv\Saica\PixelInfo_1.cpp>
 
 
 
