@@ -396,7 +396,7 @@ namespace Hcv
 			F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
 
 
-			TempImageAccessor_REF(PixelStandevInfo) rgnGrow_Img = new TempImageAccessor<PixelStandevInfo>(
+			TempImageAccessor_REF(PixelInfo_1) rgnGrow_Img = new TempImageAccessor<PixelInfo_1>(
 				cx.m_org_Img->GetOffsetCalc());
 
 			const int nQueScale = 10;
