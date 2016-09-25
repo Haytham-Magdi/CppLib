@@ -433,7 +433,13 @@ namespace Hcv
 				}
 			}
 
+			//F32ImageAccessor3C_Ref disp1_Img = new F32ImageAccessor3C(
+			//	cx.m_org_Img->GetOffsetCalc());
+
+			//MemSimpleAccessor_2D<F32ColorVal> sac_Disp1 = disp1_Img->GetMemAccessor()->GenSimpleAccessor();
+
 			PixelInfo_1 * pPI = NULL;
+			int cnt_1 = 0;
 
 			do
 			{
@@ -443,7 +449,17 @@ namespace Hcv
 					continue;
 				}
 
+				cnt_1++;
+
 				Hcpl_ASSERT(pPI->IsPushed);
+
+				//F32ColorVal * pVal_Disp1 = &sac_Disp1.GetAt(pPI->X, pPI->Y);
+				//pVal_Disp1->val0 = 0;
+				////pVal_Disp1->val1 = pPI->Val_WideOutStandev;
+				//pVal_Disp1->val1 = cnt_1 * 255.0f / 480000;
+				//pVal_Disp1->val2 = 0;
+
+
 
 				for (int yd = -1; yd <= 1; yd++)
 				{
@@ -476,6 +492,7 @@ namespace Hcv
 
 			} while (NULL != pPI);
 
+			//ShowImage(disp1_Img->GetSrcImg(), "disp1_Img");
 
 			return;
 
