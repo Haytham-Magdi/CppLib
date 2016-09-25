@@ -135,6 +135,7 @@ namespace Hcv
 			F32ImageAccessor1C_Ref standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 
 			const int nInrRad = 5;
+			//const int nInrRad = 5 * 2;
 			//const int nInrRad = 8;
 			F32ImageAccessor3C_Ref avg_InrWide_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			//F32VectorValImageAcc_3C_Ref avg_InrWide_Img = new F32VectorValImageAcc_3C(cx.m_org_Img->GetOffsetCalc());
@@ -166,6 +167,7 @@ namespace Hcv
 
 			//const int nOutRad = 5;
 			const int nOutRad = 8;
+			//const int nOutRad = 8 * 2;
 			{
 				F32ImageAccessor1C_Ref standev_OutWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 				F32VectorValImageAcc_4C_Ref avg_OutWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());

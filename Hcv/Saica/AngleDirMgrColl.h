@@ -24,6 +24,28 @@ namespace Hcv
 
 		class AngleDirMgrColl : FRM_Object
 		{
+		protected:
+
+			class RgnInfo
+			{
+			public:
+
+				//RgnInfo * pPrev;	//	for being ListQue Entry
+			};
+
+			class LinkAction_2 : public MultiListQueMember< LinkAction_2 >
+			{
+			public:
+
+				int nIndex;
+
+				RgnInfo * pRgn1;
+				RgnInfo * pRgn2;
+			};
+
+
+
+
 		public:
 
 			//AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2);
@@ -49,6 +71,7 @@ namespace Hcv
 			void Prepare();
 			void DisplayStandiv_Dir_Img();
 			void DisplayConflictImg();
+			void ManageThresholding_0();
 			void ManageThresholding();
 
 		protected:

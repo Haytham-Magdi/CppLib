@@ -16,7 +16,7 @@ namespace Hcpl
 {
 	//template<class T>
 	//class MemAccessor_2D;
-//#define MemAccessor_2D_REF(T) Hcpl::ObjRef<Hcv::MemAccessor_2D<T>>
+	//#define MemAccessor_2D_REF(T) Hcpl::ObjRef<Hcv::MemAccessor_2D<T>>
 #define MemAccessor_2D_REF(T) ObjRef<MemAccessor_2D<T>>
 
 	template<class T>
@@ -95,6 +95,19 @@ namespace Hcpl
 			return new MemAccessor_1D<T>(
 				m_data, m_offsetCalc->GetOffsetCalc_Y());
 		}
+
+		MemSimpleAccessor_2D<T> GenSimpleAccessor()
+		{
+			MemSimpleAccessor_2D<T> sac;
+
+			sac.Init(m_data + m_offsetCalc->GetOffsetPart1(), GetIndexSize(),
+				m_offsetCalc->GetOffsetCalc_X()->GetActualStepSize(),
+				m_offsetCalc->GetOffsetCalc_Y()->GetActualStepSize()
+				);
+
+			return sac;
+		}
+
 
 		//void GenSimpleAccessor(MemSimpleAccessor_2D<T> * a_pSac)
 		//{
