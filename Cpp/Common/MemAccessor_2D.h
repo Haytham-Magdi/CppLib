@@ -9,7 +9,7 @@
 #include <Lib\Cpp\Common\Object.h>
 #include <Lib\Cpp\Common\ObjRef.h>
 #include <Lib\Cpp\Common\OffsetCalc_2D.h>
-#include <Lib\Cpp\Common\MemSimpleAccessor_1D.h>
+#include <Lib\Cpp\Common\MemSimpleAccessor_2D.h>
 
 
 namespace Hcpl
@@ -100,7 +100,7 @@ namespace Hcpl
 		{
 			MemSimpleAccessor_2D<T> sac;
 
-			sac.Init(m_data + m_offsetCalc->GetOffsetPart1(), GetIndexSize(),
+			sac.Init(m_data + m_offsetCalc->GetOffsetPart1(), GetIndexSize_X(), GetIndexSize_Y(), 
 				m_offsetCalc->GetOffsetCalc_X()->GetActualStepSize(),
 				m_offsetCalc->GetOffsetCalc_Y()->GetActualStepSize()
 				);

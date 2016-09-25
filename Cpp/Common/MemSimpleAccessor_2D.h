@@ -19,23 +19,38 @@ namespace Hcpl
 		{
 		}
 
-		void Init(T * a_data, int a_nStepSize_X, int a_nStepSize_Y)
+		void Init(T * a_data, int a_nIndexSize_X, int a_nIndexSize_Y, int a_nStepSize_X, int a_nStepSize_Y)
 		{
 			T * m_data = a_data;
-			m_nStepSize = a_nStepSize;
+			
+			m_nIndexSize_X = a_nIndexSize_X;
+			m_nIndexSize_Y = a_nIndexSize_Y;
+
+			m_nStepSize_X = a_nStepSize_X;
+			m_nStepSize_Y = a_nStepSize_Y;
 		}
 
 		//T & operator[](int a_pos_X, int a_pos_Y)
 		T & GetAt(int a_pos_X, int a_pos_Y)
 		{
+			Hcpl_ASSERT(a_pos_X >= 0);
+			Hcpl_ASSERT(a_pos_X < m_nIndexSize_X);
+			
+			Hcpl_ASSERT(a_pos_Y >= 0);
+			Hcpl_ASSERT(a_pos_Y < m_nIndexSize_Y);
+
 			return m_data[a_pos_X * m_nStepSize_X + a_pos_Y * m_nStepSize_Y];
 		}
 
 	protected:
 
 		T * m_data;
+
 		int m_nStepSize_X;
 		int m_nStepSize_Y;
+
+		int m_nIndexSize_X;
+		int m_nIndexSize_Y;
 	};
 
 }
