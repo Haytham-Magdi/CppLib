@@ -399,7 +399,15 @@ namespace Hcv
 			TempImageAccessor_REF(PixelStandevInfo) rgnGrow_Img = new TempImageAccessor<PixelStandevInfo>(
 				cx.m_org_Img->GetOffsetCalc());
 
-			MemSimpleAccessor_2D<PixelStandevInfo> sac_RgnGrow = rgnGrow_Img->GetMemAccessor()->GenSimpleAccessor();
+			const int nQueScale = 10;
+
+			MemSimpleAccessor_2D<float> sac_WideOutStandev = cx.m_wideConflictDiff_Img->GetMemAccessor()->GenSimpleAccessor();
+			MemSimpleAccessor_2D<ConflictInfo_Ex> sac_Conflicts = cx.m_conflictInfoImg->GetMemAccessor()->GenSimpleAccessor();
+
+			MultiListQueMgr< PixelInfo_1 > rgnGrowQues;
+			rgnGrowQues.InitSize(700 * nQueScale + 2);
+
+			MemSimpleAccessor_2D<PixelInfo_1> sac_RgnGrow = rgnGrow_Img->GetMemAccessor()->GenSimpleAccessor();
 
 			for (int y = 0; y < sac_RgnGrow.GetSize_Y(); y++)
 			{
@@ -407,16 +415,20 @@ namespace Hcv
 				{
 					PixelInfo_1 & rPixInfo = sac_RgnGrow.GetAt(x, y);
 
+					rPixInfo.X = x;
+					rPixInfo.Y = y;
 
+					rPixInfo.pConflictInfo = &sac_Conflicts.GetAt(x, y);
 				}
 			}
 
 
+			return;
 
 
-			AngleDirMgrColl_Context & cx = *m_context_H;
+			//AngleDirMgrColl_Context & cx = *m_context_H;
 
-			F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
+			//F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
 			ConflictInfo_Ex * conf_Ptr = cx.m_conflictInfoImg->GetDataPtr();
 
 			const int nSize_1D = cx.m_conflictInfoImg->GetSize_1D();

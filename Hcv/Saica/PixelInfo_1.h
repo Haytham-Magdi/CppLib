@@ -17,6 +17,7 @@
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 #include <Lib\Hcv\Saica\RotationMgrColl.h>
+#include <Lib\Hcv\ConflictInfo.h>
 
 
 namespace Hcv
@@ -31,11 +32,13 @@ namespace Hcv
 			int X;
 			int Y;
 
+			ConflictInfo_Ex * pConflictInfo;
+
 			bool IsProcessed;
 
 		};
 
-		typedef Hcpl::ObjRef< PixelInfo_1 > PixelInfo_1_Ref;
+		//typedef Hcpl::ObjRef< PixelInfo_1 > PixelInfo_1_Ref;
 	};
 
 }
