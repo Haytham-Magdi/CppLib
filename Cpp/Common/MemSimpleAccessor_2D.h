@@ -42,6 +42,16 @@ namespace Hcpl
 			return m_data[a_pos_X * m_nStepSize_X + a_pos_Y * m_nStepSize_Y];
 		}
 
+		int GetSize_X()
+		{
+			return m_nIndexSize_X;
+		}
+
+		int GetSize_Y()
+		{
+			return m_nIndexSize_Y;
+		}
+
 	protected:
 
 		T * m_data;

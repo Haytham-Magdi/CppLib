@@ -9,6 +9,7 @@
 
 #include <Lib\Hcv\Image_Operations.h>
 #include <Lib\Hcv\Saica\AngleDirMgrColl.h>
+#include <Lib\Hcv\Saica\PixelInfo_1.h>
 
 
 #define M_PI 3.14159265358979323846
@@ -390,8 +391,25 @@ namespace Hcv
 
 		void AngleDirMgrColl::ManageThresholding()
 		{
+			AngleDirMgrColl_Context & cx = *m_context_H;
+
+			F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
 
 
+			TempImageAccessor_REF(PixelStandevInfo) rgnGrow_Img = new TempImageAccessor<PixelStandevInfo>(
+				cx.m_org_Img->GetOffsetCalc());
+
+			MemSimpleAccessor_2D<PixelStandevInfo> sac_RgnGrow = rgnGrow_Img->GetMemAccessor()->GenSimpleAccessor();
+
+			for (int y = 0; y < sac_RgnGrow.GetSize_Y(); y++)
+			{
+				for (int x = 0; x < sac_RgnGrow.GetSize_X(); x++)
+				{
+					PixelInfo_1 & rPixInfo = sac_RgnGrow.GetAt(x, y);
+
+
+				}
+			}
 
 
 
