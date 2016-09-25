@@ -73,7 +73,7 @@ namespace Hcv
 			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly(); m_context_V->m_standevInfoImg->SwitchXY();
 			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
 			m_context_V->m_wideConflictDiff_Img = m_context_H->m_wideConflictDiff_Img->CloneAccessorOnly(); m_context_V->m_wideConflictDiff_Img->SwitchXY();
-			
+
 			m_angleDirMgrArr.SetSize(m_rotMgrColl->GetNofRots() * 2);
 
 			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
@@ -149,7 +149,7 @@ namespace Hcv
 
 			SaveImage(m_context_H->m_wideConflictDiff_Img->GetSrcImg(), "m_wideConflictDiff_Img.jpg");
 
-						
+
 
 			ManageThresholding();
 
@@ -418,17 +418,63 @@ namespace Hcv
 					rPixInfo.X = x;
 					rPixInfo.Y = y;
 
-					rPixInfo.IsProcessed = false;
-
 					rPixInfo.pConflictInfo = &sac_Conflicts.GetAt(x, y);
 
 					rPixInfo.Val_WideOutStandev = sac_WideOutStandev.GetAt(x, y);
 					if (rPixInfo.pConflictInfo->Exists)
 					{
 						rgnGrowQues.PushPtr(rPixInfo.Val_WideOutStandev * nQueScale, &rPixInfo);
+						rPixInfo.IsPushed = true;
+					}
+					else
+					{
+						rPixInfo.IsPushed = false;
 					}
 				}
 			}
+
+			PixelInfo_1 * pPI = NULL;
+
+			do
+			{
+				pPI = rgnGrowQues.PopPtrMin();
+				if (NULL == pPI)
+				{
+					continue;
+				}
+
+				Hcpl_ASSERT(pPI->IsPushed);
+
+				for (int yd = -1; yd <= 1; yd++)
+				{
+					int y = pPI->Y + yd;
+					if (y < 0 || y >= sac_RgnGrow.GetSize_Y())
+					{
+						continue;
+					}
+
+					for (int xd = -1; xd <= 1; xd++)
+					{
+						int x = pPI->X + xd;
+						if (x < 0 || x >= sac_RgnGrow.GetSize_X())
+						{
+							continue;
+						}
+
+						PixelInfo_1 * pPI_Dest = &sac_RgnGrow.GetAt(x, y);
+						if (pPI_Dest->IsPushed)
+						{
+							continue;
+						}
+
+						Hcpl_ASSERT(!pPI_Dest->pConflictInfo->Exists);
+						rgnGrowQues.PushPtr(pPI_Dest->Val_WideOutStandev * nQueScale, pPI_Dest);
+						pPI_Dest->IsPushed = true;
+					}
+				}
+
+
+			} while (NULL != pPI);
 
 
 			return;

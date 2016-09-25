@@ -36,7 +36,7 @@ namespace Hcv
 
 			float Val_WideOutStandev;
 
-			bool IsProcessed;
+			bool IsPushed;
 
 		};
 
