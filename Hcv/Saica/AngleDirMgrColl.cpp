@@ -322,15 +322,16 @@ namespace Hcv
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(threshold_Mag_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
 			//ShowImage(threshold_Img->GetSrcImg(), "threshold_Img->GetSrcImg()");
 
-			F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
-			{
-				//const int nWinRadius = 5;
-				//const int nWinRadius = 8;
-				const int nWinRadius = 15;
-				AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
-					Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
-			}
-			ShowImage(avg_Threshold_Img->GetSrcImg(), "avg_Threshold_Img->GetSrcImg()");
+			F32ImageAccessor3C_Ref avg_Threshold_Img = threshold_Img;
+			//F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
+			//{
+			//	//const int nWinRadius = 5;
+			//	//const int nWinRadius = 8;
+			//	const int nWinRadius = 15;
+			//	AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
+			//		Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
+			//}
+			//ShowImage(avg_Threshold_Img->GetSrcImg(), "avg_Threshold_Img->GetSrcImg()");
 
 			F32ImageAccessor1C_Ref mag_Avg_Threshold_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			CalcMagImage(avg_Threshold_Img->GetMemAccessor(), mag_Avg_Threshold_Img->GetMemAccessor());
@@ -376,7 +377,7 @@ namespace Hcv
 
 
 			//SaveImage(GenTriChGrayImg(bin_Img->GetSrcImg()), "E:\\bin_Img.jpg");
-			SaveImage(GenTriChGrayImg(bin_Img->GetSrcImg()), "bin_Img.jpg");
+			//SaveImage(GenTriChGrayImg(bin_Img->GetSrcImg()), "bin_Img.jpg");
 
 
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(avg_Wide_Mag_Diff_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
@@ -484,6 +485,10 @@ namespace Hcv
 						}
 
 						Hcpl_ASSERT(!pPI_Dest->pConflictInfo->Exists);
+						Hcpl_ASSERT(pPI->pConflictInfo->Exists);
+						
+						pPI_Dest->pConflictInfo = pPI->pConflictInfo;
+
 						rgnGrowQues.PushPtr(pPI_Dest->Val_WideOutStandev * nQueScale, pPI_Dest);
 						pPI_Dest->IsPushed = true;
 					}
@@ -494,62 +499,47 @@ namespace Hcv
 
 			//ShowImage(disp1_Img->GetSrcImg(), "disp1_Img");
 
-			return;
+			//return;
 
 
 			//AngleDirMgrColl_Context & cx = *m_context_H;
 
 			//F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
-			ConflictInfo_Ex * conf_Ptr = cx.m_conflictInfoImg->GetDataPtr();
+			//ConflictInfo_Ex * conf_Ptr = cx.m_conflictInfoImg->GetDataPtr();
 
 			const int nSize_1D = cx.m_conflictInfoImg->GetSize_1D();
 
 			F32ImageAccessor3C_Ref threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			F32ColorVal * threshold_Ptr = (F32ColorVal *)threshold_Img->GetDataPtr();
+			PixelInfo_1 * pixelInfo_Ptr = rgnGrow_Img->GetDataPtr();
 
-			F32ImageAccessor1C_Ref weight_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			float * weight_Ptr = weight_Img->GetDataPtr();
 			{
-				{
-					float init_Val = 0.0f;
-					FillImage(weight_Img->GetMemAccessor(), init_Val);
-				}
-
 				for (int i = 0; i < nSize_1D; i++)
 				{
-					ConflictInfo_Ex & rConf = conf_Ptr[i];
-					float & rWeight = weight_Ptr[i];
+					PixelInfo_1 & rPI = pixelInfo_Ptr[i];
 					F32ColorVal & rThreshold = threshold_Ptr[i];
 
-					if (!rConf.Exists)
-					{
-						rWeight = 0;
-						rThreshold.AssignVal(0, 0, 0);
-						continue;
-					}
+					Hcpl_ASSERT(rPI.pConflictInfo->Exists);
 
-					rWeight = 1;
-
-					F32ColorVal & rVal_Side_1 = orgImg_Ptr[rConf.Offset_Side_1];
-					F32ColorVal & rVal_Side_2 = orgImg_Ptr[rConf.Offset_Side_2];
+					F32ColorVal & rVal_Side_1 = orgImg_Ptr[rPI.pConflictInfo->Offset_Side_1];
+					F32ColorVal & rVal_Side_2 = orgImg_Ptr[rPI.pConflictInfo->Offset_Side_2];
 
 					rThreshold = F32ColorVal::Add(rVal_Side_1, rVal_Side_2).DividBy(2);
-
-					//avg_Wide_Mag_Diff_Ptr[i] = fabs(mag_Ptr[i] - avg_Wide_Ptr[i]);
 				}
 			}
 
 			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(threshold_Mag_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
 			//ShowImage(threshold_Img->GetSrcImg(), "threshold_Img->GetSrcImg()");
 
-			F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
-			{
-				//const int nWinRadius = 5;
-				//const int nWinRadius = 8;
-				const int nWinRadius = 15;
-				AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
-					Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
-			}
+			F32ImageAccessor3C_Ref avg_Threshold_Img = threshold_Img;
+			//F32ImageAccessor3C_Ref avg_Threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
+			//{
+			//	//const int nWinRadius = 5;
+			//	//const int nWinRadius = 8;
+			//	const int nWinRadius = 15;
+			//	AvgImage_Weighted(threshold_Img->GetMemAccessor(), weight_Img->GetMemAccessor(), avg_Threshold_Img->GetMemAccessor(),
+			//		Window<int>::New(-nWinRadius, nWinRadius, -nWinRadius, nWinRadius));
+			//}
 			ShowImage(avg_Threshold_Img->GetSrcImg(), "avg_Threshold_Img->GetSrcImg()");
 
 			F32ImageAccessor1C_Ref mag_Avg_Threshold_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
