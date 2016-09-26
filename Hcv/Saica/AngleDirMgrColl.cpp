@@ -486,7 +486,7 @@ namespace Hcv
 
 						Hcpl_ASSERT(!pPI_Dest->pConflictInfo->Exists);
 						Hcpl_ASSERT(pPI->pConflictInfo->Exists);
-						
+
 						pPI_Dest->pConflictInfo = pPI->pConflictInfo;
 
 						rgnGrowQues.PushPtr(pPI_Dest->Val_WideOutStandev * nQueScale, pPI_Dest);
@@ -552,6 +552,10 @@ namespace Hcv
 			CalcMagImage(cx.m_org_Img->GetMemAccessor(), magImg->GetMemAccessor());
 			float * mag_Ptr = magImg->GetDataPtr();
 
+
+			//PixelInfo_1 & rPI = pixelInfo_Ptr[i];
+
+
 			F32ImageAccessor1C_Ref bin_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			{
 				//{
@@ -562,24 +566,87 @@ namespace Hcv
 
 				for (int i = 0; i < nSize_1D; i++)
 				{
-					float & rMag_Avg_Threshold = mag_Avg_Threshold_Ptr[i];
-					float & rMag = mag_Ptr[i];
+					PixelInfo_1 & rPI = pixelInfo_Ptr[i];
+					F32ColorVal & rThreshold = threshold_Ptr[i];
+
+					Hcpl_ASSERT(rPI.pConflictInfo->Exists);
+
+					const int offset_1 = rPI.pConflictInfo->Offset_Side_1;
+					const int offset_2 = rPI.pConflictInfo->Offset_Side_2;
+
+					//float & rMag_Avg_Threshold = mag_Avg_Threshold_Ptr[i];
+					//float & rMag = mag_Ptr[i];
 					float & rBin = bin_Ptr[i];
 
-					if (rMag_Avg_Threshold < 5.0)
+					F32ColorVal & rVal_Side_1 = orgImg_Ptr[offset_1];
+					F32ColorVal & rVal_Side_2 = orgImg_Ptr[offset_2];
+
+					F32ColorVal & rVal_Pix = orgImg_Ptr[i];
+
+					float dif_1 = F32ColorVal::Sub(rVal_Pix, rVal_Side_1).CalcMag();
+					float dif_2 = F32ColorVal::Sub(rVal_Pix, rVal_Side_2).CalcMag();
+
+					float mag_1 = mag_Ptr[offset_1];
+					float mag_2 = mag_Ptr[offset_2];
+
+					if (dif_1 < dif_2)	//	closer to 1
 					{
-						rBin = 128;
-						continue;
+						if (mag_1 > mag_2)
+						{
+							rBin = 255;
+						}
+						else
+						{
+							rBin = 0;
+						}
+					}
+					else	//	closer to 2
+					{
+						if (mag_1 > mag_2)
+						{
+							rBin = 0;
+						}
+						else
+						{
+							rBin = 255;
+						}
 					}
 
-					if (rMag > rMag_Avg_Threshold)
-					{
-						rBin = 255;
-					}
-					else
-					{
-						rBin = 0;
-					}
+
+					//if (rMag_Avg_Threshold < 5.0)
+					//{
+					//	rBin = 128;
+					//	continue;
+					//}
+
+					//if (rMag > rMag_Avg_Threshold)
+					//{
+					//	rBin = 255;
+					//}
+					//else
+					//{
+					//	rBin = 0;
+					//}
+
+
+					//float & rMag_Avg_Threshold = mag_Avg_Threshold_Ptr[i];
+					//float & rMag = mag_Ptr[i];
+					//float & rBin = bin_Ptr[i];
+
+					//if (rMag_Avg_Threshold < 5.0)
+					//{
+					//	rBin = 128;
+					//	continue;
+					//}
+
+					//if (rMag > rMag_Avg_Threshold)
+					//{
+					//	rBin = 255;
+					//}
+					//else
+					//{
+					//	rBin = 0;
+					//}
 				}
 			}
 			ShowImage(bin_Img->GetSrcImg(), "bin_Img->GetSrcImg()");
