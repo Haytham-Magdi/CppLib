@@ -507,6 +507,7 @@ namespace Hcv
 			//F32ColorVal * orgImg_Ptr = (F32ColorVal *)cx.m_org_Img->GetDataPtr();
 			//ConflictInfo_Ex * conf_Ptr = cx.m_conflictInfoImg->GetDataPtr();
 
+
 			const int nSize_1D = cx.m_conflictInfoImg->GetSize_1D();
 
 			F32ImageAccessor3C_Ref threshold_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
