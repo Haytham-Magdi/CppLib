@@ -92,8 +92,12 @@ namespace Hcv
 
 			//Window<int> avgWin = Window<int>::New(-1, 1, -5, 5);
 			//Window<int> avgWin = Window<int>::New(-1, 1, -2, 2);
+
 			Window<int> avgWin = Window<int>::New(-1, 0, -2, 2);
 			//Window<int> avgWin = Window<int>::New(0, 0, -2, 2);
+
+			//Window<int> avgWin = Window<int>::New(-2, 2, -2, 2);
+			//Window<int> avgWin = Window<int>::New(-2, 1, -2, 2);
 
 			cx.m_conflict_Img = new TempImageAccessor<ConflictInfo>(cx.m_org_Img->GetOffsetCalc());
 
@@ -146,8 +150,12 @@ namespace Hcv
 				MultiplyImageByNum(standev_InrWide_Img->GetMemAccessor(), 2);
 				//AssertValues_Image(avg_InrWide_Img->GetMemAccessor());
 			}
-			//GlobalStuff::SetLinePathImg(GenTriChGrayImg(standev_InrWide_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-			//ShowImage(standev_InrWide_Img->GetSrcImg(), "standev_InrWide_Img->GetSrcImg()");
+
+			if (0 == m_context->m_nIndex)
+			{
+				GlobalStuff::SetLinePathImg(GenTriChGrayImg(standev_InrWide_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
+				ShowImage(standev_InrWide_Img->GetSrcImg(), "standev_InrWide_Img->GetSrcImg()");
+			}
 
 			F32VectorValImageAcc_4C_Ref avgPStandev_InrWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
 			{
