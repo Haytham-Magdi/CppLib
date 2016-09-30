@@ -521,6 +521,11 @@ namespace Hcv
 					F32ColorVal & rThreshold = threshold_Ptr[i];
 
 					Hcpl_ASSERT(rPI.pConflictInfo->Exists);
+					//if (!rPI.pConflictInfo->Exists)
+					//{
+					//	rThreshold.AssignVal(255, 255, 255);
+					//	continue;
+					//}
 
 					F32ColorVal & rVal_Side_1 = orgImg_Ptr[rPI.pConflictInfo->Offset_Side_1];
 					F32ColorVal & rVal_Side_2 = orgImg_Ptr[rPI.pConflictInfo->Offset_Side_2];
