@@ -7,7 +7,7 @@
 #include <Lib\Hcv\Image.h>
 #include <Lib\Hcv\funcs1.h>
 
-#include <Lib\Hcv\ImgRotationMgr.h>
+#include <Lib\Hcv\ImgRotationMgr_3.h>
 
 
 #define M_PI 3.14159265358979323846
@@ -19,7 +19,7 @@ namespace Hcv
 	//using namespace Hcpl::Math;
 
 
-	ImgRotationMgr::ImgRotationMgr(F32ImageRef a_srcImg, float a_angDig)
+	ImgRotationMgr_3::ImgRotationMgr_3(F32ImageRef a_srcImg, float a_angDig)
 	{
 		Hcpl_ASSERT(a_angDig >= 0);
 		Hcpl_ASSERT(a_angDig <= 90);
@@ -50,7 +50,7 @@ namespace Hcv
 	}
 
 
-	int ImgRotationMgr::AddRound(int a_num)
+	int ImgRotationMgr_3::AddRound(int a_num)
 	{
 		int nRet;
 
@@ -70,7 +70,7 @@ namespace Hcv
 	}
 
 
-	int ImgRotationMgr::AddRoundByMin(int a_num)
+	int ImgRotationMgr_3::AddRoundByMin(int a_num)
 	{
 		int nRet;
 
@@ -91,7 +91,7 @@ namespace Hcv
 
 
 
-	void ImgRotationMgr::Prepare()
+	void ImgRotationMgr_3::Prepare()
 	{
 		CvSize srcSiz = m_srcImg->GetSize();
 
@@ -448,8 +448,8 @@ namespace Hcv
 	}
 
 
-	//void ImgRotationMgr::PrepareProvArr()
-	void ImgRotationMgr::PrepareImageItrMgr()
+	//void ImgRotationMgr_3::PrepareProvArr()
+	void ImgRotationMgr_3::PrepareImageItrMgr()
 	{
 		m_imageItrMgr = new ImageItrMgr(m_resSiz,
 			m_lineLimit_H_Arr, m_lineLimit_V_Arr);
@@ -457,7 +457,7 @@ namespace Hcv
 
 
 
-	//void ImgRotationMgr::PrepareResImg()
+	//void ImgRotationMgr_3::PrepareResImg()
 	//{
 	//	int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 

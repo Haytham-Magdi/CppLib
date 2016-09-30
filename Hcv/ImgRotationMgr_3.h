@@ -18,11 +18,11 @@
 namespace Hcv
 {
 
-	class ImgRotationMgr  : FRM_Object
+	class ImgRotationMgr_3  : FRM_Object
 	{
 	public:
 
-		ImgRotationMgr( F32ImageRef a_srcImg, float a_angDig );
+		ImgRotationMgr_3( F32ImageRef a_srcImg, float a_angDig );
 
 		F32ImageRef GetSrcImg()
 		{			
@@ -119,6 +119,6 @@ namespace Hcv
 	};
 
 
-	typedef Hcpl::ObjRef< ImgRotationMgr > ImgRotationMgrRef;
+	typedef Hcpl::ObjRef< ImgRotationMgr_3 > ImgRotationMgr_3_Ref;
 
 }
