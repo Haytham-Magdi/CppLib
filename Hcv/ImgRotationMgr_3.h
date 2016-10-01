@@ -24,30 +24,15 @@ namespace Hcv
 
 		ImgRotationMgr_3( F32ImageRef a_srcImg, float a_angDig );
 
-		F32ImageRef GetSrcImg()
-		{			
-			return m_srcImg;
-		}
+		F32ImageRef GetSrcImg() { return m_srcImg; }
 
-		float GetAngleByDigree()
-		{
-			return m_angDig;
-		}
+		float GetAngleByDigree() { return m_angDig; }
 
-		float GetAngleByRad()
-		{
-			return m_angRad;
-		}
+		float GetAngleByRad() { return m_angRad; }
 
-		CvSize GetResImgSiz()
-		{
-			return m_resSiz;
-		}
+		CvSize GetResImgSiz() { return m_resSiz; }
 
-		S32ImageRef Get_ResToSrcMapImage()
-		{
-			return m_resToSrcMapImg;
-		}
+		S32ImageRef Get_ResToSrcMapImage() { return m_resToSrcMapImg; }
 
 		//S32ImageRef Get_ResToSrcMap_X_Scaled_Image()
 		//{
@@ -59,20 +44,11 @@ namespace Hcv
 		//	return m_resToSrcMapImg_Y_Scaled;
 		//}
 
-		F32ImageRef GetResImg()
-		{
-			return m_resImg;
-		}
+		F32ImageRef GetResImg() { return m_resImg; }
 
-		S32ImageRef Get_SrcToResMapImage()
-		{
-			return m_srcToResMapImg;
-		}
+		S32ImageRef Get_SrcToResMapImage() { return m_srcToResMapImg; }
 
-		ImageItrMgrRef GetImageItrMgr()
-		{
-			return m_imageItrMgr;
-		}
+		ImageItrMgrRef GetImageItrMgr() { return m_imageItrMgr; }
 
 	protected:
 
@@ -86,8 +62,6 @@ namespace Hcv
 		
 		//void PrepareProvArr();
 		void PrepareImageItrMgr();
-		
-
 
 	protected:
 
@@ -114,8 +88,7 @@ namespace Hcv
 		//FixedVector< ImageLineItrProvider > m_lineItrProv_Arr;
 
 		ImageItrMgrRef m_imageItrMgr;
-
-		
+	
 	};
 
 
