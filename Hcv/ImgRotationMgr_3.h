@@ -82,6 +82,8 @@ namespace Hcv
 		F32ImageRef m_resImg;
 		S32ImageRef m_srcToResMapImg;
 
+		FixedVector< CvPoint > m_srcPntOfRes_Arr;
+
 		FixedVector< LineLimit > m_lineLimit_H_Arr;
 		FixedVector< LineLimit > m_lineLimit_V_Arr;
 

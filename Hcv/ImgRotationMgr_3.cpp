@@ -42,13 +42,8 @@ namespace Hcv
 		int mag1 = Sqr(m_nCos) + Sqr(m_nSin);
 		Hcpl_ASSERT(mag1 >= Sqr(m_nScale));
 
-		// tmp only
-		//m_nCos *= 1.3;
-		//m_nSin *= 1.3;
-
 		Prepare();
 	}
-
 
 	int ImgRotationMgr_3::AddRound(int a_num)
 	{
@@ -69,7 +64,6 @@ namespace Hcv
 		return nRet;
 	}
 
-
 	int ImgRotationMgr_3::AddRoundByMin(int a_num)
 	{
 		int nRet;
@@ -88,8 +82,6 @@ namespace Hcv
 
 		return nRet;
 	}
-
-
 
 	void ImgRotationMgr_3::Prepare()
 	{
@@ -128,7 +120,6 @@ namespace Hcv
 
 			nofLinesBef /= m_nScale;
 
-
 			int nofLinesAft = m_nSin * (srcSiz.height + nSafeMarg);
 			nofLinesAft = AddRoundByMin(nofLinesAft);
 
@@ -157,6 +148,8 @@ namespace Hcv
 
 		//m_resToSrcMapImg_Y_Scaled = S32Image::Create(m_resSiz, 1);
 		//int * resToSrcBuf_Y_Scaled = (int *)m_resToSrcMapImg_Y_Scaled->GetPixAt(0, 0);
+
+		m_srcPntOfRes_Arr.SetSize(m_resSiz.width * m_resSiz.height);
 
 		m_srcToResMapImg = S32Image::Create(srcSiz, 1);
 		int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
@@ -197,7 +190,10 @@ namespace Hcv
 			{
 				int nIdx_Res = idxCalc_Res.Calc(x, y);
 
-				CvPoint curPnt_X;
+				//CvPoint curPnt_X;
+				CvPoint curPnt_X = m_srcPntOfRes_Arr[nIdx_Res];
+
+
 
 				curPnt_X.x = curPnt_Y.x + x * m_nCos;
 				curPnt_X.y = curPnt_Y.y + x * m_nSin;
