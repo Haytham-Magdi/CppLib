@@ -50,11 +50,13 @@ namespace Hcv
 
 		ImageItrMgrRef GetImageItrMgr() { return m_imageItrMgr; }
 
+		CvPoint & GetBgnPnt() { return m_bgnPnt; }
+
 	protected:
 
 		void Prepare();
 		
-		//void PrepareResImg();
+		void PrepareResImg();
 
 		int AddRound( int a_num );
 
@@ -75,6 +77,8 @@ namespace Hcv
 		int m_nCos;
 		int m_nSin;
 
+		CvPoint m_bgnPnt;
+
 		CvSize m_resSiz;
 		S32ImageRef m_resToSrcMapImg;
 		//S32ImageRef m_resToSrcMapImg_X_Scaled;
@@ -82,7 +86,7 @@ namespace Hcv
 		F32ImageRef m_resImg;
 		S32ImageRef m_srcToResMapImg;
 
-		FixedVector< CvPoint > m_srcPntOfRes_Arr;
+		//FixedVector< CvPoint > m_srcPntOfRes_Arr;
 
 		FixedVector< LineLimit > m_lineLimit_H_Arr;
 		FixedVector< LineLimit > m_lineLimit_V_Arr;

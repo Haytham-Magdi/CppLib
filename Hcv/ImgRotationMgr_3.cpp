@@ -90,7 +90,7 @@ namespace Hcv
 		const int nScaled_SrcWidth = srcSiz.width * m_nScale;
 		const int nScaled_SrcHeight = srcSiz.height * m_nScale;
 
-		CvPoint bgnPnt;
+		//m_bgnPnt;
 
 		int nSafeMarg = 0;
 		//int nSafeMarg = 20;
@@ -102,8 +102,8 @@ namespace Hcv
 
 			nofLinesBef /= m_nScale;
 
-			bgnPnt.x = nofLinesBef * m_nSin;
-			bgnPnt.y = -nofLinesBef * m_nCos;
+			m_bgnPnt.x = nofLinesBef * m_nSin;
+			m_bgnPnt.y = -nofLinesBef * m_nCos;
 
 			int nofLinesAft = AddRoundByMin(
 				m_nCos * (srcSiz.height + nSafeMarg));
@@ -149,7 +149,7 @@ namespace Hcv
 		//m_resToSrcMapImg_Y_Scaled = S32Image::Create(m_resSiz, 1);
 		//int * resToSrcBuf_Y_Scaled = (int *)m_resToSrcMapImg_Y_Scaled->GetPixAt(0, 0);
 
-		m_srcPntOfRes_Arr.SetSize(m_resSiz.width * m_resSiz.height);
+		//m_srcPntOfRes_Arr.SetSize(m_resSiz.width * m_resSiz.height);
 
 		m_srcToResMapImg = S32Image::Create(srcSiz, 1);
 		int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
@@ -175,7 +175,7 @@ namespace Hcv
 
 		IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
 
-		//CvPoint curPnt = bgnPnt;
+		//CvPoint curPnt = m_bgnPnt;
 
 		FixedVector< CvPoint > srcPntArr(100);
 
@@ -183,15 +183,15 @@ namespace Hcv
 		{
 			CvPoint curPnt_Y;
 
-			curPnt_Y.x = bgnPnt.x - y * m_nSin;
-			curPnt_Y.y = bgnPnt.y + y * m_nCos;
+			curPnt_Y.x = m_bgnPnt.x - y * m_nSin;
+			curPnt_Y.y = m_bgnPnt.y + y * m_nCos;
 
 			for (int x = 0; x < m_resSiz.width; x++)
 			{
 				int nIdx_Res = idxCalc_Res.Calc(x, y);
 
-				//CvPoint curPnt_X;
-				CvPoint curPnt_X = m_srcPntOfRes_Arr[nIdx_Res];
+				CvPoint curPnt_X;
+				//CvPoint curPnt_X = m_srcPntOfRes_Arr[nIdx_Res];
 
 
 
