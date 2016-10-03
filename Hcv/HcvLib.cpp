@@ -29,6 +29,7 @@
 #include <Lib\Hcv\ImgPopulation_CovMat.cpp>
 #include <Lib\Hcv\ImgRotationMgr.cpp>
 #include <Lib\Hcv\ImgRotationMgr_3.cpp>
+#include <Lib\Hcv\ImgSizeRotation.cpp>
 #include <Lib\Hcv\ImageLineItr.cpp>
 #include <Lib\Hcv\ImageLineItrProvider.cpp>
 #include <Lib\Hcv\ImageItrMgr.cpp>

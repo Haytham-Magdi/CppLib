@@ -172,6 +172,7 @@
 #include <Lib\Hcv\ImgDataElm_CovMat.h>
 #include <Lib\Hcv\ImgRotationMgr.h>
 #include <Lib\Hcv\ImgRotationMgr_3.h>
+#include <Lib\Hcv\ImgSizeRotation.h>
 #include <Lib\Hcv\ImageLineItr.h>
 #include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
