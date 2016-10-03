@@ -489,7 +489,6 @@ namespace Hcv
 							rColor_Src_X2_Y2.MultBy(m_nScale - nWt_X1)
 							).DividBy(m_nScale);
 
-						//int nCur_Y = (nY1 == nY2) ? nY1 : curPnt_X.y;
 						int nWt_Y1 = (nY1 == nY2) ? m_nScale : abs(curPnt_X.y - nY2);
 						Hcpl_ASSERT(nWt_Y1 <= m_nScale);
 
@@ -497,65 +496,18 @@ namespace Hcv
 							rColor_Src_X_Y1.MultBy(nWt_Y1),
 							rColor_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
 							).DividBy(m_nScale);
-
-
-						//F32ColorVal rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1, nY2)];
-
-						//F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
-						//rColor_Res.AssignVal(rColor_Src);
-
-						//rColor_Res.AssignVal(rColor_Src_X1_Y1);
-						//rColor_Res.AssignVal(rColor_Src_X2_Y2);
 					}
 					else
 					{
-						//rColor_Res.AssignVal( 0, 120, 0 );
 						rColor_Res.AssignVal(0, 0, 0);
 					}
 
 				}
 
 
-
-
-
-
 			}
 		}
 
-
-
-		//m_resImg = F32Image::Create(m_resSiz, 3);
-
-		//F32ColorVal * resBuf = (F32ColorVal *)m_resImg->GetPixAt(0, 0);
-
-		//CvSize srcSiz = m_srcImg->GetSize();
-
-		////int nSrcSiz1D = srcSiz.width * srcSiz.height;
-
-		//F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
-
-		//int nResSiz1D = m_resSiz.width * m_resSiz.height;
-
-		//for (int i = 0; i < nResSiz1D; i++)
-		//{
-		//	F32ColorVal & rColor_Res = resBuf[i];
-
-
-		//	int nIdx_Src = resToSrcBuf[i];
-
-		//	if (nIdx_Src >= 0)
-		//	{
-		//		F32ColorVal & rColor_Src = srcBuf[nIdx_Src];
-
-		//		rColor_Res.AssignVal(rColor_Src);
-		//	}
-		//	else
-		//	{
-		//		//rColor_Res.AssignVal( 0, 120, 0 );
-		//		rColor_Res.AssignVal(0, 0, 0);
-		//	}
-		//}
 
 	}
 
