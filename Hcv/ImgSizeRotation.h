@@ -57,8 +57,13 @@ namespace Hcv
 		void PrepareImageItrMgr();
 
 		template<class T> 
-		void GenResImage(MemAccessor_2D_REF(T) a_destAcc, MemAccessor_2D_REF(T) a_srcAcc)
+		void RotateImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc)
 		{
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize_X() == m_srcSiz.width);
+			Hcpl_ASSERT(a_inpAcc->GetIndexSize_Y() == m_srcSiz.height);
+
+			Hcpl_ASSERT(a_outAcc->GetIndexSize_X() == m_resSiz.width);
+			Hcpl_ASSERT(a_outAcc->GetIndexSize_Y() == m_resSiz.height);
 
 
 
