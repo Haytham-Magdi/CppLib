@@ -85,10 +85,10 @@ namespace Hcv
 
 	void ImgSizeRotation::Prepare()
 	{
-		CvSize srcSiz = m_srcImg->GetSize();
+		m_srcSiz = m_srcImg->GetSize();
 
-		const int nScaled_SrcWidth = srcSiz.width * m_nScale;
-		const int nScaled_SrcHeight = srcSiz.height * m_nScale;
+		const int nScaled_SrcWidth = m_srcSiz.width * m_nScale;
+		const int nScaled_SrcHeight = m_srcSiz.height * m_nScale;
 
 		//m_bgnPnt;
 
@@ -98,7 +98,7 @@ namespace Hcv
 		{
 			//int nofLinesBef = AddRound(
 			int nofLinesBef = AddRoundByMin(
-				m_nSin * (srcSiz.width + nSafeMarg));
+				m_nSin * (m_srcSiz.width + nSafeMarg));
 
 			nofLinesBef /= m_nScale;
 
@@ -106,7 +106,7 @@ namespace Hcv
 			m_bgnPnt.y = -nofLinesBef * m_nCos;
 
 			int nofLinesAft = AddRoundByMin(
-				m_nCos * (srcSiz.height + nSafeMarg));
+				m_nCos * (m_srcSiz.height + nSafeMarg));
 
 			nofLinesAft /= m_nScale;
 
@@ -115,12 +115,12 @@ namespace Hcv
 		}
 
 		{
-			int nofLinesBef = m_nCos * (srcSiz.width + nSafeMarg);
+			int nofLinesBef = m_nCos * (m_srcSiz.width + nSafeMarg);
 			nofLinesBef = AddRoundByMin(nofLinesBef);
 
 			nofLinesBef /= m_nScale;
 
-			int nofLinesAft = m_nSin * (srcSiz.height + nSafeMarg);
+			int nofLinesAft = m_nSin * (m_srcSiz.height + nSafeMarg);
 			nofLinesAft = AddRoundByMin(nofLinesAft);
 
 			nofLinesAft /= m_nScale;
@@ -129,9 +129,9 @@ namespace Hcv
 		}
 
 		//{
-		//	int nofLinesBef = m_nCos * (srcSiz.width + nSafeMarg);
+		//	int nofLinesBef = m_nCos * (m_srcSiz.width + nSafeMarg);
 
-		//	int nofLinesAft = m_nSin * (srcSiz.height + nSafeMarg);
+		//	int nofLinesAft = m_nSin * (m_srcSiz.height + nSafeMarg);
 
 		//	//m_resSiz.width = AddRound(
 		//	m_resSiz.width = AddRoundByMin(
@@ -151,10 +151,10 @@ namespace Hcv
 
 		//m_srcPntOfRes_Arr.SetSize(m_resSiz.width * m_resSiz.height);
 
-		m_srcToResMapImg = S32Image::Create(srcSiz, 1);
+		m_srcToResMapImg = S32Image::Create(m_srcSiz, 1);
 		int *  srcToResBuf = (int *)m_srcToResMapImg->GetPixAt(0, 0);
 
-		S32ImageRef srcMinDistImg = S32Image::Create(srcSiz, 1);
+		S32ImageRef srcMinDistImg = S32Image::Create(m_srcSiz, 1);
 		int *  srcMinDistBuf = (int *)srcMinDistImg->GetPixAt(0, 0);
 
 		m_resImg = F32Image::Create(m_resSiz, 3);
@@ -171,7 +171,7 @@ namespace Hcv
 
 
 
-		IndexCalc2D idxCalc_Src(srcSiz.width, srcSiz.height);
+		IndexCalc2D idxCalc_Src(m_srcSiz.width, m_srcSiz.height);
 
 		IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
 
@@ -263,13 +263,13 @@ namespace Hcv
 				int nX_Src = AddRound(curPnt_X.x);
 				nX_Src /= m_nScale;
 
-				if (!(nX_Src >= 0 && nX_Src < srcSiz.width))
+				if (!(nX_Src >= 0 && nX_Src < m_srcSiz.width))
 					bInImg = false;
 
 				int nY_Src = AddRound(curPnt_X.y);
 				nY_Src /= m_nScale;
 
-				if (!(nY_Src >= 0 && nY_Src < srcSiz.height))
+				if (!(nY_Src >= 0 && nY_Src < m_srcSiz.height))
 					bInImg = false;
 
 				int nIdx_Src = -1;
@@ -284,7 +284,7 @@ namespace Hcv
 			}
 		}
 
-		int nSrcSiz1D = srcSiz.width * srcSiz.height;
+		int nSrcSiz1D = m_srcSiz.width * m_srcSiz.height;
 
 		Hcpl_ASSERT(nMappedSrcCnt == nSrcSiz1D);
 
@@ -385,10 +385,10 @@ namespace Hcv
 
 	void ImgSizeRotation::PrepareResImg()
 	{
-		CvSize srcSiz = m_srcImg->GetSize();
+		//m_srcSiz = m_srcImg->GetSize();
 
-		const int nScaled_SrcWidth = srcSiz.width * m_nScale;
-		const int nScaled_SrcHeight = srcSiz.height * m_nScale;
+		const int nScaled_SrcWidth = m_srcSiz.width * m_nScale;
+		const int nScaled_SrcHeight = m_srcSiz.height * m_nScale;
 
 		F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
 
@@ -396,7 +396,7 @@ namespace Hcv
 
 		int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
-		IndexCalc2D idxCalc_Src(srcSiz.width, srcSiz.height);
+		IndexCalc2D idxCalc_Src(m_srcSiz.width, m_srcSiz.height);
 
 		IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
 

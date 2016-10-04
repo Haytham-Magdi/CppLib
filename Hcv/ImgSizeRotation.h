@@ -30,6 +30,8 @@ namespace Hcv
 
 		float GetAngleByRad() { return m_angRad; }
 
+		CvSize GetSrcImgSiz() { return m_srcSiz; }
+		
 		CvSize GetResImgSiz() { return m_resSiz; }
 
 		S32ImageRef Get_ResToSrcMapImage() { return m_resToSrcMapImg; }
@@ -54,6 +56,24 @@ namespace Hcv
 		
 		void PrepareImageItrMgr();
 
+		template<class T> 
+		void GenResImage(MemAccessor_2D_REF(T) a_destAcc, MemAccessor_2D_REF(T) a_srcAcc)
+		{
+
+
+
+
+
+
+
+		}
+
+
+
+
+
+
+
 	protected:
 
 		F32ImageRef m_srcImg;
@@ -67,6 +87,8 @@ namespace Hcv
 		int m_nSin;
 
 		CvPoint m_bgnPnt;
+
+		CvSize m_srcSiz;
 
 		CvSize m_resSiz;
 		S32ImageRef m_resToSrcMapImg;
