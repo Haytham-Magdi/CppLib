@@ -49,6 +49,12 @@ namespace Hcv
 		}
 
 		template<class T>
+		void WaitedAdd_ByPtr(T * a_pInp1, T * a_pInp2, T * a_pOut)
+		{
+			*a_pOut = *a_pInp1 + *a_pInp2;
+		}
+
+		template<class T>
 		void Subtract_ByPtr(T * a_pInp1, T * a_pInp2, T * a_pOut)
 		{
 			*a_pOut = *a_pInp1 - *a_pInp2;

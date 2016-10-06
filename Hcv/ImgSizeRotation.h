@@ -165,6 +165,11 @@ namespace Hcv
 
 							T rColor_Src_X_Y1;
 							{
+								T color_mult1;
+
+								MultiplyByNum_ByPtr(T * a_pInp, float a_num, &color_mult1)
+
+
 								Add_ByPtr(T * a_pInp1, T * a_pInp2, &rColor_Src_X_Y1)
 
 									= T::Add(
