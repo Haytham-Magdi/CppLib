@@ -158,10 +158,21 @@ namespace Hcv
 							int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
 							Hcpl_ASSERT(nWt_X1 <= m_nScale);
 
-							T rColor_Src_X_Y1 = T::Add(
-								rColor_Src_X1_Y1.MultBy(nWt_X1),
-								rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
-								).DividBy(m_nScale);
+							//T rColor_Src_X_Y1 = T::Add(
+							//	rColor_Src_X1_Y1.MultBy(nWt_X1),
+							//	rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
+							//	).DividBy(m_nScale);
+
+							T rColor_Src_X_Y1;
+							{
+								Add_ByPtr(T * a_pInp1, T * a_pInp2, &rColor_Src_X_Y1)
+
+									= T::Add(
+									rColor_Src_X1_Y1.MultBy(nWt_X1),
+									rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
+									).DividBy(m_nScale);
+
+							}
 
 							T rColor_Src_X_Y2 = T::Add(
 								rColor_Src_X1_Y2.MultBy(nWt_X1),
