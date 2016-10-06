@@ -49,9 +49,14 @@ namespace Hcv
 		}
 
 		template<class T>
-		void WaitedAdd_ByPtr(T * a_pInp1, T * a_pInp2, T * a_pOut)
+		void WaitedAdd_ByPtr(T * a_pInp1, float a_weight1, T * a_pInp2, float a_weight2, T * a_pOut)
 		{
-			*a_pOut = *a_pInp1 + *a_pInp2;
+			T inp11, inp22;
+
+			MultiplyByNum_ByPtr(a_pInp1, a_weight1, &inp11);
+			MultiplyByNum_ByPtr(a_pInp2, a_weight2, &inp22);
+
+			Add_ByPtr(&inp11, &inp22, a_pOut);
 		}
 
 		template<class T>

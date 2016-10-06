@@ -79,7 +79,7 @@ namespace Hcv
 
 
 			for (int y = 0; y < m_resSiz.height; y++)
-			//for (int y = 0; y < sac_Out.GetSize_Y(); y++)
+				//for (int y = 0; y < sac_Out.GetSize_Y(); y++)
 			{
 				CvPoint curPnt_Y;
 
@@ -87,7 +87,7 @@ namespace Hcv
 				curPnt_Y.y = m_bgnPnt.y + y * m_nCos;
 
 				for (int x = 0; x < m_resSiz.width; x++)
-				//for (int x = 0; x < sac_Out.GetSize_X(); x++)
+					//for (int x = 0; x < sac_Out.GetSize_X(); x++)
 				{
 					int nIdx_Res = idxCalc_Res.Calc(x, y);
 					//int nIdx_Res = sac_Out->GetAt(x, y);
@@ -154,49 +154,49 @@ namespace Hcv
 							T & rColor_Src_X2_Y1 = a_srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
 							T & rColor_Src_X2_Y2 = a_srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
 
-							//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
-							int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
-							Hcpl_ASSERT(nWt_X1 <= m_nScale);
 
-							//T rColor_Src_X_Y1 = T::Add(
-							//	rColor_Src_X1_Y1.MultBy(nWt_X1),
-							//	rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
-							//	).DividBy(m_nScale);
+
 
 							T rColor_Src_X_Y1;
+							T rColor_Src_X_Y2;
 							{
-								T color_mult1;
+								//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
+								int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
+								Hcpl_ASSERT(nWt_X1 <= m_nScale);
 
-								MultiplyByNum_ByPtr(T * a_pInp, float a_num, &color_mult1)
+								//T rColor_Src_X_Y1 = T::Add(
+								//	rColor_Src_X1_Y1.MultBy(nWt_X1),
+								//	rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
+								//	).DividBy(m_nScale);
 
+								WaitedAdd_ByPtr(&rColor_Src_X1_Y1, (float)nWt_X1 / m_nScale,
+									&rColor_Src_X2_Y1, (float)(m_nScale - nWt_X1) / m_nScale, &rColor_Src_X_Y1);
 
-								Add_ByPtr(T * a_pInp1, T * a_pInp2, &rColor_Src_X_Y1)
+								WaitedAdd_ByPtr(&rColor_Src_X1_Y2, (float)nWt_X1 / m_nScale,
+									&rColor_Src_X2_Y2, (float)(m_nScale - nWt_X1) / m_nScale, &rColor_Src_X_Y2);
 
-									= T::Add(
-									rColor_Src_X1_Y1.MultBy(nWt_X1),
-									rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
-									).DividBy(m_nScale);
-
+								//T rColor_Src_X_Y2 = T::Add(
+								//	rColor_Src_X1_Y2.MultBy(nWt_X1),
+								//	rColor_Src_X2_Y2.MultBy(m_nScale - nWt_X1)
+								//	).DividBy(m_nScale);
 							}
 
-							T rColor_Src_X_Y2 = T::Add(
-								rColor_Src_X1_Y2.MultBy(nWt_X1),
-								rColor_Src_X2_Y2.MultBy(m_nScale - nWt_X1)
-								).DividBy(m_nScale);
+							{
+								int nWt_Y1 = (nY1 == nY2) ? m_nScale : abs(curPnt_X.y - nY2);
+								Hcpl_ASSERT(nWt_Y1 <= m_nScale);
 
-							int nWt_Y1 = (nY1 == nY2) ? m_nScale : abs(curPnt_X.y - nY2);
-							Hcpl_ASSERT(nWt_Y1 <= m_nScale);
-
-							rColor_Res = T::Add(
-								rColor_Src_X_Y1.MultBy(nWt_Y1),
-								rColor_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
-								).DividBy(m_nScale);
+								WaitedAdd_ByPtr(&rColor_Src_X_Y1, (float)nWt_Y1 / m_nScale,
+									&rColor_Src_X_Y2, (float)(m_nScale - nWt_Y1) / m_nScale, &rColor_Res);
+								//rColor_Res = T::Add(
+								//	rColor_Src_X_Y1.MultBy(nWt_Y1),
+								//	rColor_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
+								//	).DividBy(m_nScale);
+							}
 						}
 						else
 						{
 							rColor_Res.AssignVal(0, 0, 0);
 						}
-
 					}
 
 
