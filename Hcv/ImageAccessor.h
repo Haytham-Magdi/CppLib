@@ -66,6 +66,11 @@ namespace Hcv
 			return cvSize(m_memAccessor->GetIndexSize_X(), m_memAccessor->GetIndexSize_Y());
 		}
 
+		CvSize GetSrcImgSize()
+		{
+			return m_srcImg->GetSize();
+		}
+
 		int GetSize_1D()
 		{
 			return m_memAccessor->GetIndexSize_X() * m_memAccessor->GetIndexSize_Y();

@@ -45,21 +45,25 @@ namespace Hcv
 		CvPoint & GetBgnPnt() { return m_bgnPnt; }
 
 		template<class T>
-		void RotateImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc)
+		//void RotateImage(MemAccessor_2D_REF(T) a_inpAcc, MemAccessor_2D_REF(T) a_outAcc)
+		void RotateImage(T * a_destBuf, CvSize a_destSiz, T * a_srcBuf, CvSize a_srcSiz)
 		{
-			Hcpl_ASSERT(a_inpAcc->GetIndexSize_X() == m_srcSiz.width);
-			Hcpl_ASSERT(a_inpAcc->GetIndexSize_Y() == m_srcSiz.height);
+			//Hcpl_ASSERT(a_inpAcc->GetIndexSize_X() == m_srcSiz.width);
+			//Hcpl_ASSERT(a_inpAcc->GetIndexSize_Y() == m_srcSiz.height);
 
-			Hcpl_ASSERT(a_outAcc->GetIndexSize_X() == m_resSiz.width);
-			Hcpl_ASSERT(a_outAcc->GetIndexSize_Y() == m_resSiz.height);
+			//Hcpl_ASSERT(a_outAcc->GetIndexSize_X() == m_resSiz.width);
+			//Hcpl_ASSERT(a_outAcc->GetIndexSize_Y() == m_resSiz.height);
 
+			Hcpl_ASSERT(a_srcSiz.width == m_srcSiz.width);
+			Hcpl_ASSERT(a_srcSiz.height == m_srcSiz.height);
 
-
+			Hcpl_ASSERT(a_destSiz.width == m_resSiz.width);
+			Hcpl_ASSERT(a_destSiz.height == m_resSiz.height);
 
 			const int nScaled_SrcWidth = m_srcSiz.width * m_nScale;
 			const int nScaled_SrcHeight = m_srcSiz.height * m_nScale;
 
-			MemSimpleAccessor_2D<T> sac_Out = a_outAcc->GenSimpleAccessor();
+			//MemSimpleAccessor_2D<T> sac_Out = a_outAcc->GenSimpleAccessor();
 
 
 			//F32ColorVal * srcBuf = (F32ColorVal *)m_srcImg->GetPixAt(0, 0);
@@ -68,23 +72,25 @@ namespace Hcv
 
 			int * resToSrcBuf = (int *)m_resToSrcMapImg->GetPixAt(0, 0);
 
-			//IndexCalc2D idxCalc_Src(m_srcSiz.width, m_srcSiz.height);
+			IndexCalc2D idxCalc_Src(m_srcSiz.width, m_srcSiz.height);
 
-			//IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
+			IndexCalc2D idxCalc_Res(m_resSiz.width, m_resSiz.height);
 
 
 
-			for (int y = 0; y < sac_Out.GetSize_Y(); y++)
+			for (int y = 0; y < m_resSiz.height; y++)
+			//for (int y = 0; y < sac_Out.GetSize_Y(); y++)
 			{
 				CvPoint curPnt_Y;
 
 				curPnt_Y.x = m_bgnPnt.x - y * m_nSin;
 				curPnt_Y.y = m_bgnPnt.y + y * m_nCos;
 
-				for (int x = 0; x < sac_Out.GetSize_X(); x++)
+				for (int x = 0; x < m_resSiz.width; x++)
+				//for (int x = 0; x < sac_Out.GetSize_X(); x++)
 				{
-					//int nIdx_Res = idxCalc_Res.Calc(x, y);
-					int nIdx_Res = sac_Out->GetAt(x, y);
+					int nIdx_Res = idxCalc_Res.Calc(x, y);
+					//int nIdx_Res = sac_Out->GetAt(x, y);
 
 					CvPoint curPnt_X;
 					//CvPoint curPnt_X = m_srcPntOfRes_Arr[nIdx_Res];
@@ -130,7 +136,7 @@ namespace Hcv
 					//	PrepareResImg
 					//if (bInImg)
 					{
-						T & rColor_Res = resBuf[nIdx_Res];
+						T & rColor_Res = a_destBuf[nIdx_Res];
 
 						int nIdx_Src = resToSrcBuf[nIdx_Res];
 
@@ -143,10 +149,10 @@ namespace Hcv
 							//Hcpl_ASSERT(nX2 >= 0);
 							//Hcpl_ASSERT(nY2 >= 0);
 
-							T & rColor_Src_X1_Y1 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY1 / m_nScale)];
-							T & rColor_Src_X1_Y2 = srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY2 / m_nScale)];
-							T & rColor_Src_X2_Y1 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
-							T & rColor_Src_X2_Y2 = srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
+							T & rColor_Src_X1_Y1 = a_srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY1 / m_nScale)];
+							T & rColor_Src_X1_Y2 = a_srcBuf[idxCalc_Src.Calc(nX1 / m_nScale, nY2 / m_nScale)];
+							T & rColor_Src_X2_Y1 = a_srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY1 / m_nScale)];
+							T & rColor_Src_X2_Y2 = a_srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
 
 							//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
 							int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
