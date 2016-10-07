@@ -12,7 +12,7 @@
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
 
-//#include <Lib\Hcv\ImgRotationMgr.h>
+#include <Lib\Hcv\ImgSizeRotation.h>
 //#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 
 
@@ -27,7 +27,7 @@ namespace Hcv
 
 			ImgSizeRotationColl(CvSize a_srcSiz, int a_nofRots);
 
-			ImgRotationMgrRef GetRotAt(int a_nRotIdx)
+			ImgSizeRotationRef GetRotAt(int a_nRotIdx)
 			{
 				return m_rotMgrArr[a_nRotIdx];
 			}
@@ -37,9 +37,9 @@ namespace Hcv
 				return m_rotMgrArr.GetSize();
 			}
 
-			F32ImageRef GetSrcImg()
+			CvSize GetSrcImgSiz()
 			{
-				return m_srcImg;
+				return m_srcSiz;
 			}
 
 		protected:
@@ -48,10 +48,11 @@ namespace Hcv
 
 		protected:
 
-			F32ImageRef m_srcImg;
+			//F32ImageRef m_srcImg;
+			CvSize m_srcSiz;
 
 			int m_nofRots;
-			FixedVector< ImgRotationMgrRef > m_rotMgrArr;
+			FixedVector< ImgSizeRotationRef > m_rotMgrArr;
 		};
 
 		typedef Hcpl::ObjRef< ImgSizeRotationColl > ImgSizeRotationCollRef;

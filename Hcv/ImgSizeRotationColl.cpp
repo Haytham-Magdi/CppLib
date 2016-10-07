@@ -41,7 +41,7 @@ namespace Hcv
 
 			//Hcpl_ASSERT( 0 == a_nofRots % 2 );
 
-			m_srcImg = a_srcImg;
+			m_srcSiz = a_srcSiz;
 
 			m_nofRots = a_nofRots;
 
@@ -53,7 +53,7 @@ namespace Hcv
 			{
 				float angDig = i * angStep;
 
-				ImgRotationMgrRef rot = new ImgRotationMgr(m_srcImg, angDig);
+				ImgSizeRotationRef rot = new ImgSizeRotation(m_srcSiz, angDig);
 
 				m_rotMgrArr.PushBack(rot);
 			}
