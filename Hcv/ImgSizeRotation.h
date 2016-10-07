@@ -22,9 +22,9 @@ namespace Hcv
 	{
 	public:
 
-		ImgSizeRotation(F32ImageRef a_srcImg, float a_angDig);
+		ImgSizeRotation(CvSize a_srcSiz, float a_angDig);
 
-		F32ImageRef GetSrcImg() { return m_srcImg; }
+		//F32ImageRef GetSrcImg() { return m_srcImg; }
 
 		float GetAngleByDigree() { return m_angDig; }
 
@@ -36,7 +36,7 @@ namespace Hcv
 
 		S32ImageRef Get_ResToSrcMapImage() { return m_resToSrcMapImg; }
 
-		F32ImageRef GetResImg() { return m_resImg; }
+		//F32ImageRef GetResImg() { return m_resImg; }
 
 		S32ImageRef Get_SrcToResMapImage() { return m_srcToResMapImg; }
 
@@ -155,27 +155,25 @@ namespace Hcv
 							T & rColor_Src_X2_Y2 = a_srcBuf[idxCalc_Src.Calc(nX2 / m_nScale, nY2 / m_nScale)];
 
 
-
-
-							T rColor_Src_X_Y1;
-							T rColor_Src_X_Y2;
+							T color_Src_X_Y1;
+							T color_Src_X_Y2;
 							{
 								//int nCur_X = (nX1 == nX2) ? nX1 : curPnt_X.x;
 								int nWt_X1 = (nX1 == nX2) ? m_nScale : abs(curPnt_X.x - nX2);
 								Hcpl_ASSERT(nWt_X1 <= m_nScale);
 
-								//T rColor_Src_X_Y1 = T::Add(
+								//T color_Src_X_Y1 = T::Add(
 								//	rColor_Src_X1_Y1.MultBy(nWt_X1),
 								//	rColor_Src_X2_Y1.MultBy(m_nScale - nWt_X1)
 								//	).DividBy(m_nScale);
 
 								WaitedAdd_ByPtr(&rColor_Src_X1_Y1, (float)nWt_X1 / m_nScale,
-									&rColor_Src_X2_Y1, (float)(m_nScale - nWt_X1) / m_nScale, &rColor_Src_X_Y1);
+									&rColor_Src_X2_Y1, (float)(m_nScale - nWt_X1) / m_nScale, &color_Src_X_Y1);
 
 								WaitedAdd_ByPtr(&rColor_Src_X1_Y2, (float)nWt_X1 / m_nScale,
-									&rColor_Src_X2_Y2, (float)(m_nScale - nWt_X1) / m_nScale, &rColor_Src_X_Y2);
+									&rColor_Src_X2_Y2, (float)(m_nScale - nWt_X1) / m_nScale, &color_Src_X_Y2);
 
-								//T rColor_Src_X_Y2 = T::Add(
+								//T color_Src_X_Y2 = T::Add(
 								//	rColor_Src_X1_Y2.MultBy(nWt_X1),
 								//	rColor_Src_X2_Y2.MultBy(m_nScale - nWt_X1)
 								//	).DividBy(m_nScale);
@@ -185,11 +183,11 @@ namespace Hcv
 								int nWt_Y1 = (nY1 == nY2) ? m_nScale : abs(curPnt_X.y - nY2);
 								Hcpl_ASSERT(nWt_Y1 <= m_nScale);
 
-								WaitedAdd_ByPtr(&rColor_Src_X_Y1, (float)nWt_Y1 / m_nScale,
-									&rColor_Src_X_Y2, (float)(m_nScale - nWt_Y1) / m_nScale, &rColor_Res);
+								WaitedAdd_ByPtr(&color_Src_X_Y1, (float)nWt_Y1 / m_nScale,
+									&color_Src_X_Y2, (float)(m_nScale - nWt_Y1) / m_nScale, &rColor_Res);
 								//rColor_Res = T::Add(
-								//	rColor_Src_X_Y1.MultBy(nWt_Y1),
-								//	rColor_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
+								//	color_Src_X_Y1.MultBy(nWt_Y1),
+								//	color_Src_X_Y2.MultBy(m_nScale - nWt_Y1)
 								//	).DividBy(m_nScale);
 							}
 						}
@@ -213,7 +211,7 @@ namespace Hcv
 
 		void Prepare();
 
-		void PrepareResImg();
+		//void PrepareResImg();
 
 		int AddRound(int a_num);
 
@@ -223,12 +221,9 @@ namespace Hcv
 
 
 
-
-
-
 	protected:
 
-		F32ImageRef m_srcImg;
+		//F32ImageRef m_srcImg;
 		float m_angDig;
 		float m_angRad;
 
@@ -244,7 +239,7 @@ namespace Hcv
 
 		CvSize m_resSiz;
 		S32ImageRef m_resToSrcMapImg;
-		F32ImageRef m_resImg;
+		//F32ImageRef m_resImg;
 		S32ImageRef m_srcToResMapImg;
 
 		FixedVector< LineLimit > m_lineLimit_H_Arr;
