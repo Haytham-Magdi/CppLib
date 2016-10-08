@@ -13,8 +13,9 @@
 #include <Lib\Hcv\ImageItrMgr.h>
 
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
-#include <Lib\Hcv\Saica\RotationMgrColl.h>
+//#include <Lib\Hcv\Saica\ImgSizeRotationColl.h>
 #include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
+#include <Lib\Hcv\ImgSizeRotationColl.h>
 
 
 namespace Hcv
@@ -48,8 +49,8 @@ namespace Hcv
 
 		public:
 
-			//AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl, int a_nAprLen_1, int a_nAprLen_2);
-			AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl);
+			//AngleDirMgrColl(ImgSizeRotationCollRef a_rotColl, int a_nAprLen_1, int a_nAprLen_2);
+			AngleDirMgrColl(ImgSizeRotationCollRef a_rotColl);
 
 			//ImgAngleDirMgrRef GetRotAt(int a_nRotIdx)
 			//{
@@ -79,7 +80,8 @@ namespace Hcv
 			AngleDirMgrColl_Context_Ref m_context_H;
 			AngleDirMgrColl_Context_Ref m_context_V;
 
-			RotationMgrCollRef m_rotMgrColl;
+			F32ImageRef m_srcImg;
+			ImgSizeRotationCollRef m_rotColl;
 			//F32ImageRef m_srcImg;
 
 			//int m_nAprLen_1;

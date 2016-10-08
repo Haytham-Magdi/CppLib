@@ -26,9 +26,10 @@ namespace Hcv
 
 	namespace Ns_Saica
 	{
-		AngleDirMgrColl::AngleDirMgrColl(RotationMgrCollRef a_rotMgrColl)
+		AngleDirMgrColl::AngleDirMgrColl(F32ImageRef a_srcImg, ImgSizeRotationCollRef a_rotColl)
 		{
-			m_rotMgrColl = a_rotMgrColl;
+			m_srcImg = a_srcImg;
+			m_rotColl = a_rotColl;
 			m_context_H = new AngleDirMgrColl_Context();
 			m_context_V = new AngleDirMgrColl_Context();
 
@@ -37,7 +38,10 @@ namespace Hcv
 
 		void AngleDirMgrColl::Prepare()
 		{
-			F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(m_rotMgrColl->GetRotAt(0)->GetSrcImg());
+			//Hcpl_ASSERT(m_srcImg)
+			
+				//m_rotColl
+			F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(m_srcImg);
 			//F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly(); org_Img_V->SwitchXY();
 
 			ShowImage(org_Img_H->GetSrcImg(), "org_Img_H->GetSrcImg()");
@@ -74,13 +78,19 @@ namespace Hcv
 			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
 			m_context_V->m_wideConflictDiff_Img = m_context_H->m_wideConflictDiff_Img->CloneAccessorOnly(); m_context_V->m_wideConflictDiff_Img->SwitchXY();
 
-			m_angleDirMgrArr.SetSize(m_rotMgrColl->GetNofRots() * 2);
+			m_angleDirMgrArr.SetSize(m_rotColl->GetNofRots() * 2);
 
-			for (int i = 0; i < m_rotMgrColl->GetNofRots(); i++)
+			for (int i = 0; i < m_rotColl->GetNofRots(); i++)
 			{
-				ImgRotationMgrRef rotMgr = m_rotMgrColl->GetRotAt(i);
+				ImgSizeRotationRef rotMgr = m_rotColl->GetRotAt(i);
 
-				F32ImageAccessor3C_Ref rot_Img_H = new F32ImageAccessor3C(rotMgr->GetResImg());
+				//F32ImageAccessor3C_Ref rot_Img_H = new F32ImageAccessor3C(rotMgr->GetResImg());
+				//F32ImageAccessor3C_Ref rot_Img_H = new F32ImageAccessor3C(rotMgr->GetResImgSiz());
+				F32ImageAccessor3C_Ref rot_Img_H = new F32ImageAccessor3C(
+					F32Image::Create(rotMgr->GetResImgSiz(), m_srcImg->GetNofChannels()));
+
+				rotMgr->RotateImage(rot_Img_H->GetDataPtr(), rot_Img_H->GetSrcImgSize(), 
+					org_Img_H->GetDataPtr(), org_Img_H->GetSrcImgSize());
 
 				F32ImageAccessor1C_Ref magSqr_Img_H = new F32ImageAccessor1C(rot_Img_H->GetOffsetCalc());
 				CalcMagSqrImage(rot_Img_H->GetMemAccessor(), magSqr_Img_H->GetMemAccessor());
@@ -99,7 +109,7 @@ namespace Hcv
 				F32ImageAccessor3C_Ref rot_Img_V = rot_Img_H->CloneAccessorOnly(); rot_Img_V->SwitchXY();
 				F32ImageAccessor1C_Ref magSqr_Img_V = magSqr_Img_H->CloneAccessorOnly(); magSqr_Img_V->SwitchXY();
 
-				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(i + m_rotMgrColl->GetNofRots(),
+				ImgAngleDirMgr_Context_Ref dirContext_V = new ImgAngleDirMgr::Context(i + m_rotColl->GetNofRots(),
 					rotMgr, rot_Img_V, magSqr_Img_V, 'V');
 
 				dirContext_V->m_rotToOrgMap_Img = dirContext_H->m_rotToOrgMap_Img->CloneAccessorOnly(); dirContext_V->m_rotToOrgMap_Img->SwitchXY();
@@ -111,7 +121,7 @@ namespace Hcv
 				m_angleDirMgrArr[i] = angleDirMgr_H;
 
 				ImgAngleDirMgrRef angleDirMgr_V = new ImgAngleDirMgr(dirContext_V, dirContext_H, m_context_V);
-				m_angleDirMgrArr[i + m_rotMgrColl->GetNofRots()] = angleDirMgr_V;
+				m_angleDirMgrArr[i + m_rotColl->GetNofRots()] = angleDirMgr_V;
 			}
 
 			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
