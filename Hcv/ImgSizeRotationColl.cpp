@@ -18,50 +18,47 @@ namespace Hcv
 	using namespace Hcpl;
 	//using namespace Hcpl::Math;
 
-	namespace Ns_Saica
+
+	//ImgSizeRotationColl::ImgSizeRotationColl(F32ImageRef a_srcImg, int a_nofRots)
+	//{
+	//	m_srcImg = a_srcImg;
+	//	m_nofRots = a_nofRots;
+
+	//	Prepare();
+	//}
+
+	//void ImgSizeRotationColl::Prepare()
+	//{
+	//
+	//}
+
+	ImgSizeRotationColl::ImgSizeRotationColl(
+		CvSize a_srcSiz, int a_nofRots)
 	{
+		Hcpl_ASSERT(a_nofRots >= 0);
 
-		//ImgSizeRotationColl::ImgSizeRotationColl(F32ImageRef a_srcImg, int a_nofRots)
-		//{
-		//	m_srcImg = a_srcImg;
-		//	m_nofRots = a_nofRots;
+		//Hcpl_ASSERT( 0 == a_nofRots % 2 );
 
-		//	Prepare();
-		//}
+		m_srcSiz = a_srcSiz;
 
-		//void ImgSizeRotationColl::Prepare()
-		//{
-		//
-		//}
+		m_nofRots = a_nofRots;
 
-		ImgSizeRotationColl::ImgSizeRotationColl(
-			CvSize a_srcSiz, int a_nofRots)
+		m_rotMgrArr.SetCapacity(a_nofRots);
+
+		float angStep = 90.0F / a_nofRots;
+
+		for (int i = 0; i < a_nofRots; i++)
 		{
-			Hcpl_ASSERT(a_nofRots >= 0);
+			float angDig = i * angStep;
 
-			//Hcpl_ASSERT( 0 == a_nofRots % 2 );
+			ImgSizeRotationRef rot = new ImgSizeRotation(m_srcSiz, angDig);
 
-			m_srcSiz = a_srcSiz;
-
-			m_nofRots = a_nofRots;
-
-			m_rotMgrArr.SetCapacity(a_nofRots);
-
-			float angStep = 90.0F / a_nofRots;
-
-			for (int i = 0; i < a_nofRots; i++)
-			{
-				float angDig = i * angStep;
-
-				ImgSizeRotationRef rot = new ImgSizeRotation(m_srcSiz, angDig);
-
-				m_rotMgrArr.PushBack(rot);
-			}
-
+			m_rotMgrArr.PushBack(rot);
 		}
 
-
-
 	}
+
+
+
 }
 

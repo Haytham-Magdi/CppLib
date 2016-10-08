@@ -13,7 +13,7 @@
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
 
-#include <Lib\Hcv\ImgRotationMgr.h>
+#include <Lib\Hcv\ImgSizeRotation.h>
 #include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 #include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
 
@@ -35,7 +35,7 @@ namespace Hcv
 			{
 			public:
 
-				Context(int a_nIndex, ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv);
+				Context(int a_nIndex, ImgSizeRotationRef a_imgRot, F32ImageAccessor3C_Ref a_org_Img, F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv);
 
 				std::string & GetIdStr() {
 					return m_idStr;
@@ -54,7 +54,7 @@ namespace Hcv
 				F32ImageAccessor1C_Ref m_magSqr_Img;
 
 				char m_hv;
-				ImgRotationMgrRef m_imgRotMgr;
+				ImgSizeRotationRef m_imgRot;
 
 				F32ImageAccessor1C_Ref m_avgStandev_H_Img;
 

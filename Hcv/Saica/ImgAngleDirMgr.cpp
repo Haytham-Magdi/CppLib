@@ -32,11 +32,11 @@ namespace Hcv
 			m_parentContext = a_parentContext;
 		}
 
-		ImgAngleDirMgr::Context::Context(int a_nIndex, ImgRotationMgrRef a_imgRotMgr, F32ImageAccessor3C_Ref a_org_Img,
+		ImgAngleDirMgr::Context::Context(int a_nIndex, ImgSizeRotationRef a_imgRot, F32ImageAccessor3C_Ref a_org_Img,
 			F32ImageAccessor1C_Ref a_magSqr_Img, char a_hv)
 		{
 			m_nIndex = a_nIndex;
-			m_imgRotMgr = a_imgRotMgr;
+			m_imgRot = a_imgRot;
 
 			m_org_Img = a_org_Img;
 			m_magSqr_Img = a_magSqr_Img;
@@ -46,7 +46,7 @@ namespace Hcv
 
 			{
 				char idStr_0[70];
-				sprintf(idStr_0, "%.2f, %c: ", m_imgRotMgr->GetAngleByDigree(), m_hv);
+				sprintf(idStr_0, "%.2f, %c: ", m_imgRot->GetAngleByDigree(), m_hv);
 				m_idStr = idStr_0;
 			}
 
