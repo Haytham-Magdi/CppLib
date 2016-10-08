@@ -85,7 +85,9 @@ namespace Hcv
 			void Proceed_2();
 			void Proceed_3();
 			void Proceed_4();
-			void Proceed_5();
+			void Proceed_5_1();
+			void Proceed_5_2();
+			void Proceed_5_3();
 			void Proceed_6();
 
 		protected:
