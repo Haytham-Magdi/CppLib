@@ -50,7 +50,7 @@ namespace Hcv
 		public:
 
 			//AngleDirMgrColl(ImgSizeRotationCollRef a_rotColl, int a_nAprLen_1, int a_nAprLen_2);
-			AngleDirMgrColl(ImgSizeRotationCollRef a_rotColl);
+			AngleDirMgrColl(F32ImageRef a_srcImg, ImgSizeRotationCollRef a_rotColl);
 
 			//ImgAngleDirMgrRef GetRotAt(int a_nRotIdx)
 			//{

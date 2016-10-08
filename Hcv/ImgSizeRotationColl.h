@@ -18,44 +18,39 @@
 
 namespace Hcv
 {
-	namespace Ns_Saica
+	class ImgSizeRotationColl : FRM_Object
 	{
+	public:
 
-		class ImgSizeRotationColl : FRM_Object
+		ImgSizeRotationColl(CvSize a_srcSiz, int a_nofRots);
+
+		ImgSizeRotationRef GetRotAt(int a_nRotIdx)
 		{
-		public:
+			return m_rotMgrArr[a_nRotIdx];
+		}
 
-			ImgSizeRotationColl(CvSize a_srcSiz, int a_nofRots);
+		int GetNofRots()
+		{
+			return m_rotMgrArr.GetSize();
+		}
 
-			ImgSizeRotationRef GetRotAt(int a_nRotIdx)
-			{
-				return m_rotMgrArr[a_nRotIdx];
-			}
+		CvSize GetSrcImgSiz()
+		{
+			return m_srcSiz;
+		}
 
-			int GetNofRots()
-			{
-				return m_rotMgrArr.GetSize();
-			}
+	protected:
 
-			CvSize GetSrcImgSiz()
-			{
-				return m_srcSiz;
-			}
+		//void Prepare();
 
-		protected:
+	protected:
 
-			//void Prepare();
+		//F32ImageRef m_srcImg;
+		CvSize m_srcSiz;
 
-		protected:
-
-			//F32ImageRef m_srcImg;
-			CvSize m_srcSiz;
-
-			int m_nofRots;
-			FixedVector< ImgSizeRotationRef > m_rotMgrArr;
-		};
-
-		typedef Hcpl::ObjRef< ImgSizeRotationColl > ImgSizeRotationCollRef;
+		int m_nofRots;
+		Hcpl::FixedVector< ImgSizeRotationRef > m_rotMgrArr;
 	};
 
+	typedef Hcpl::ObjRef< ImgSizeRotationColl > ImgSizeRotationCollRef;
 }
