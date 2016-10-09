@@ -63,6 +63,8 @@ namespace Hcv
 				float m_angle;
 				TempImageAccessor_REF(ConflictInfo) m_conflict_Img;
 
+				F32ImageAccessor1C_Ref m_standev_InrWide_Img;
+
 				F32ImageAccessor1C_Ref m_wideConflictDiff_Img;
 			};
 
