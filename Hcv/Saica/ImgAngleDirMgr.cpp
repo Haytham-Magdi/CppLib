@@ -136,8 +136,7 @@ namespace Hcv
 			AngleDirMgrColl_Context & pcx = *m_parentContext;
 
 
-			//F32ImageAccessor1C_Ref cx.m_standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			cx.m_standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			F32ImageAccessor1C_Ref standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 
 			const int nInrRad = 5;
 			//const int nInrRad = 5 * 2;
@@ -145,17 +144,17 @@ namespace Hcv
 			F32ImageAccessor3C_Ref avg_InrWide_Img = new F32ImageAccessor3C(cx.m_org_Img->GetOffsetCalc());
 			//F32VectorValImageAcc_3C_Ref avg_InrWide_Img = new F32VectorValImageAcc_3C(cx.m_org_Img->GetOffsetCalc());
 			{
-				Calc_Avg_And_Standev_Image(cx.m_org_Img->GetMemAccessor(), avg_InrWide_Img->GetMemAccessor(), cx.m_standev_InrWide_Img->GetMemAccessor(),
+				Calc_Avg_And_Standev_Image(cx.m_org_Img->GetMemAccessor(), avg_InrWide_Img->GetMemAccessor(), standev_InrWide_Img->GetMemAccessor(),
 					Window<int>::New(-nInrRad, nInrRad, -nInrRad, nInrRad));
 
-				MultiplyImageByNum(cx.m_standev_InrWide_Img->GetMemAccessor(), 2);
+				MultiplyImageByNum(standev_InrWide_Img->GetMemAccessor(), 2);
 				//AssertValues_Image(avg_InrWide_Img->GetMemAccessor());
 			}
 
 			if (0 == m_context->m_nIndex)
 			{
-				GlobalStuff::SetLinePathImg(GenTriChGrayImg(cx.m_standev_InrWide_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
-				ShowImage(cx.m_standev_InrWide_Img->GetSrcImg(), "cx.m_standev_InrWide_Img->GetSrcImg()");
+				GlobalStuff::SetLinePathImg(GenTriChGrayImg(standev_InrWide_Img->GetSrcImg())); GlobalStuff::ShowLinePathImg();
+				ShowImage(standev_InrWide_Img->GetSrcImg(), "standev_InrWide_Img->GetSrcImg()");
 			}
 
 			F32VectorValImageAcc_4C_Ref avgPStandev_InrWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
@@ -164,7 +163,7 @@ namespace Hcv
 
 				F32VectorVal<4> * dest_Ptr = (F32VectorVal<4> *)avgPStandev_InrWide_Img->GetDataPtr();
 				F32VectorVal<3> * src_Avg_Ptr = (F32VectorVal<3> *)avg_InrWide_Img->GetDataPtr();
-				float * src_Standev_Ptr = cx.m_standev_InrWide_Img->GetDataPtr();
+				float * src_Standev_Ptr = standev_InrWide_Img->GetDataPtr();
 
 				for (int i = 0; i < nSize_1D; i++)
 				{
