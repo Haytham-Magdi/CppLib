@@ -137,6 +137,7 @@ namespace Hcv
 
 
 			//F32ImageAccessor1C_Ref cx.m_standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
+			cx.m_standev_InrWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 
 			const int nInrRad = 5;
 			//const int nInrRad = 5 * 2;
