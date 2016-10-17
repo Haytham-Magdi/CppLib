@@ -73,10 +73,24 @@ namespace Hcv
 				FillImage(m_context_H->m_wideConflictDiff_Img->GetMemAccessor(), initVal);
 			}
 
+			m_context_H->m_avgPStandev_InrWide_Img = new F32VectorValImageAcc_4C(
+				org_Img_H->GetMemAccessor()->GetOffsetCalc());
+			{
+				//float initVal = -10000000;
+				VectorVal<Float, 4> initVal;
+				initVal.Vals[0] = initVal.Vals[1] = initVal.Vals[2] = initVal.Vals[3] = 0;
+				FillImage(m_context_H->m_avgPStandev_InrWide_Img->GetMemAccessor(), initVal);
+			}
+
+
+
+
 			m_context_V->m_org_Img = m_context_H->m_org_Img->CloneAccessorOnly(); m_context_V->m_org_Img->SwitchXY();
 			m_context_V->m_standevInfoImg = m_context_H->m_standevInfoImg->CloneAccessorOnly(); m_context_V->m_standevInfoImg->SwitchXY();
 			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
 			m_context_V->m_wideConflictDiff_Img = m_context_H->m_wideConflictDiff_Img->CloneAccessorOnly(); m_context_V->m_wideConflictDiff_Img->SwitchXY();
+			m_context_V->m_avgPStandev_InrWide_Img = m_context_H->m_avgPStandev_InrWide_Img->CloneAccessorOnly(); m_context_V->m_avgPStandev_InrWide_Img->SwitchXY();
+			
 
 			m_angleDirMgrArr.SetSize(m_rotColl->GetNofRots() * 2);
 
