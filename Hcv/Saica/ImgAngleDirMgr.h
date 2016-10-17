@@ -66,6 +66,7 @@ namespace Hcv
 				//F32ImageAccessor1C_Ref m_standev_InrWide_Img;
 
 				F32ImageAccessor1C_Ref m_wideConflictDiff_Img;
+				F32VectorValImageAcc_4C_Ref m_avgPStandev_InrWide_Img;
 			};
 
 		public:
