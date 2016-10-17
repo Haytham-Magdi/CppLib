@@ -99,6 +99,7 @@ namespace Hcv
 			void AffectCommonAvgStandev();
 			void AffectCommonConflict();
 			void AffectCommonWideConflictDiff();
+			void AffectCommonAvgPStandev_InrWide();
 
 
 			void DisplayConflictImg();
