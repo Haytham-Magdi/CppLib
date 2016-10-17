@@ -145,6 +145,14 @@ namespace Hcv
 			}
 
 			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
+				m_angleDirMgrArr[i]->Proceed_5_2();
+			}
+
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
+				m_angleDirMgrArr[i]->Proceed_5_3();
+			}
+
+			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
 				m_angleDirMgrArr[i]->Proceed_6();
 			}
 

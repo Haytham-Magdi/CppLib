@@ -157,11 +157,12 @@ namespace Hcv
 				ShowImage(standev_InrWide_Img->GetSrcImg(), "standev_InrWide_Img->GetSrcImg()");
 			}
 
-			F32VectorValImageAcc_4C_Ref avgPStandev_InrWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
+			//F32VectorValImageAcc_4C_Ref cx.m_avgPStandev_InrWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
+			cx.m_avgPStandev_InrWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
 			{
 				const int nSize_1D = avg_InrWide_Img->GetSize_1D();
 
-				F32VectorVal<4> * dest_Ptr = (F32VectorVal<4> *)avgPStandev_InrWide_Img->GetDataPtr();
+				F32VectorVal<4> * dest_Ptr = (F32VectorVal<4> *)cx.m_avgPStandev_InrWide_Img->GetDataPtr();
 				F32VectorVal<3> * src_Avg_Ptr = (F32VectorVal<3> *)avg_InrWide_Img->GetDataPtr();
 				float * src_Standev_Ptr = standev_InrWide_Img->GetDataPtr();
 
@@ -172,6 +173,21 @@ namespace Hcv
 				}
 			}
 
+		}
+
+		void ImgAngleDirMgr::Proceed_5_2()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
+
+		}
+
+		void ImgAngleDirMgr::Proceed_5_3()
+		{
+			Context & cx = *m_context;
+			Context & ncx = *m_normalContext;
+			AngleDirMgrColl_Context & pcx = *m_parentContext;
 
 			//const int nOutRad = 5;
 			const int nOutRad = 8;
@@ -180,7 +196,7 @@ namespace Hcv
 				F32ImageAccessor1C_Ref standev_OutWide_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 				F32VectorValImageAcc_4C_Ref avg_OutWide_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
 
-				Calc_Avg_And_Standev_Image(avgPStandev_InrWide_Img->GetMemAccessor(), avg_OutWide_Img->GetMemAccessor(), standev_OutWide_Img->GetMemAccessor(),
+				Calc_Avg_And_Standev_Image(cx.m_avgPStandev_InrWide_Img->GetMemAccessor(), avg_OutWide_Img->GetMemAccessor(), standev_OutWide_Img->GetMemAccessor(),
 					//Window<int>::New(-nOutRad, nOutRad, -nOutRad, nOutRad));
 					Window<int>::New(-nOutRad, nOutRad, 0, 0));
 
@@ -202,10 +218,10 @@ namespace Hcv
 			//	Window<int> avgWin = Window<int>::New(-nOutRad, nOutRad, -nOutRad, nOutRad);
 
 			//	F32VectorValImageAcc_4C_Ref avg_Img = new F32VectorValImageAcc_4C(cx.m_org_Img->GetOffsetCalc());
-			//	AvgImage(avgPStandev_InrWide_Img->GetMemAccessor(), avg_Img->GetMemAccessor(), avgWin);
+			//	AvgImage(cx.m_avgPStandev_InrWide_Img->GetMemAccessor(), avg_Img->GetMemAccessor(), avgWin);
 
 			//	F32ImageAccessor1C_Ref magSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
-			//	CalcMagSqrImage(avgPStandev_InrWide_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
+			//	CalcMagSqrImage(cx.m_avgPStandev_InrWide_Img->GetMemAccessor(), magSqr_Img->GetMemAccessor());
 
 			//	F32ImageAccessor1C_Ref avg_MagSqr_Img = new F32ImageAccessor1C(cx.m_org_Img->GetOffsetCalc());
 			//	AvgImage(magSqr_Img->GetMemAccessor(), avg_MagSqr_Img->GetMemAccessor(), avgWin);
