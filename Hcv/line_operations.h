@@ -39,7 +39,7 @@ namespace Hcv
 			for (; !ptrItr.IsDone(); ptrItr.Next())
 			{
 				T * ptr = ptrItr.GetCurrent();
-				Element_Operations::DivideByNum_ByPtr<T>(ptr, a_num);
+				Element_Operations::DivideByNum_ByPtr<T>(ptr, a_num, ptr);
 			}
 		}
 

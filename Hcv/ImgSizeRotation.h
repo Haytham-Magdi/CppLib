@@ -193,7 +193,8 @@ namespace Hcv
 						}
 						else
 						{
-							rColor_Res.AssignVal(0, 0, 0);
+							//rColor_Res.AssignVal(0, 0, 0);
+							SetToZero_ByPtr(&rColor_Res);
 						}
 					}
 
