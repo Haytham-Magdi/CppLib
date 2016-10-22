@@ -39,8 +39,8 @@ namespace Hcv
 		void AngleDirMgrColl::Prepare()
 		{
 			//Hcpl_ASSERT(m_srcImg)
-			
-				//m_rotColl
+
+			//m_rotColl
 			F32ImageAccessor3C_Ref org_Img_H = new F32ImageAccessor3C(m_srcImg);
 			//F32ImageAccessor3C_Ref org_Img_V = org_Img_H->CloneAccessorOnly(); org_Img_V->SwitchXY();
 
@@ -90,7 +90,7 @@ namespace Hcv
 			m_context_V->m_conflictInfoImg = m_context_H->m_conflictInfoImg->CloneAccessorOnly(); m_context_V->m_conflictInfoImg->SwitchXY();
 			m_context_V->m_wideConflictDiff_Img = m_context_H->m_wideConflictDiff_Img->CloneAccessorOnly(); m_context_V->m_wideConflictDiff_Img->SwitchXY();
 			m_context_V->m_avgPStandev_InrWide_Img = m_context_H->m_avgPStandev_InrWide_Img->CloneAccessorOnly(); m_context_V->m_avgPStandev_InrWide_Img->SwitchXY();
-			
+
 
 			m_angleDirMgrArr.SetSize(m_rotColl->GetNofRots() * 2);
 
@@ -103,7 +103,7 @@ namespace Hcv
 				F32ImageAccessor3C_Ref rot_Img_H = new F32ImageAccessor3C(
 					F32Image::Create(rotMgr->GetResImgSiz(), m_srcImg->GetNofChannels()));
 
-				rotMgr->RotateImage(rot_Img_H->GetDataPtr(), rot_Img_H->GetSrcImgSize(), 
+				rotMgr->RotateImage(rot_Img_H->GetDataPtr(), rot_Img_H->GetSrcImgSize(),
 					org_Img_H->GetDataPtr(), org_Img_H->GetSrcImgSize());
 
 				F32ImageAccessor1C_Ref magSqr_Img_H = new F32ImageAccessor1C(rot_Img_H->GetOffsetCalc());
@@ -160,6 +160,29 @@ namespace Hcv
 
 			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {
 				m_angleDirMgrArr[i]->Proceed_5_2();
+			}
+
+			DivideImageByNum(m_context_H->m_avgPStandev_InrWide_Img->GetMemAccessor(), this->m_angleDirMgrArr.GetSize());
+			
+			for (int i = 0; i < m_rotColl->GetNofRots(); i++) {
+				
+				ImgSizeRotationRef rot = m_rotColl->GetRotAt(i);
+
+				ImgAngleDirMgrRef dirMgr_H = m_angleDirMgrArr[i];
+				ImgAngleDirMgrRef dirMgr_V = m_angleDirMgrArr[i + m_rotColl->GetNofRots()];
+
+				F32VectorValImageAcc_4C_Ref avgPStandev_InrWide_Img_H = new F32VectorValImageAcc_4C(
+					dirMgr_H->GetContext()->m_org_Img->GetOffsetCalc());;
+
+				rot->RotateImage(avgPStandev_InrWide_Img_H->GetDataPtr(), avgPStandev_InrWide_Img_H->GetSize(),
+					m_context_H->m_avgPStandev_InrWide_Img->GetDataPtr(), m_context_H->m_avgPStandev_InrWide_Img->GetSize());
+
+				dirMgr_H->GetContext()->m_avgPStandev_InrWide_Img = avgPStandev_InrWide_Img_H;
+
+				F32VectorValImageAcc_4C_Ref avgPStandev_InrWide_Img_V = avgPStandev_InrWide_Img_H->CloneAccessorOnly();
+				avgPStandev_InrWide_Img_V->SwitchXY();
+
+				dirMgr_V->GetContext()->m_avgPStandev_InrWide_Img = avgPStandev_InrWide_Img_V;
 			}
 
 			for (int i = 0; i < m_angleDirMgrArr.GetSize(); i++) {

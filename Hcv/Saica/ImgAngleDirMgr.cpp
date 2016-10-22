@@ -328,7 +328,6 @@ namespace Hcv
 
 					VectorVal<Float, 4> & val_Local = localPtr[nOffset_Mapped];
 					Add_ByPtr(&rCommonVal, &val_Local, &rCommonVal);
-
 				}
 			}
 
