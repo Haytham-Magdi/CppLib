@@ -12,15 +12,15 @@
 //#include <Lib\Hcv\ImageLineItrProvider.h>
 #include <Lib\Hcv\ImageItrMgr.h>
 
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
-//#include <Lib\Hcv\Saica\ImgSizeRotationColl.h>
-#include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.h>
+//#include <Lib\Hcv\Binarization\ImgSizeRotationColl.h>
+#include <Lib\Hcv\Binarization\AngleDirMgrColl_Context.h>
 #include <Lib\Hcv\ImgSizeRotationColl.h>
 
 
 namespace Hcv
 {
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
 		class AngleDirMgrColl : FRM_Object

@@ -15,14 +15,14 @@
 #include <Lib\Hcv\PixelStandevInfo.h>
 #include <Lib\Hcv\ConflictInfo.h>
 
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
-#include <Lib\Hcv\Saica\RotationMgrColl.h>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Binarization\RotationMgrColl.h>
 #include <Lib\Hcv\ConflictInfo.h>
 
 
 namespace Hcv
 {
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
 		class PixelInfo_1 : public MultiListQueMember< PixelInfo_1 >

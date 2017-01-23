@@ -7,7 +7,7 @@
 #include <Lib\Hcv\Image.h>
 #include <Lib\Hcv\funcs1.h>
 
-#include <Lib\Hcv\Saica\SaicaProcess1.h>
+#include <Lib\Hcv\Binarization\BinarizationProcess1.h>
 
 
 #define M_PI 3.14159265358979323846
@@ -18,17 +18,17 @@ namespace Hcv
 	using namespace Hcpl;
 	//using namespace Hcpl::Math;
 
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
-		SaicaProcess1::SaicaProcess1(F32ImageRef a_srcImg)
+		BinarizationProcess1::BinarizationProcess1(F32ImageRef a_srcImg)
 		{
 			m_srcImg = a_srcImg;
 
 			Prepare();
 		}
 
-		void SaicaProcess1::Prepare()
+		void BinarizationProcess1::Prepare()
 		{
 		
 		}

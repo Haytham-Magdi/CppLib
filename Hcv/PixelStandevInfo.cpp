@@ -7,7 +7,7 @@
 #include <Lib\Hcv\Image.h>
 #include <Lib\Hcv\funcs1.h>
 
-#include <Lib\Hcv\Saica\AngleDirMgrColl.h>
+#include <Lib\Hcv\Binarization\AngleDirMgrColl.h>
 
 
 #define M_PI 3.14159265358979323846

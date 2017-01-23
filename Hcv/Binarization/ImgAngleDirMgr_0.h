@@ -16,7 +16,7 @@
 
 namespace Hcv
 {
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
 		class ImgAngleDirMgr : FRM_Object

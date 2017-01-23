@@ -15,13 +15,13 @@
 #include <Lib\Hcv\PixelStandevInfo.h>
 #include <Lib\Hcv\ConflictInfo.h>
 
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
-#include <Lib\Hcv\Saica\RotationMgrColl.h>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Binarization\RotationMgrColl.h>
 
 
 namespace Hcv
 {
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
 		class AngleDirMgrColl_Context : FRM_Object

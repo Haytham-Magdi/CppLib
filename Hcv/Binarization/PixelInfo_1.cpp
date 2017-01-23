@@ -7,7 +7,7 @@
 #include <Lib\Hcv\Image.h>
 #include <Lib\Hcv\funcs1.h>
 
-#include <Lib\Hcv\Saica\PixelInfo_1.h>
+#include <Lib\Hcv\Binarization\PixelInfo_1.h>
 
 
 #define M_PI 3.14159265358979323846
@@ -22,7 +22,7 @@ namespace Hcv
 	using namespace Hcv::Image_Operations;
 	using namespace Hcv::ImageAccessorOperations;
 
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
 	}

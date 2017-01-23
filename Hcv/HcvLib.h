@@ -215,12 +215,12 @@
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_FactorySet_Simple.h>
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_Simple.h>
 
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
-#include <Lib\Hcv\Saica\AngleDirMgrColl.h>
-#include <Lib\Hcv\Saica\AngleDirMgrColl_Context.h>
-#include <Lib\Hcv\Saica\RotationMgrColl.h>
-#include <Lib\Hcv\Saica\SaicaProcess1.h>
-#include <Lib\Hcv\Saica\PixelInfo_1.h>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Binarization\AngleDirMgrColl.h>
+#include <Lib\Hcv\Binarization\AngleDirMgrColl_Context.h>
+#include <Lib\Hcv\Binarization\RotationMgrColl.h>
+#include <Lib\Hcv\Binarization\BinarizationProcess1.h>
+#include <Lib\Hcv\Binarization\PixelInfo_1.h>
 
 
 

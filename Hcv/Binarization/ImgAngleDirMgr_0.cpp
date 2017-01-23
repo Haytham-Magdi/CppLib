@@ -7,7 +7,7 @@
 #include <Lib\Hcv\Image.h>
 #include <Lib\Hcv\funcs1.h>
 
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.h>
 
 
 #define M_PI 3.14159265358979323846
@@ -18,7 +18,7 @@ namespace Hcv
 	using namespace Hcpl;
 	//using namespace Hcpl::Math;
 
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
 		ImgAngleDirMgr::ImgAngleDirMgr(F32ImageRef a_srcImg, float a_angDig)

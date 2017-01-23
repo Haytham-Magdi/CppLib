@@ -13,7 +13,6 @@
 #include <Lib\Hcv\ImageItrMgr.h>
 
 #include <Lib\Hcv\ImgSizeRotation.h>
-//#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
 
 
 namespace Hcv

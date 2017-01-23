@@ -13,29 +13,19 @@
 #include <Lib\Hcv\ImageItrMgr.h>
 
 #include <Lib\Hcv\ImgRotationMgr.h>
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.h>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.h>
 
 
 namespace Hcv
 {
-	namespace Ns_Saica
+	namespace Ns_Binarization
 	{
 
-		class RotationMgrColl : FRM_Object
+		class BinarizationProcess1 : FRM_Object
 		{
 		public:
 
-			RotationMgrColl(F32ImageRef a_srcImg, int a_nofRots);
-
-			ImgRotationMgrRef GetRotAt(int a_nRotIdx)
-			{
-				return m_rotMgrArr[a_nRotIdx];
-			}
-
-			int GetNofRots()
-			{
-				return m_rotMgrArr.GetSize();
-			}
+			BinarizationProcess1(F32ImageRef a_srcImg);
 
 			F32ImageRef GetSrcImg()
 			{
@@ -44,17 +34,16 @@ namespace Hcv
 
 		protected:
 
-			//void Prepare();
+			void Prepare();
 
 		protected:
 
 			F32ImageRef m_srcImg;
-
-			int m_nofRots;
-			FixedVector< ImgRotationMgrRef > m_rotMgrArr;
 		};
-
-		typedef Hcpl::ObjRef< RotationMgrColl > RotationMgrCollRef;
+	
+		typedef Hcpl::ObjRef< BinarizationProcess1 > BinarizationProcess1Ref;
 	};
+
+
 
 }

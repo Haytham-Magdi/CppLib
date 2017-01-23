@@ -70,12 +70,12 @@
 //#include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_FactorySet_Simple.cpp>
 #include <Lib\Hcv\ImgData_Simple\ImgDataMgr_2_Simple.cpp>
 
-#include <Lib\Hcv\Saica\ImgAngleDirMgr.cpp>
-#include <Lib\Hcv\Saica\AngleDirMgrColl.cpp>
-#include <Lib\Hcv\Saica\AngleDirMgrColl_Context.cpp>
-#include <Lib\Hcv\Saica\RotationMgrColl.cpp>
-#include <Lib\Hcv\Saica\SaicaProcess1.cpp>
-#include <Lib\Hcv\Saica\PixelInfo_1.cpp>
+#include <Lib\Hcv\Binarization\ImgAngleDirMgr.cpp>
+#include <Lib\Hcv\Binarization\AngleDirMgrColl.cpp>
+#include <Lib\Hcv\Binarization\AngleDirMgrColl_Context.cpp>
+#include <Lib\Hcv\Binarization\RotationMgrColl.cpp>
+#include <Lib\Hcv\Binarization\BinarizationProcess1.cpp>
+#include <Lib\Hcv\Binarization\PixelInfo_1.cpp>
 
 
 
